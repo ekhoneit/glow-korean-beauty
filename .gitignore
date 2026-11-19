@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+/.pnp
+.pnp.js
+
+# Testing & Coverage
+coverage/
+
+# Next.js build outputs
+.next/
+out/
+build/
+dist/
+
+# Production outputs & logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment files - NEVER COMMIT TO PUBLIC GITHUB
+.env
+.env*.local
+.env.development
+.env.test
+.env.production
+*.env
+
+# Operating System files
+.DS_Store
+Thumbs.db
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Prisma Generated Clients if in subfolder
+glow-server/src/generated/
