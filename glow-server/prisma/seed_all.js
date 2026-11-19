@@ -169,6 +169,24 @@ async function main() {
     console.log("✅ Collections seeded");
   }
 
+  // 11.5 Product Collections (Link products to collections)
+  if (data.productCollection?.length) {
+    for (const pc of data.productCollection) {
+      const { id, createdAt, ...rest } = pc;
+      await prisma.productCollection.upsert({
+        where: {
+          productId_collectionId: {
+            productId: rest.productId,
+            collectionId: rest.collectionId,
+          },
+        },
+        create: rest,
+        update: rest,
+      });
+    }
+    console.log("✅ Product Collection links seeded");
+  }
+
   // 12. Bento Gallery Cards
   if (data.bentoImageCard?.length) {
     for (const b of data.bentoImageCard) {

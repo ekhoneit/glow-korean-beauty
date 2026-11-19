@@ -722,5 +722,55 @@
       "createdAt": "2026-11-19T04:56:19.688Z",
       "updatedAt": "2026-11-19T04:56:19.688Z"
     }
+  ],
+  "productCollection": [
+    {
+      "id": 1,
+      "productId": 1,
+      "collectionId": 1,
+      "createdAt": "2026-11-18T16:45:45.445Z"
+    },
+    {
+      "id": 2,
+      "productId": 2,
+      "collectionId": 1,
+      "createdAt": "2026-11-18T16:45:45.449Z"
+    },
+    {
+      "id": 3,
+      "productId": 3,
+      "collectionId": 1,
+      "createdAt": "2026-11-18T16:45:45.451Z"
+    },
+    {
+      "id": 4,
+      "productId": 4,
+      "collectionId": 1,
+      "createdAt": "2026-11-18T16:45:45.454Z"
+    },
+    {
+      "id": 5,
+      "productId": 3,
+      "collectionId": 2,
+      "createdAt": "2026-11-18T16:45:45.477Z"
+    },
+    {
+      "id": 6,
+      "productId": 4,
+      "collectionId": 2,
+      "createdAt": "2026-11-18T16:45:45.481Z"
+    },
+    {
+      "id": 7,
+      "productId": 5,
+      "collectionId": 2,
+      "createdAt": "2026-11-18T16:45:45.483Z"
+    },
+    {
+      "id": 8,
+      "productId": 6,
+      "collectionId": 2,
+      "createdAt": "2026-11-18T16:45:45.485Z"
+    }
   ]
 }
