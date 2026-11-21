@@ -3,9 +3,45 @@ const path = require('path');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const cloudinaryUrls = JSON.parse(
-  fs.readFileSync('C:/Users/Siyan/.gemini/antigravity/brain/c6579d48-089f-4269-99fa-15d7390b6222/scratch/uploaded_cloudinary_images.json', 'utf8')
-);
+// Cloudinary images dictionary
+const rawCloudinary = {
+  1: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260285/vclajdxnqk7jq8ilxcrq.png", // 1.png: Rose PDRN
+  2: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260286/mzzz6u5cfjfcybmwrdi1.png", // 2.png: Ceramide D Ampoule
+  3: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260288/bll4irvdxt9kwxivqgqr.png", // 3.png: Retinol A Ampoule
+  4: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260289/sj1arekn0c22fo3ywg8e.png", // 4.png
+  5: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260290/qm3va1bskcwnjre5dzgs.png", // 5.png
+  6: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260292/zhpeduepqtpoubevn0ji.png", // 6.png: Clear Green Caviar Toner
+  7: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260294/egeraowticr7faxnnebm.png", // 7.png
+  8: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260296/bhxw8simjscxuradqvhl.png", // 8.png: Green Caviar Serum
+  9: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260297/orxzcrctqvhavaoxd0o1.png", // 9.png: Green Caviar Cream
+  10: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260299/mmbdlojuxkd3urwx6lrh.png", // 10.png: Aqua Cooling Tonic
+  11: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260301/dimn4avyj69ceavoqihd.png", // 11.png: Cica Cooling Tonic
+  12: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260302/zbn03nb5fz3ycyvppfsl.png", // 12.png
+  13: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260304/vbpiknrtndrf5mhyisww.png", // 13.png: Hair Voluming Watery Essence
+  14: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260306/cv2eowfva3stk1c0rn5v.png"  // 15.png: Hair Protecting Floral Essence
+};
+
+// Exact Swapped Mapping as requested:
+// Product 4 (Retinol Cream) gets image 5
+// Product 5 (Ceramide Cream) gets image 4
+// Product 7 (Hair Angel Ring) gets image 12
+// Product 12 (Relief Cica Cleansing Oil) gets image 7
+const productImages = {
+  1: rawCloudinary[1],
+  2: rawCloudinary[2],
+  3: rawCloudinary[3],
+  4: rawCloudinary[5], // Swapped
+  5: rawCloudinary[4], // Swapped
+  6: rawCloudinary[6],
+  7: rawCloudinary[12], // Swapped
+  8: rawCloudinary[8],
+  9: rawCloudinary[9],
+  10: rawCloudinary[10],
+  11: rawCloudinary[11],
+  12: rawCloudinary[7], // Swapped
+  13: rawCloudinary[13],
+  14: rawCloudinary[14]
+};
 
 // 14 Products definition
 const rawProducts = [
@@ -14,8 +50,7 @@ const rawProducts = [
     title: "Rose PDRN K Vitamin K Water Soothing Cream – 100g",
     slug: "rose-pdrn-k-vitamin-k-water-soothing-cream-100g",
     sku: "GLOW-TZ-01",
-    subCategoryId: 3, // Moisturizers & Creams
-    brandName: "Tenzero",
+    categoryName: "Moisturizers & Creams",
     price: 1350,
     regularPrice: 1650,
     desc: "Discover a refreshing skincare experience with Rose PDRN K Vitamin K Water Soothing Cream. Its lightweight cream formula is designed to provide a comfortable, hydrated feel while adding a soothing touch to your daily skincare routine. A beautiful addition to your everyday skincare essentials.",
@@ -33,8 +68,7 @@ const rawProducts = [
     title: "Ceramide D Vitamin D Ampoule – 50ml",
     slug: "ceramide-d-vitamin-d-ampoule-50ml",
     sku: "GLOW-TZ-02",
-    subCategoryId: 2, // Serums & Ampoules
-    brandName: "Tenzero",
+    categoryName: "Serums & Ampoules",
     price: 1450,
     regularPrice: 1750,
     desc: "Give your skin a nourishing touch with Ceramide D Vitamin D Ampoule. Formulated with Ceramide NP and 7-Dehydrocholesterol, this lightweight ampoule is designed to support your daily skin-conditioning routine and leave your skin feeling soft and comfortable.",
@@ -52,8 +86,7 @@ const rawProducts = [
     title: "Retinol A Vitamin A Ampoule – 50ml",
     slug: "retinol-a-vitamin-a-ampoule-50ml",
     sku: "GLOW-TZ-03",
-    subCategoryId: 2, // Serums & Ampoules
-    brandName: "Tenzero",
+    categoryName: "Serums & Ampoules",
     price: 1490,
     regularPrice: 1850,
     desc: "Elevate your skincare routine with Retinol A Vitamin A Ampoule. Featuring Retinyl Palmitate, Beta-Carotene and Astaxanthin, this skincare formula is designed to complement your regular skincare routine and give your skin a smooth, refreshed appearance.",
@@ -71,8 +104,7 @@ const rawProducts = [
     title: "Retinol A Vitamin A Silk Soothing Cream – 100g",
     slug: "retinol-a-vitamin-a-silk-soothing-cream-100g",
     sku: "GLOW-TZ-04",
-    subCategoryId: 3, // Moisturizers & Creams
-    brandName: "Tenzero",
+    categoryName: "Moisturizers & Creams",
     price: 1390,
     regularPrice: 1700,
     desc: "Experience a silky skincare touch with Retinol A Vitamin A Silk Soothing Cream. Its smooth cream texture makes daily moisturising feel effortless while helping your skin feel soft, nourished and comfortable. A perfect addition to your everyday beauty routine.",
@@ -90,8 +122,7 @@ const rawProducts = [
     title: "Ceramide D Vitamin D Silk Soothing Cream – 100g",
     slug: "ceramide-d-vitamin-d-silk-soothing-cream-100g",
     sku: "GLOW-TZ-05",
-    subCategoryId: 3, // Moisturizers & Creams
-    brandName: "Tenzero",
+    categoryName: "Moisturizers & Creams",
     price: 1390,
     regularPrice: 1700,
     desc: "Pamper your skin with the smooth and comforting texture of Ceramide D Vitamin D Silk Soothing Cream. Designed for daily skincare, this cream helps maintain a moisturised feel and leaves your skin feeling soft, smooth and refreshed.",
@@ -109,8 +140,7 @@ const rawProducts = [
     title: "Clear Green Caviar Toner – 200ml",
     slug: "clear-green-caviar-toner-200ml",
     sku: "GLOW-TZ-06",
-    subCategoryId: 1, // Toner & Essence
-    brandName: "Tenzero",
+    categoryName: "Toner & Essence",
     price: 1250,
     regularPrice: 1550,
     desc: "Refresh and prepare your skin with Clear Green Caviar Toner. Its refreshing formula is designed to support your daily skin-balancing routine while leaving your skin feeling fresh and comfortable. An ideal step after cleansing and before applying serum or moisturiser.",
@@ -128,8 +158,7 @@ const rawProducts = [
     title: "Hair Angel Ring Musk Essence – 100ml",
     slug: "hair-angel-ring-musk-essence-100ml",
     sku: "GLOW-TZ-07",
-    subCategoryId: 8, // Hair Essences & Oils
-    brandName: "Tenzero",
+    categoryName: "Hair Essences & Oils",
     price: 1190,
     regularPrice: 1450,
     desc: "Give your hair a touch of care with Hair Angel Ring Musk Essence. Featuring a blend of 3 Gold Oil, Argan Kernel Oil, Sweet Almond Oil and Sunflower Seed Oil, this hair essence is designed to nourish the hair and enhance its soft, smooth and healthy-looking appearance.",
@@ -147,8 +176,7 @@ const rawProducts = [
     title: "Green Caviar Serum – 50ml",
     slug: "green-caviar-serum-50ml",
     sku: "GLOW-TZ-08",
-    subCategoryId: 2, // Serums & Ampoules
-    brandName: "Tenzero",
+    categoryName: "Serums & Ampoules",
     price: 1350,
     regularPrice: 1650,
     desc: "Add a refreshing touch to your skincare routine with Green Caviar Serum. Its lightweight serum formula is designed to complement your daily skincare steps, helping your skin feel hydrated, balanced and refreshed.",
@@ -166,8 +194,7 @@ const rawProducts = [
     title: "Extra Capsule Green Caviar Cream – 50g",
     slug: "extra-capsule-green-caviar-cream-50g",
     sku: "GLOW-TZ-09",
-    subCategoryId: 3, // Moisturizers & Creams
-    brandName: "Tenzero",
+    categoryName: "Moisturizers & Creams",
     price: 1450,
     regularPrice: 1750,
     desc: "Complete your skincare routine with Extra Capsule Green Caviar Cream. This moisturising cream is designed to provide a comfortable, nourished feel while helping maintain your skin's moisture. Its smooth texture makes it a great addition to everyday skincare.",
@@ -185,8 +212,7 @@ const rawProducts = [
     title: "Aqua Cooling Tonic – Anti-Hair Loss Scalp Tonic – 100ml",
     slug: "aqua-cooling-tonic-anti-hair-loss-scalp-tonic-100ml",
     sku: "GLOW-TZ-10",
-    subCategoryId: 7, // Scalp Care & Tonics
-    brandName: "Tenzero",
+    categoryName: "Scalp Care & Tonics",
     price: 1250,
     regularPrice: 1550,
     desc: "Refresh your scalp with Aqua Cooling Tonic by Tenzero. This spray-type scalp tonic features an aqua-based formula with Hyaluronic Acid, Ceramide and Dexpanthenol. Designed for scalp care, it provides a refreshing cooling sensation and supports your regular hair-care routine.",
@@ -204,8 +230,7 @@ const rawProducts = [
     title: "Cica Cooling Tonic – Anti-Hair Loss Scalp Tonic – 100ml",
     slug: "cica-cooling-tonic-anti-hair-loss-scalp-tonic-100ml",
     sku: "GLOW-TZ-11",
-    subCategoryId: 7, // Scalp Care & Tonics
-    brandName: "Tenzero",
+    categoryName: "Scalp Care & Tonics",
     price: 1250,
     regularPrice: 1550,
     desc: "Give your scalp a refreshing experience with Cica Cooling Tonic. Formulated with Cica Complex, Centella Asiatica, Ceramide and Menthol, this spray-type tonic is designed to refresh the scalp and provide a cooling sensation as part of your regular hair-care routine.",
@@ -223,8 +248,7 @@ const rawProducts = [
     title: "Relief Cica Cleansing Oil – 150ml",
     slug: "relief-cica-cleansing-oil-150ml",
     sku: "GLOW-TZ-12",
-    subCategoryId: 9, // Cleansers
-    brandName: "Tenzero",
+    categoryName: "Cleansers",
     price: 1350,
     regularPrice: 1650,
     desc: "Make your cleansing routine more enjoyable with Relief Cica Cleansing Oil. Its lightweight oil formula helps dissolve makeup, sunscreen and everyday impurities, leaving your skin feeling clean and comfortable. A convenient first step in your daily double cleansing routine.",
@@ -242,8 +266,7 @@ const rawProducts = [
     title: "Hair Voluming Watery Essence Lite – 100ml",
     slug: "hair-voluming-watery-essence-lite-100ml",
     sku: "GLOW-TZ-13",
-    subCategoryId: 8, // Hair Essences & Oils
-    brandName: "Tenzero",
+    categoryName: "Hair Essences & Oils",
     price: 1190,
     regularPrice: 1450,
     desc: "Support your hair styling with Hair Voluming Watery Essence Lite. Its light essence formula helps hair feel fresh and manageable while adding a soft, natural touch to your everyday haircare routine.",
@@ -261,8 +284,7 @@ const rawProducts = [
     title: "Hair Protecting Floral Essence Oil – 100ml",
     slug: "hair-protecting-floral-essence-oil-100ml",
     sku: "GLOW-TZ-14",
-    subCategoryId: 8, // Hair Essences & Oils
-    brandName: "Tenzero",
+    categoryName: "Hair Essences & Oils",
     price: 1190,
     regularPrice: 1450,
     desc: "Treat your hair to everyday care with Hair Protecting Floral Essence Oil. Formulated with selected oils and a pleasant floral fragrance, this essence oil is designed to support hair softness and complement your regular beauty routine.",
@@ -292,106 +314,89 @@ function buildRichDescription(prod) {
 
   <h3 style="font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;">Product Information:</h3>
   <ul style="list-style-type: none; padding-left: 0; line-height: 1.8; color: #374151;">
-    <li>âœ… <strong>Brand:</strong> Tenzero Korea</li>
-    <li>âœ… <strong>Origin:</strong> Made in South Korea (100% Authentic Guaranteed)</li>
-    <li>âœ… <strong>Category:</strong> K-Beauty Skincare & Haircare</li>
-    <li>âœ… <strong>Suitability:</strong> Dermatologically Tested & Safe for Sensitive Skin</li>
+    <li>✅ <strong>Brand:</strong> Tenzero Korea</li>
+    <li>✅ <strong>Origin:</strong> Made in South Korea (100% Authentic Guaranteed)</li>
+    <li>✅ <strong>Category:</strong> K-Beauty Skincare & Haircare</li>
+    <li>✅ <strong>Suitability:</strong> Dermatologically Tested & Safe for Sensitive Skin</li>
   </ul>
 </div>
 `.trim();
 }
 
 async function main() {
-  console.log("🌱 Starting 14 Dynamic Korean Skincare Products Seed...");
+  console.log("🌱 Seeding Clean 14 Products with Accurate Swapped Images...");
 
-  // 1. Ensure Brand 'Tenzero' exists
-  let brand = await prisma.brand.findFirst({ where: { name: "Tenzero" } });
-  if (!brand) {
-    brand = await prisma.brand.create({
-      data: {
-        name: "Tenzero",
-        image: cloudinaryUrls[1]
-      }
-    });
-    console.log("✅ Brand Tenzero created");
-  } else {
-    console.log("✅ Brand Tenzero found:", brand.id);
-  }
-
-  // 2. Ensure Categories & Subcategories exist
-  const requiredCategories = [
-    { code: "CAT-TE", name: "Toner & Essence", mainCategoryId: 1 },
-    { code: "CAT-SA", name: "Serums & Ampoules", mainCategoryId: 1 },
-    { code: "CAT-MC", name: "Moisturizers & Creams", mainCategoryId: 1 },
-    { code: "CAT-ST", name: "Scalp Care & Tonics", mainCategoryId: 1 },
-    { code: "CAT-HO", name: "Hair Essences & Oils", mainCategoryId: 1 },
-    { code: "CAT-CL", name: "Cleansers", mainCategoryId: 1 }
-  ];
-
-  const categoryMap = {}; // name -> subCategoryId
-
-  for (const cat of requiredCategories) {
-    let category = await prisma.category.findFirst({ where: { name: cat.name } });
-    if (!category) {
-      category = await prisma.category.create({
-        data: {
-          code: cat.code,
-          name: cat.name,
-          mainCategoryId: cat.mainCategoryId,
-          image: cloudinaryUrls[1]
-        }
-      });
+  // 1. Brand Tenzero only
+  await prisma.brand.deleteMany({});
+  const brand = await prisma.brand.create({
+    data: {
+      name: "Tenzero",
+      image: productImages[1]
     }
+  });
+  console.log("✅ Brand Tenzero established:", brand.id);
 
-    let subCategory = await prisma.subCategory.findFirst({ where: { name: cat.name, categoryId: category.id } });
-    if (!subCategory) {
-      subCategory = await prisma.subCategory.create({
-        data: {
-          code: `SUB-${cat.code}`,
-          name: cat.name,
-          categoryId: category.id
-        }
-      });
-    }
-    categoryMap[cat.name] = subCategory.id;
-  }
-  console.log("✅ Categories & SubCategories ready:", categoryMap);
-
-  // 3. Ensure Collections exist
-  let col1 = await prisma.collection.findFirst({ where: { slug: "tenzero-best-sellers" } });
-  if (!col1) {
-    col1 = await prisma.collection.create({
-      data: { name: "Tenzero Best Sellers", slug: "tenzero-best-sellers" }
-    });
-  }
-  let col2 = await prisma.collection.findFirst({ where: { slug: "daily-skin-hair-routine" } });
-  if (!col2) {
-    col2 = await prisma.collection.create({
-      data: { name: "Daily Skin & Hair Routine", slug: "daily-skin-hair-routine" }
-    });
-  }
-  console.log("✅ Collections ready:", col1.id, col2.id);
-
-  // 4. Clean out old products and associations
-  console.log("🧹 Clearing old products and variants...");
+  // 2. Clear old categories & products
   await prisma.productCollection.deleteMany({});
   await prisma.productVariant.deleteMany({});
   await prisma.landingPage.deleteMany({});
   await prisma.product.deleteMany({});
-  console.log("✅ Old products deleted cleanly");
+  await prisma.category.deleteMany({});
+
+  // 3. Create only the 6 relevant Categories & Subcategories
+  const categoriesDef = [
+    { code: "CAT-TE", name: "Toner & Essence" },
+    { code: "CAT-SA", name: "Serums & Ampoules" },
+    { code: "CAT-MC", name: "Moisturizers & Creams" },
+    { code: "CAT-ST", name: "Scalp Care & Tonics" },
+    { code: "CAT-HO", name: "Hair Essences & Oils" },
+    { code: "CAT-CL", name: "Cleansers" }
+  ];
+
+  const categoryMap = {}; // name -> subCategoryId
+
+  for (const cat of categoriesDef) {
+    const category = await prisma.category.create({
+      data: {
+        code: cat.code,
+        name: cat.name,
+        mainCategoryId: 1,
+        image: cat.code === 'CAT-TE' ? productImages[6] :
+               cat.code === 'CAT-SA' ? productImages[2] :
+               cat.code === 'CAT-MC' ? productImages[1] :
+               cat.code === 'CAT-ST' ? productImages[10] :
+               cat.code === 'CAT-HO' ? productImages[7] :
+               productImages[12]
+      }
+    });
+
+    const subCategory = await prisma.subCategory.create({
+      data: {
+        code: `SUB-${cat.code}`,
+        name: cat.name,
+        categoryId: category.id
+      }
+    });
+    categoryMap[cat.name] = subCategory.id;
+  }
+  console.log("✅ 6 Categories created cleanly:", categoryMap);
+
+  // 4. Ensure Collections exist
+  await prisma.collection.deleteMany({});
+  const col1 = await prisma.collection.create({
+    data: { name: "Tenzero Best Sellers", slug: "tenzero-best-sellers" }
+  });
+  const col2 = await prisma.collection.create({
+    data: { name: "Daily Skin & Hair Routine", slug: "daily-skin-hair-routine" }
+  });
+  console.log("✅ Collections established");
 
   // 5. Insert 14 Products
   const createdProducts = [];
   for (const item of rawProducts) {
-    const cUrl = cloudinaryUrls[item.num];
+    const cUrl = productImages[item.num];
     const htmlDesc = buildRichDescription(item);
-    const targetSubCategoryId = item.subCategoryId === 3 ? categoryMap["Moisturizers & Creams"] :
-                                item.subCategoryId === 2 ? categoryMap["Serums & Ampoules"] :
-                                item.subCategoryId === 1 ? categoryMap["Toner & Essence"] :
-                                item.subCategoryId === 7 ? categoryMap["Scalp Care & Tonics"] :
-                                item.subCategoryId === 8 ? categoryMap["Hair Essences & Oils"] :
-                                item.subCategoryId === 9 ? categoryMap["Cleansers"] :
-                                Object.values(categoryMap)[0];
+    const targetSubCategoryId = categoryMap[item.categoryName];
 
     const prod = await prisma.product.create({
       data: {
@@ -412,7 +417,7 @@ async function main() {
       }
     });
 
-    // Create single variant for pricing/stock accuracy
+    // Create default variant
     await prisma.productVariant.create({
       data: {
         productId: prod.id,
@@ -426,7 +431,7 @@ async function main() {
       }
     });
 
-    // Map to collections: all 14 in collection 1 (Best Sellers), odd in collection 2
+    // Link to collections
     await prisma.productCollection.create({
       data: {
         productId: prod.id,
@@ -443,10 +448,10 @@ async function main() {
     }
 
     createdProducts.push(prod);
-    console.log(`✨ Created Product #${item.num}: ${prod.productName} (ID: ${prod.id})`);
+    console.log(`✨ Product #${item.num} -> ${prod.productName} (Image: ${cUrl.substring(cUrl.lastIndexOf('/')+1)})`);
   }
 
-  // 6. Create Landing Page for the flagship product (Rose PDRN K Cream)
+  // 6. Flagship Landing Page
   await prisma.landingPage.create({
     data: {
       productId: createdProducts[0].id,
@@ -459,7 +464,7 @@ async function main() {
       offerPrice: 1350,
       insideDhakaDelivery: 70,
       outsideDhakaDelivery: 130,
-      bannerImages: [cloudinaryUrls[1], cloudinaryUrls[2], cloudinaryUrls[3]],
+      bannerImages: [productImages[1], productImages[4], productImages[5]],
       relatedProductIds: [createdProducts[1].id, createdProducts[2].id, createdProducts[5].id],
       isPublished: true,
       whyChooseUsTitle: "কেন Tenzero Rose PDRN K Cream ব্যবহার করবেন?",
@@ -485,9 +490,95 @@ async function main() {
       ]
     }
   });
-  console.log("✅ Flagship Landing Page created with dynamic Cloudinary media and related products!");
 
-  console.log("🎉 ALL 14 PRODUCTS CREATED WITH DYNAMIC CLOUDINARY URLS!");
+  // 7. Update CMS: HeroSliders, BentoImageCard, MidBanner with correct Tenzero assets
+  await prisma.heroSlider.deleteMany({});
+  await prisma.heroSlider.createMany({
+    data: [
+      {
+        badge: "KOREAN INNOVATION",
+        title: "Tenzero Rose PDRN K Vitamin K Water Soothing Cream",
+        sub_title: "100g generous size delivering ultra-hydrating glass skin hydration and soothing barrier care.",
+        image: productImages[1],
+        link: "/product/rose-pdrn-k-vitamin-k-water-soothing-cream-100g",
+        categoryLink: "/product?category=Moisturizers%20%26%20Creams"
+      },
+      {
+        badge: "BEST SELLING AMPOULE",
+        title: "Tenzero Retinol A & Ceramide D High-Potency Ampoules",
+        sub_title: "Intense skin barrier revitalization and antioxidant texture refining straight from Seoul.",
+        image: productImages[3],
+        link: "/product/retinol-a-vitamin-a-ampoule-50ml",
+        categoryLink: "/product?category=Serums%20%26%20Ampoules"
+      },
+      {
+        badge: "HAIR & SCALP CARE",
+        title: "Tenzero Anti-Hair Loss Scalp Cooling Tonics",
+        sub_title: "Cica & Aqua cooling scalp relief with KFDA functional anti-hair loss certified formula.",
+        image: productImages[11],
+        link: "/product/cica-cooling-tonic-anti-hair-loss-scalp-tonic-100ml",
+        categoryLink: "/product?category=Scalp%20Care%20%26%20Tonics"
+      }
+    ]
+  });
+
+  await prisma.bentoImageCard.deleteMany({});
+  await prisma.bentoImageCard.createMany({
+    data: [
+      {
+        title: "Rose PDRN K Water Cream",
+        sub_title: "Intense daily soothing care with Rose PDRN",
+        image: productImages[1],
+        link: "/product/rose-pdrn-k-vitamin-k-water-soothing-cream-100g",
+        category: "Moisturizers & Creams"
+      },
+      {
+        title: "Clear Green Caviar Toner",
+        sub_title: "Sea grape mineral-rich balancing toner",
+        image: productImages[6],
+        link: "/product/clear-green-caviar-toner-200ml",
+        category: "Toner & Essence"
+      },
+      {
+        title: "Hair Angel Ring Musk Essence",
+        sub_title: "3 Gold Oils for radiant glass hair shine",
+        image: productImages[7],
+        link: "/product/hair-angel-ring-musk-essence-100ml",
+        category: "Hair Essences & Oils"
+      }
+    ]
+  });
+
+  await prisma.midBanner.deleteMany({});
+  await prisma.midBanner.create({
+    data: {
+      title: "Experience 100% Authentic Korean Skincare",
+      sub_title: "Specially formulated by Tenzero Seoul to restore hydration, repair damaged barriers, and deliver radiant glass skin.",
+      image: productImages[2],
+      link: "/product/ceramide-d-vitamin-d-ampoule-50ml",
+      category: "Serums & Ampoules"
+    }
+  });
+
+  // 8. Sync everything to local_seed_data.json
+  const dataPath = path.join(__dirname, 'local_seed_data.json');
+  const existing = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  existing.brand = await prisma.brand.findMany();
+  existing.category = await prisma.category.findMany();
+  existing.subCategory = await prisma.subCategory.findMany();
+  existing.collection = await prisma.collection.findMany();
+  existing.heroSlider = await prisma.heroSlider.findMany();
+  existing.bentoImageCard = await prisma.bentoImageCard.findMany();
+  existing.midBanner = await prisma.midBanner.findMany();
+  existing.product = await prisma.product.findMany();
+  existing.productVariant = await prisma.productVariant.findMany();
+  existing.productCollection = await prisma.productCollection.findMany();
+  existing.landingPage = await prisma.landingPage.findMany();
+
+  fs.writeFileSync(dataPath, JSON.stringify(existing, null, 2));
+  console.log("💾 local_seed_data.json updated completely with 100% clean data!");
+
+  console.log("🎉 ALL 14 PRODUCTS SEEDED WITH EXACT SWAPPED IMAGES!");
 }
 
 main()
