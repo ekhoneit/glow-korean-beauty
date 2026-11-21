@@ -1306,6 +1306,7 @@ model LandingPage {
   fakeOrderCounter      Int?      @default(120) // Display count e.g. "১২০ জন ইতিমধ্যে অর্ডার করেছেন"
   themeColor            String?   @default("#F45116")
   template              String?   @default("default")
+  relatedProductIds     Json?     // Array of product IDs to show in "সম্পর্কিত অন্যান্য পণ্য" section e.g. [2, 5, 8]
   isPublished           Boolean   @default(true)
   viewsCount            Int       @default(0)
   createdAt             DateTime  @default(now())

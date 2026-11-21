@@ -7,6 +7,7 @@ import LandingTimerBanner from "@/components/LandingPage/LandingTimerBanner";
 import LandingFeatures from "@/components/LandingPage/LandingFeatures";
 import LandingHighlights from "@/components/LandingPage/LandingHighlights";
 import LandingReviews from "@/components/LandingPage/LandingReviews";
+import LandingRelatedProducts from "@/components/LandingPage/LandingRelatedProducts";
 import LandingCheckoutSection from "@/components/LandingPage/LandingCheckoutSection";
 import LandingMinimalFooter from "@/components/LandingPage/LandingMinimalFooter";
 import LandingFloatingBottomBar from "@/components/LandingPage/LandingFloatingBottomBar";
@@ -93,6 +94,36 @@ export default function DynamicLandingClient({
   const [selectedImg, setSelectedImg] = useState(() => {
     return defaultVariant?.image || allImages[0] || "/placeholder.png";
   });
+
+  // State for related add-on products chosen by user
+  const [selectedRelatedItems, setSelectedRelatedItems] = useState([]);
+
+  const handleToggleRelatedItem = (relProd) => {
+    setSelectedRelatedItems((prev) => {
+      const exists = prev.find((item) => item.product.id === relProd.id);
+      if (exists) {
+        return prev.filter((item) => item.product.id !== relProd.id);
+      } else {
+        return [...prev, { product: relProd, quantity: 1 }];
+      }
+    });
+  };
+
+  const handleUpdateRelatedItemQty = (prodId, newQty) => {
+    setSelectedRelatedItems((prev) =>
+      prev.map((item) =>
+        item.product.id === prodId
+          ? { ...item, quantity: Math.max(1, newQty) }
+          : item
+      )
+    );
+  };
+
+  const handleRemoveRelatedItem = (prodId) => {
+    setSelectedRelatedItems((prev) =>
+      prev.filter((item) => item.product.id !== prodId)
+    );
+  };
 
   // Update if props change
   useEffect(() => {
@@ -197,6 +228,16 @@ export default function DynamicLandingClient({
         productName={product?.productName || landingPage?.pageTitle}
       />
 
+      {/* 5.1 Related Add-on Products (Optional on/off) */}
+      {Array.isArray(landingPage?.relatedProducts) && landingPage.relatedProducts.length > 0 && (
+        <LandingRelatedProducts
+          relatedProducts={landingPage.relatedProducts}
+          selectedRelatedItems={selectedRelatedItems}
+          onToggleRelatedItem={handleToggleRelatedItem}
+          onOrderClick={scrollToCheckout}
+        />
+      )}
+
       {/* 6. 1-Page Direct COD Checkout Section synchronized with variant */}
       <LandingCheckoutSection
         landingPage={landingPage}
@@ -206,6 +247,9 @@ export default function DynamicLandingClient({
         variantDiscounts={landingPage?.variantDiscounts || {}}
         selectedImg={selectedImg}
         onPriceChange={setCurrentCheckoutPrice}
+        selectedRelatedItems={selectedRelatedItems}
+        onUpdateRelatedItemQty={handleUpdateRelatedItemQty}
+        onRemoveRelatedItem={handleRemoveRelatedItem}
       />
 
       {/* 7. Dedicated Minimal Landing Footer */}

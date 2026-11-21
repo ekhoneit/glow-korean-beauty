@@ -32,6 +32,7 @@ import {
   Eye,
   Banknote,
   FileText,
+  Trash2,
 } from "lucide-react";
 import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
@@ -54,8 +55,12 @@ export default function LandingCheckoutSection({
   variantDiscounts = {},
   selectedImg,
   onPriceChange,
+  selectedRelatedItems = [],
+  onUpdateRelatedItemQty,
+  onRemoveRelatedItem,
 }) {
-  const isIslamic = landingPage?.template === "islamic";
+  // Korean Beauty Brand Palette Consistent Theme
+  const isIslamic = false;
   const product = landingPage?.product || {};
   const bumpProduct = landingPage?.orderBumpProduct || null;
 
@@ -161,8 +166,18 @@ export default function LandingCheckoutSection({
       ? parseFloat(landingPage.orderBumpDiscount || 0)
       : 0;
 
-  // Subtotal before bundle discount
-  const totalBeforeDiscount = mainSubtotal + (includeBump ? bumpUnitPrice : 0);
+  // Related products subtotal calculation
+  const relatedSubtotal = useMemo(() => {
+    if (!Array.isArray(selectedRelatedItems) || selectedRelatedItems.length === 0) return 0;
+    return selectedRelatedItems.reduce((acc, item) => {
+      const p = parseFloat(item.product?.salePrice || item.product?.price || 0);
+      const q = parseInt(item.quantity || 1, 10);
+      return acc + (p * q);
+    }, 0);
+  }, [selectedRelatedItems]);
+
+  // Subtotal before bundle discount (Main product + Order bump + Related Products)
+  const totalBeforeDiscount = mainSubtotal + (includeBump ? bumpUnitPrice : 0) + relatedSubtotal;
   // Effective subtotal after applying order bump discount
   const discountedTotal = Math.max(0, totalBeforeDiscount - bumpDiscountAmount);
   // Grand Total including delivery fee
@@ -464,6 +479,28 @@ export default function LandingCheckoutSection({
         });
       }
 
+      // If user added Related Products, add them to order items
+      if (Array.isArray(selectedRelatedItems) && selectedRelatedItems.length > 0) {
+        selectedRelatedItems.forEach((rel) => {
+          const rProd = rel.product;
+          const rPrice = parseFloat(rProd.salePrice || rProd.price || 0);
+          const rQty = parseInt(rel.quantity || 1, 10);
+          orderItemsPayload.push({
+            productId: rProd.id,
+            productVariantId: null,
+            quantity: rQty,
+            unitPrice: rPrice,
+            lineTotal: rPrice * rQty,
+            total: rPrice * rQty,
+            sku: rProd.sku || null,
+          });
+        });
+      }
+
+      const relatedNotesSummary = Array.isArray(selectedRelatedItems) && selectedRelatedItems.length > 0
+        ? ` | সাথে সম্পর্কিত পণ্য: ${selectedRelatedItems.map(r => `${r.product.productName} (${r.quantity}টি)`).join(", ")}`
+        : "";
+
       const orderPayload = {
         customerId: customerId || undefined,
         orderDate: new Date().toISOString(),
@@ -479,7 +516,7 @@ export default function LandingCheckoutSection({
         grandTotal: grandTotal,
         paidAmount: 0,
         dueAmount: grandTotal,
-        note: `Landing Page Order (/landing/${landingPage.slug}) | এরিয়া: ${deliveryArea === "inside" ? "ঢাকার ভিতরে" : "ঢাকার বাইরে"}${includeBump ? ` | সাথে অর্ডার বাম্প: ${bumpProduct?.productName}${selectedBumpVariant ? ` (${getVariantLabel(selectedBumpVariant)})` : ""} (ছাড়: ৳${bumpDiscountAmount})` : ""}${orderNotes.trim() ? ` | অতিরিক্ত নির্দেশনা: ${orderNotes.trim()}` : ""}`,
+        note: `Landing Page Order (/landing/${landingPage.slug}) | এরিয়া: ${deliveryArea === "inside" ? "ঢাকার ভিতরে" : "ঢাকার বাইরে"}${includeBump ? ` | সাথে অর্ডার বাম্প: ${bumpProduct?.productName}${selectedBumpVariant ? ` (${getVariantLabel(selectedBumpVariant)})` : ""} (ছাড়: ৳${bumpDiscountAmount})` : ""}${relatedNotesSummary}${orderNotes.trim() ? ` | অতিরিক্ত নির্দেশনা: ${orderNotes.trim()}` : ""}`,
         customer: {
           fullName: fullName.trim(),
           phone: cleanPhone,
@@ -604,33 +641,23 @@ export default function LandingCheckoutSection({
   return (
     <section
       id="checkout-form"
-      className={`py-12 sm:py-18 ${
-        isIslamic
-          ? "bg-gradient-to-b from-[#FDFBF7] to-[#F5EEDC]/60"
-          : "bg-gradient-to-b from-slate-50 to-amber-50/50"
-      }`}
+      className="py-12 sm:py-18 bg-gradient-to-b from-white via-rose-50/20 to-slate-50"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Highlighted Banner Header */}
         <div
-          className={`rounded-2xl py-6 px-4 sm:px-8 text-center shadow-lg mb-8 sm:mb-10 max-w-6xl mx-auto border text-white ${
-            isIslamic
-              ? "bg-gradient-to-r from-[#063323] via-[#0E4D34] to-[#063323] border-[#D4AF37]/50"
-              : "bg-[#102D50] border-slate-800"
-          }`}
+          className="rounded-2xl py-6 px-4 sm:px-8 text-center shadow-lg mb-8 sm:mb-10 max-w-6xl mx-auto border text-white bg-gradient-to-r from-primary via-[#BF756A] to-primary border-primary/40 shadow-primary/20"
         >
           <div className="flex items-center justify-center gap-2.5 sm:gap-3 text-xl sm:text-2xl md:text-3xl font-black mb-2.5">
             <ShoppingCart
               size={28}
-              className={`shrink-0 ${
-                isIslamic ? "text-[#D4AF37] fill-[#D4AF37]" : "text-white fill-white"
-              }`}
+              className="text-white fill-white shrink-0"
             />
             <h2 className="tracking-tight text-white font-extrabold">
               ক্যাশ অন ডেলিভারিতে অর্ডার করতে নিচের ফর্মটি পূরণ করুন
             </h2>
           </div>
-          <p className="text-sm sm:text-base text-slate-200 font-medium max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-rose-50 font-medium max-w-2xl mx-auto leading-relaxed">
             অর্ডার কনফার্ম করতে কোনো প্রকার অগ্রিম টাকা দিতে হবে না। ডেলিভারি ম্যানের কাছ থেকে পণ্য দেখে ও পরখ করে মূল্য পরিশোধ করবেন।
           </p>
         </div>
@@ -729,9 +756,7 @@ export default function LandingCheckoutSection({
                       onChange={(e) => setFullName(e.target.value)}
                       placeholder="যেমন: আহমেদ সিয়ান"
                       className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm sm:text-base font-hind focus:outline-none transition bg-slate-50/50 ${
-                        isIslamic
-                          ? "border-slate-300 focus:border-[#0E4D34] focus:ring-2 focus:ring-[#0E4D34]/20"
-                          : "border-slate-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                        "border-slate-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
                       }`}
                       required
                       suppressHydrationWarning
@@ -756,9 +781,7 @@ export default function LandingCheckoutSection({
                       placeholder="যেমন: 01XXXXXXXXX"
                       maxLength={11}
                       className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm sm:text-base font-hind focus:outline-none transition bg-slate-50/50 ${
-                        isIslamic
-                          ? "border-slate-300 focus:border-[#0E4D34] focus:ring-2 focus:ring-[#0E4D34]/20"
-                          : "border-slate-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                        "border-slate-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
                       }`}
                       required
                       suppressHydrationWarning
@@ -786,9 +809,7 @@ export default function LandingCheckoutSection({
                       rows={3}
                       placeholder="বাসা নং, রোড নং, এলাকা, থানা ও জেলার নাম বিস্তারিত লিখুন..."
                       className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm sm:text-base font-hind focus:outline-none transition bg-slate-50/50 min-h-[90px] resize-y ${
-                        isIslamic
-                          ? "border-slate-300 focus:border-[#0E4D34] focus:ring-2 focus:ring-[#0E4D34]/20"
-                          : "border-slate-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
+                        "border-slate-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
                       }`}
                       required
                       suppressHydrationWarning
@@ -805,11 +826,7 @@ export default function LandingCheckoutSection({
                   <div className="grid grid-cols-2 gap-2 sm:gap-3">
                     <label
                       className={`flex items-center justify-between p-2.5 sm:p-3.5 rounded-xl border-2 cursor-pointer transition ${
-                        deliveryArea === "inside"
-                          ? isIslamic
-                            ? "border-[#0E4D34] bg-emerald-50 text-[#0E4D34] font-bold shadow-xs"
-                            : "border-primary bg-primary/5 text-primary font-bold shadow-xs"
-                          : "border-slate-200 hover:border-slate-300 text-slate-700 bg-white"
+                        deliveryArea === "inside" ? "border-primary bg-primary-light/50 text-primary font-bold shadow-xs" : "border-slate-200 hover:border-slate-300 text-slate-700 bg-white"
                       }`}
                     >
                       <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
@@ -819,7 +836,7 @@ export default function LandingCheckoutSection({
                           value="inside"
                           checked={deliveryArea === "inside"}
                           onChange={() => setDeliveryArea("inside")}
-                          className={`shrink-0 ${isIslamic ? "accent-[#0E4D34]" : "accent-primary"}`}
+                          className={`shrink-0 ${"accent-primary"}`}
                           suppressHydrationWarning
                         />
                         <span className="text-[11px] min-[380px]:text-xs sm:text-sm font-semibold whitespace-nowrap">
@@ -833,11 +850,7 @@ export default function LandingCheckoutSection({
 
                     <label
                       className={`flex items-center justify-between p-2.5 sm:p-3.5 rounded-xl border-2 cursor-pointer transition ${
-                        deliveryArea === "outside"
-                          ? isIslamic
-                            ? "border-[#0E4D34] bg-emerald-50 text-[#0E4D34] font-bold shadow-xs"
-                            : "border-primary bg-primary/5 text-primary font-bold shadow-xs"
-                          : "border-slate-200 hover:border-slate-300 text-slate-700 bg-white"
+                        deliveryArea === "outside" ? "border-primary bg-primary-light/50 text-primary font-bold shadow-xs" : "border-slate-200 hover:border-slate-300 text-slate-700 bg-white"
                       }`}
                     >
                       <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
@@ -847,7 +860,7 @@ export default function LandingCheckoutSection({
                           value="outside"
                           checked={deliveryArea === "outside"}
                           onChange={() => setDeliveryArea("outside")}
-                          className={`shrink-0 ${isIslamic ? "accent-[#0E4D34]" : "accent-primary"}`}
+                          className={`shrink-0 ${"accent-primary"}`}
                           suppressHydrationWarning
                         />
                         <span className="text-[11px] min-[380px]:text-xs sm:text-sm font-semibold whitespace-nowrap">
@@ -863,19 +876,17 @@ export default function LandingCheckoutSection({
 
                 {/* Payment Method Notice Box */}
                 <div className={`p-4 rounded-xl border flex items-start gap-3.5 ${
-                  isIslamic
-                    ? "bg-[#0E4D34]/5 border-[#D4AF37]/40"
-                    : "bg-emerald-50/90 border-emerald-200"
+                  "bg-primary-light/40 border-primary/20"
                 }`}>
                   <div className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
-                    isIslamic ? "bg-[#0E4D34] text-[#D4AF37]" : "bg-emerald-100 text-emerald-700"
+                    "bg-primary-light text-primary"
                   }`}>
                     <Banknote size={20} />
                   </div>
                   <div>
                     <h4 className="text-sm sm:text-base font-bold text-slate-900 leading-snug font-hind">
                       পেমেন্ট পদ্ধতি:{" "}
-                      <span className={`font-extrabold ${isIslamic ? "text-[#0E4D34]" : "text-emerald-900"}`}>
+                      <span className={`font-extrabold ${"text-primary"}`}>
                         ক্যাশ অন ডেলিভারি (Cash on Delivery)
                       </span>
                     </h4>
@@ -922,7 +933,7 @@ export default function LandingCheckoutSection({
                         />
                         {/* Always visible magnifying glass badge */}
                         <div className="absolute inset-0 bg-black/15 group-hover:bg-black/35 transition-colors flex items-center justify-center rounded-lg">
-                          <div className="w-6 h-6 rounded-full bg-black/55 group-hover:bg-[#0E4D34] text-white flex items-center justify-center shadow-md transition-transform group-hover:scale-110">
+                          <div className="w-6 h-6 rounded-full bg-black/55 group-hover:bg-primary text-white flex items-center justify-center shadow-md transition-transform group-hover:scale-110">
                             <ZoomIn size={14} className="stroke-[2.5]" />
                           </div>
                         </div>
@@ -942,7 +953,7 @@ export default function LandingCheckoutSection({
                     )}
                     <div className="flex items-baseline flex-wrap gap-2 mt-1">
                       <p className={`text-base sm:text-lg font-black font-hind ${
-                        isIslamic ? "text-[#0E4D34]" : "text-primary"
+                        "text-primary"
                       }`}>
                         ৳ {unitPrice.toLocaleString()}
                       </p>
@@ -1003,11 +1014,7 @@ export default function LandingCheckoutSection({
                               onSelectVariant && onSelectVariant(v)
                             }
                             className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border transition cursor-pointer flex items-center gap-2 ${
-                              isSel
-                                ? isIslamic
-                                  ? "bg-[#0E4D34] text-white border-[#0E4D34] shadow-sm font-bold"
-                                  : "bg-primary text-white border-primary shadow-xs font-bold"
-                                : "bg-white text-slate-700 border-slate-200 hover:border-slate-300"
+                              isSel ? "bg-primary text-white border-primary shadow-xs font-bold" : "bg-white text-slate-700 border-slate-200 hover:border-slate-300"
                             }`}
                           >
                             {v.image ? (
@@ -1084,6 +1091,88 @@ export default function LandingCheckoutSection({
                     </button>
                   </div>
                 </div>
+
+                {/* Selected Related Products In-Cart Display */}
+                {Array.isArray(selectedRelatedItems) && selectedRelatedItems.length > 0 && (
+                  <div className="space-y-3 pt-3 border-t border-slate-200">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs sm:text-sm font-bold text-slate-800 flex items-center gap-1.5 font-hind">
+                        <Sparkles size={14} className="text-primary" />
+                        <span>অতিরিক্ত যুক্ত করা পণ্যসমূহ:</span>
+                      </span>
+                      <span className="text-[11px] text-slate-500 font-hind">
+                        {selectedRelatedItems.length} টি পণ্য
+                      </span>
+                    </div>
+
+                    <div className="space-y-2">
+                      {selectedRelatedItems.map((relItem) => {
+                        const rProd = relItem.product;
+                        const rPrice = parseFloat(rProd.salePrice || rProd.price || 0);
+                        const rImg = (Array.isArray(rProd.images) && rProd.images[0]) || rProd.image || "/placeholder.png";
+
+                        return (
+                          <div
+                            key={rProd.id}
+                            className="flex items-center justify-between gap-3 p-2.5 bg-rose-50/40 rounded-xl border border-primary/20"
+                          >
+                            <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                              <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 overflow-hidden relative shrink-0">
+                                <Image
+                                  src={typeof rImg === "string" ? rImg : rImg?.url || "/placeholder.png"}
+                                  alt={rProd.productName}
+                                  fill
+                                  className="object-contain p-0.5"
+                                  unoptimized
+                                />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <h5 className="text-xs font-bold text-slate-800 truncate font-hind">
+                                  {rProd.productName}
+                                </h5>
+                                <span className="text-xs font-extrabold text-primary font-hind">
+                                  ৳ {rPrice.toLocaleString()}
+                                </span>
+                              </div>
+                            </div>
+
+                            {/* Quantity Controls & Remove */}
+                            <div className="flex items-center gap-2 shrink-0">
+                              <div className="flex items-center border border-slate-300 rounded-lg overflow-hidden bg-white">
+                                <button
+                                  type="button"
+                                  onClick={() => onUpdateRelatedItemQty && onUpdateRelatedItemQty(rProd.id, Math.max(1, (relItem.quantity || 1) - 1))}
+                                  className="px-2 py-1 text-xs text-slate-600 hover:bg-slate-100 font-bold"
+                                >
+                                  -
+                                </button>
+                                <span className="px-2.5 py-1 text-xs font-bold text-slate-800 font-hind">
+                                  {relItem.quantity || 1}
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => onUpdateRelatedItemQty && onUpdateRelatedItemQty(rProd.id, (relItem.quantity || 1) + 1)}
+                                  className="px-2 py-1 text-xs text-slate-600 hover:bg-slate-100 font-bold"
+                                >
+                                  +
+                                </button>
+                              </div>
+
+                              <button
+                                type="button"
+                                title="মুছে ফেলুন"
+                                onClick={() => onRemoveRelatedItem && onRemoveRelatedItem(rProd.id)}
+                                className="p-1.5 text-rose-500 hover:bg-rose-100 rounded-lg transition"
+                              >
+                                <Trash2 size={16} />
+                              </button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
 
                 {/* Order Bump Portion (Upsell Add-on) */}
                 {bumpProduct && (
@@ -1276,6 +1365,15 @@ export default function LandingCheckoutSection({
                     </strong>
                   </div>
 
+                  {Array.isArray(selectedRelatedItems) && selectedRelatedItems.length > 0 && (
+                    <div className="flex justify-between text-slate-700">
+                      <span>সম্পর্কিত অতিরিক্ত পণ্য ({selectedRelatedItems.reduce((acc, i) => acc + (i.quantity || 1), 0)} টি):</span>
+                      <strong className="text-slate-900 font-hind">
+                        + ৳ {relatedSubtotal.toLocaleString()}
+                      </strong>
+                    </div>
+                  )}
+
                   {includeBump && bumpProduct && (
                     <div className="flex justify-between text-slate-700">
                       <span>
@@ -1316,7 +1414,7 @@ export default function LandingCheckoutSection({
                   <div className="flex justify-between items-center text-lg sm:text-xl font-extrabold text-slate-900 pt-3.5 border-t-2 border-slate-200">
                     <span>সর্বমোট প্রদেয় বিল:</span>
                     <span className={`text-2xl sm:text-3xl font-black font-hind ${
-                      isIslamic ? "text-[#0E4D34]" : "text-primary"
+                      "text-primary"
                     }`}>
                       ৳ {grandTotal.toLocaleString()}
                     </span>
@@ -1330,9 +1428,7 @@ export default function LandingCheckoutSection({
                   type="submit"
                   disabled={isSubmitting}
                   className={`w-full py-3 sm:py-4 px-4 sm:px-6 rounded-xl text-white text-sm sm:text-base md:text-lg font-bold shadow-xl transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed group active:scale-[0.99] ${
-                    isIslamic
-                      ? "bg-gradient-to-r from-[#0E4D34] via-[#12583C] to-[#0E4D34] hover:brightness-105 shadow-emerald-950/20 border border-[#D4AF37]/50"
-                      : "bg-primary hover:bg-primary-hover shadow-primary/30"
+                    "bg-primary hover:bg-primary-hover shadow-primary/30"
                   }`}
                 >
                   {isSubmitting ? (
@@ -1345,7 +1441,7 @@ export default function LandingCheckoutSection({
                       <ShoppingBag
                         size={20}
                         className={`shrink-0 group-hover:scale-110 transition-transform ${
-                          isIslamic ? "text-[#D4AF37]" : "text-white"
+                          "text-white"
                         }`}
                       />
                       <span className="whitespace-nowrap tracking-tight">

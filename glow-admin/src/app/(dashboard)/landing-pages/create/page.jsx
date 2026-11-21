@@ -131,6 +131,25 @@ export default function CreateLandingPage() {
   const [orderBumpDiscount, setOrderBumpDiscount] = useState(100);
   const [orderBumpPrice, setOrderBumpPrice] = useState("");
 
+  // Template Theme Selector
+  const [selectedTemplate, setSelectedTemplate] = useState("korean_beauty");
+
+  // Related Products (Optional Section)
+  const [enableRelatedProducts, setEnableRelatedProducts] = useState(false);
+  const [selectedRelatedProducts, setSelectedRelatedProducts] = useState([]);
+  const [relatedProductSearch, setRelatedProductSearch] = useState("");
+
+  const toggleRelatedProduct = (prod) => {
+    setSelectedRelatedProducts((prev) => {
+      const exists = prev.some((p) => p.id === prod.id);
+      if (exists) {
+        return prev.filter((p) => p.id !== prod.id);
+      } else {
+        return [...prev, prod];
+      }
+    });
+  };
+
   // Per-Variant Discount Map: { [variantId]: discountAmount }
   const [variantDiscounts, setVariantDiscounts] = useState({});
   const updateVariantDiscount = (variantId, amount) => {
@@ -390,6 +409,8 @@ export default function CreateLandingPage() {
             : null,
         isPublished: true,
         variantDiscounts: variantDiscounts,
+        template: selectedTemplate,
+        relatedProductIds: enableRelatedProducts ? selectedRelatedProducts.map(p => p.id) : [],
       };
 
       const res = await apiClient("/api/landing-page", {
@@ -1185,6 +1206,103 @@ export default function CreateLandingPage() {
                       className="w-full p-2.5 rounded border border-stone-300 text-sm font-hind focus:outline-none focus:border-secound focus:ring-2 focus:ring-secound/20 bg-white"
                     />
                   </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Step 4.5: Related Products (Optional Cross-sell Grid) */}
+          <div className="bg-white p-6 rounded-xl shadow-xs border border-gray-200 space-y-4">
+            <div className="flex items-center justify-between pb-4 border-b border-gray-200">
+              <div className="flex items-center gap-2.5">
+                <span className="w-7 h-7 rounded bg-secound/10 text-secound font-bold text-xs flex items-center justify-center">
+                  🛍️
+                </span>
+                <div>
+                  <h3 className="text-base font-semibold text-gray-800">
+                    Related Products Section (সম্পর্কিত অন্যান্য পণ্য)
+                  </h3>
+                  <p className="text-xs text-gray-500">
+                    Display an optional cross-sell grid where customers can pick additional items
+                  </p>
+                </div>
+              </div>
+              <label className="flex items-center gap-2 text-xs font-bold text-gray-700 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={enableRelatedProducts}
+                  onChange={(e) => setEnableRelatedProducts(e.target.checked)}
+                  className="rounded text-secound focus:ring-secound w-4 h-4 cursor-pointer"
+                />
+                <span>Enable Related Products</span>
+              </label>
+            </div>
+
+            {enableRelatedProducts && (
+              <div className="space-y-4">
+                <p className="text-xs text-gray-500">
+                  Select products to display in the Related Products section. Customers can click to add them directly into their order and change quantities at checkout:
+                </p>
+
+                {/* Selected Related Products Badges */}
+                {selectedRelatedProducts.length > 0 && (
+                  <div className="flex flex-wrap gap-2 p-3 bg-slate-50 rounded-lg border border-slate-200">
+                    {selectedRelatedProducts.map((p) => (
+                      <span
+                        key={p.id}
+                        className="inline-flex items-center gap-1.5 px-3 py-1 bg-white border border-slate-300 rounded-full text-xs font-semibold text-gray-800 shadow-2xs font-hind"
+                      >
+                        <span>{p.productName} (৳{p.salePrice || p.price})</span>
+                        <button
+                          type="button"
+                          onClick={() => toggleRelatedProduct(p)}
+                          className="text-gray-400 hover:text-red-500"
+                        >
+                          <X size={14} />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {/* Search products for related */}
+                <div className="relative">
+                  <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+                  <input
+                    type="text"
+                    value={relatedProductSearch}
+                    onChange={(e) => setRelatedProductSearch(e.target.value)}
+                    placeholder="Search products to add to related..."
+                    className="w-full pl-10 pr-4 py-2.5 rounded border border-stone-300 text-sm font-hind focus:outline-none focus:border-secound focus:ring-2 focus:ring-secound/20 bg-white"
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-60 overflow-y-auto p-1">
+                  {allProducts
+                    .filter((p) => p.id !== selectedProduct?.id)
+                    .filter((p) =>
+                      !relatedProductSearch ||
+                      p.productName.toLowerCase().includes(relatedProductSearch.toLowerCase()) ||
+                      (p.sku && p.sku.toLowerCase().includes(relatedProductSearch.toLowerCase()))
+                    )
+                    .slice(0, 15)
+                    .map((p) => {
+                      const isChosen = selectedRelatedProducts.some((item) => item.id === p.id);
+                      return (
+                        <div
+                          key={p.id}
+                          onClick={() => toggleRelatedProduct(p)}
+                          className={`p-3 rounded-lg border flex items-center justify-between gap-2 cursor-pointer transition select-none ${
+                            isChosen
+                              ? "bg-secound/10 border-secound text-secound font-bold shadow-2xs"
+                              : "bg-white border-slate-200 hover:border-slate-300 text-gray-700"
+                          }`}
+                        >
+                          <span className="text-xs truncate font-hind">{p.productName}</span>
+                          <span className="text-xs shrink-0 font-hind">৳{p.salePrice || p.price}</span>
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
             )}

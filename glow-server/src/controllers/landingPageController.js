@@ -72,6 +72,24 @@ exports.getLandingPageBySlug = async (req, res) => {
             });
         }
 
+        // Fetch related products if configured
+        let relatedProducts = [];
+        if (Array.isArray(landingPage.relatedProductIds) && landingPage.relatedProductIds.length > 0) {
+            const validIds = landingPage.relatedProductIds.map(id => parseInt(id)).filter(id => !isNaN(id));
+            if (validIds.length > 0) {
+                relatedProducts = await prisma.product.findMany({
+                    where: {
+                        id: { in: validIds },
+                        status: true
+                    },
+                    include: {
+                        productVariants: true,
+                        brand: true
+                    }
+                });
+            }
+        }
+
         // Increment view count asynchronously
         prisma.landingPage.update({
             where: { id: landingPage.id },
@@ -80,7 +98,10 @@ exports.getLandingPageBySlug = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            data: landingPage
+            data: {
+                ...landingPage,
+                relatedProducts
+            }
         });
     } catch (error) {
         console.error('Error fetching landing page by slug:', error);
@@ -164,6 +185,7 @@ exports.createLandingPage = async (req, res) => {
             fakeOrderCounter,
             themeColor,
             template,
+            relatedProductIds,
             isPublished
         } = req.body;
 
@@ -213,8 +235,9 @@ exports.createLandingPage = async (req, res) => {
                 offerPrice: offerPrice ? parseFloat(offerPrice) : null,
                 urgencyText: urgencyText || "অফারটি সীমিত সময়ের জন্য! এখনই অর্ডার করুন",
                 fakeOrderCounter: fakeOrderCounter ? parseInt(fakeOrderCounter) : 120,
-                themeColor: themeColor || "#0c7c40",
-                template: template || "default",
+                themeColor: themeColor || "#D48B80",
+                template: template || "korean_beauty",
+                relatedProductIds: Array.isArray(relatedProductIds) ? relatedProductIds : [],
                 isPublished: isPublished !== undefined ? Boolean(isPublished) : true
             },
             include: {
@@ -268,6 +291,7 @@ exports.updateLandingPage = async (req, res) => {
             fakeOrderCounter,
             themeColor,
             template,
+            relatedProductIds,
             isPublished
         } = req.body;
 
@@ -320,6 +344,7 @@ exports.updateLandingPage = async (req, res) => {
                 ...(fakeOrderCounter !== undefined && { fakeOrderCounter: parseInt(fakeOrderCounter) }),
                 ...(themeColor !== undefined && { themeColor }),
                 ...(template !== undefined && { template }),
+                ...(relatedProductIds !== undefined && { relatedProductIds: Array.isArray(relatedProductIds) ? relatedProductIds : [] }),
                 ...(isPublished !== undefined && { isPublished: Boolean(isPublished) })
             },
             include: {
