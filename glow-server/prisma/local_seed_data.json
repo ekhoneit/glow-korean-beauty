@@ -66,141 +66,141 @@
   ],
   "category": [
     {
-      "id": 11,
+      "id": 17,
       "code": "CAT-TE",
       "name": "Toner & Essence",
       "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260292/zhpeduepqtpoubevn0ji.png",
       "mainCategoryId": 1,
       "status": true,
       "priority": 1,
-      "createdAt": "2026-11-21T11:50:30.407Z",
-      "updatedAt": "2026-11-21T11:50:30.407Z"
+      "createdAt": "2026-11-21T12:28:12.428Z",
+      "updatedAt": "2026-11-21T12:28:12.428Z"
     },
     {
-      "id": 12,
+      "id": 18,
       "code": "CAT-SA",
       "name": "Serums & Ampoules",
       "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260286/mzzz6u5cfjfcybmwrdi1.png",
       "mainCategoryId": 1,
       "status": true,
       "priority": 1,
-      "createdAt": "2026-11-21T11:50:30.417Z",
-      "updatedAt": "2026-11-21T11:50:30.417Z"
+      "createdAt": "2026-11-21T12:28:12.450Z",
+      "updatedAt": "2026-11-21T12:28:12.450Z"
     },
     {
-      "id": 13,
+      "id": 19,
       "code": "CAT-MC",
       "name": "Moisturizers & Creams",
       "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260285/vclajdxnqk7jq8ilxcrq.png",
       "mainCategoryId": 1,
       "status": true,
       "priority": 1,
-      "createdAt": "2026-11-21T11:50:30.427Z",
-      "updatedAt": "2026-11-21T11:50:30.427Z"
+      "createdAt": "2026-11-21T12:28:12.457Z",
+      "updatedAt": "2026-11-21T12:28:12.457Z"
     },
     {
-      "id": 14,
+      "id": 20,
       "code": "CAT-ST",
       "name": "Scalp Care & Tonics",
       "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260299/mmbdlojuxkd3urwx6lrh.png",
       "mainCategoryId": 1,
       "status": true,
       "priority": 1,
-      "createdAt": "2026-11-21T11:50:30.435Z",
-      "updatedAt": "2026-11-21T11:50:30.435Z"
+      "createdAt": "2026-11-21T12:28:12.463Z",
+      "updatedAt": "2026-11-21T12:28:12.463Z"
     },
     {
-      "id": 15,
+      "id": 21,
       "code": "CAT-HO",
       "name": "Hair Essences & Oils",
       "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260302/zbn03nb5fz3ycyvppfsl.png",
       "mainCategoryId": 1,
       "status": true,
       "priority": 1,
-      "createdAt": "2026-11-21T11:50:30.442Z",
-      "updatedAt": "2026-11-21T11:50:30.442Z"
+      "createdAt": "2026-11-21T12:28:12.472Z",
+      "updatedAt": "2026-11-21T12:28:12.472Z"
     },
     {
-      "id": 16,
+      "id": 22,
       "code": "CAT-CL",
       "name": "Cleansers",
       "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260294/egeraowticr7faxnnebm.png",
       "mainCategoryId": 1,
       "status": true,
       "priority": 1,
-      "createdAt": "2026-11-21T11:50:30.451Z",
-      "updatedAt": "2026-11-21T11:50:30.451Z"
+      "createdAt": "2026-11-21T12:28:12.493Z",
+      "updatedAt": "2026-11-21T12:28:12.493Z"
     }
   ],
   "subCategory": [
     {
-      "id": 10,
+      "id": 16,
       "code": "SUB-CAT-TE",
       "name": "Toner & Essence",
-      "categoryId": 11,
+      "categoryId": 17,
       "status": true,
       "priority": 1,
-      "createdAt": "2026-11-21T11:50:30.412Z",
-      "updatedAt": "2026-11-21T11:50:30.412Z"
+      "createdAt": "2026-11-21T12:28:12.445Z",
+      "updatedAt": "2026-11-21T12:28:12.445Z"
     },
     {
-      "id": 11,
+      "id": 17,
       "code": "SUB-CAT-SA",
       "name": "Serums & Ampoules",
-      "categoryId": 12,
+      "categoryId": 18,
       "status": true,
       "priority": 1,
-      "createdAt": "2026-11-21T11:50:30.421Z",
-      "updatedAt": "2026-11-21T11:50:30.421Z"
+      "createdAt": "2026-11-21T12:28:12.454Z",
+      "updatedAt": "2026-11-21T12:28:12.454Z"
     },
     {
-      "id": 12,
+      "id": 18,
       "code": "SUB-CAT-MC",
       "name": "Moisturizers & Creams",
-      "categoryId": 13,
+      "categoryId": 19,
       "status": true,
       "priority": 1,
-      "createdAt": "2026-11-21T11:50:30.430Z",
-      "updatedAt": "2026-11-21T11:50:30.430Z"
+      "createdAt": "2026-11-21T12:28:12.461Z",
+      "updatedAt": "2026-11-21T12:28:12.461Z"
     },
     {
-      "id": 13,
+      "id": 19,
       "code": "SUB-CAT-ST",
       "name": "Scalp Care & Tonics",
-      "categoryId": 14,
+      "categoryId": 20,
       "status": true,
       "priority": 1,
-      "createdAt": "2026-11-21T11:50:30.438Z",
-      "updatedAt": "2026-11-21T11:50:30.438Z"
+      "createdAt": "2026-11-21T12:28:12.467Z",
+      "updatedAt": "2026-11-21T12:28:12.467Z"
     },
     {
-      "id": 14,
+      "id": 20,
       "code": "SUB-CAT-HO",
       "name": "Hair Essences & Oils",
-      "categoryId": 15,
+      "categoryId": 21,
       "status": true,
       "priority": 1,
-      "createdAt": "2026-11-21T11:50:30.445Z",
-      "updatedAt": "2026-11-21T11:50:30.445Z"
+      "createdAt": "2026-11-21T12:28:12.488Z",
+      "updatedAt": "2026-11-21T12:28:12.488Z"
     },
     {
-      "id": 15,
+      "id": 21,
       "code": "SUB-CAT-CL",
       "name": "Cleansers",
-      "categoryId": 16,
+      "categoryId": 22,
       "status": true,
       "priority": 1,
-      "createdAt": "2026-11-21T11:50:30.455Z",
-      "updatedAt": "2026-11-21T11:50:30.455Z"
+      "createdAt": "2026-11-21T12:28:12.496Z",
+      "updatedAt": "2026-11-21T12:28:12.496Z"
     }
   ],
   "brand": [
     {
-      "id": 10,
+      "id": 11,
       "name": "Tenzero",
       "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260285/vclajdxnqk7jq8ilxcrq.png",
-      "createdAt": "2026-11-21T11:50:30.364Z",
-      "updatedAt": "2026-11-21T11:50:30.364Z"
+      "createdAt": "2026-11-21T12:28:12.376Z",
+      "updatedAt": "2026-11-21T12:28:12.376Z"
     }
   ],
   "unit": [
@@ -216,13 +216,13 @@
   "warranty": [],
   "product": [
     {
-      "id": 23,
+      "id": 37,
       "slug": "rose-pdrn-k-vitamin-k-water-soothing-cream-100g",
       "sku": "GLOW-TZ-01",
       "productName": "Rose PDRN K Vitamin K Water Soothing Cream – 100g",
       "sellingType": "single",
-      "subCategoryId": 12,
-      "brandId": 10,
+      "subCategoryId": 18,
+      "brandId": 11,
       "unitId": 1,
       "store": null,
       "warehouse": null,
@@ -231,14 +231,14 @@
       "regularPrice": "1650",
       "quantity": 100,
       "stockStatus": "IN_STOCK",
-      "trackQuantity": true,
+      "trackQuantity": false,
       "preOrderMessage": null,
       "images": [
         "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260285/vclajdxnqk7jq8ilxcrq.png"
       ],
       "description": "<div class=\"product-description-content\">\n  <p class=\"lead-text\"><strong>Rose PDRN K Vitamin K Water Soothing Cream – 100g</strong> — Discover a refreshing skincare experience with Rose PDRN K Vitamin K Water Soothing Cream. Its lightweight cream formula is designed to provide a comfortable, hydrated feel while adding a soothing touch to your daily skincare routine. A beautiful addition to your everyday skincare essentials.</p>\n  \n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Key Benefits & Features:</h3>\n  <ul style=\"list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.8;\">\n    <li style=\"margin-bottom: 0.4rem;\"><strong>Infused with</strong>: Infused with Rose PDRN and Vitamin K for intense soothing care</li><li style=\"margin-bottom: 0.4rem;\"><strong>Lightweight water-burst</strong>: Lightweight water-burst texture absorbs immediately without stickiness</li><li style=\"margin-bottom: 0.4rem;\"><strong>Helps improve</strong>: Helps improve skin barrier resilience and deeply hydrates</li><li style=\"margin-bottom: 0.4rem;\"><strong>Calms redness</strong>: Calms redness and sensitive skin after cleansing or sun exposure</li><li style=\"margin-bottom: 0.4rem;\"><strong>Authentic Made</strong>: Authentic Made in Korea formula, 100g generous size</li>\n  </ul>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">How To Use:</h3>\n  <p style=\"line-height: 1.7; margin-bottom: 1.5rem; color: #4b5563;\">Take an appropriate amount at the last step of your skincare routine and spread evenly over the entire face. Gently pat for better absorption.</p>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Product Information:</h3>\n  <ul style=\"list-style-type: none; padding-left: 0; line-height: 1.8; color: #374151;\">\n    <li>✅ <strong>Brand:</strong> Tenzero Korea</li>\n    <li>✅ <strong>Origin:</strong> Made in South Korea (100% Authentic Guaranteed)</li>\n    <li>✅ <strong>Category:</strong> K-Beauty Skincare & Haircare</li>\n    <li>✅ <strong>Suitability:</strong> Dermatologically Tested & Safe for Sensitive Skin</li>\n  </ul>\n</div>",
-      "taxType": null,
-      "tax": null,
+      "taxType": "inclusive",
+      "tax": 0,
       "discountType": null,
       "discountValue": 0,
       "quantityAlert": null,
@@ -250,8 +250,8 @@
       "status": true,
       "isArchived": false,
       "deletedAt": null,
-      "createdAt": "2026-11-21T11:50:30.475Z",
-      "updatedAt": "2026-11-21T11:50:30.475Z",
+      "createdAt": "2026-11-21T12:28:12.512Z",
+      "updatedAt": "2026-11-21T12:28:12.512Z",
       "productType": "single",
       "insideDhakaDeliveryCharge": null,
       "outsideDhakaDeliveryCharge": null,
@@ -263,13 +263,13 @@
       "orderBumpPrice": null
     },
     {
-      "id": 24,
+      "id": 38,
       "slug": "ceramide-d-vitamin-d-ampoule-50ml",
       "sku": "GLOW-TZ-02",
       "productName": "Ceramide D Vitamin D Ampoule – 50ml",
       "sellingType": "single",
-      "subCategoryId": 11,
-      "brandId": 10,
+      "subCategoryId": 17,
+      "brandId": 11,
       "unitId": 1,
       "store": null,
       "warehouse": null,
@@ -278,14 +278,14 @@
       "regularPrice": "1750",
       "quantity": 100,
       "stockStatus": "IN_STOCK",
-      "trackQuantity": true,
+      "trackQuantity": false,
       "preOrderMessage": null,
       "images": [
         "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260286/mzzz6u5cfjfcybmwrdi1.png"
       ],
       "description": "<div class=\"product-description-content\">\n  <p class=\"lead-text\"><strong>Ceramide D Vitamin D Ampoule – 50ml</strong> — Give your skin a nourishing touch with Ceramide D Vitamin D Ampoule. Formulated with Ceramide NP and 7-Dehydrocholesterol, this lightweight ampoule is designed to support your daily skin-conditioning routine and leave your skin feeling soft and comfortable.</p>\n  \n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Key Benefits & Features:</h3>\n  <ul style=\"list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.8;\">\n    <li style=\"margin-bottom: 0.4rem;\"><strong>Concentrated Ceramide</strong>: Concentrated Ceramide NP reinforces the damaged moisture barrier</li><li style=\"margin-bottom: 0.4rem;\"><strong>Contains Vitamin</strong>: Contains Vitamin D precursor (7-Dehydrocholesterol) for energized, healthy vitality</li><li style=\"margin-bottom: 0.4rem;\"><strong>Deeply hydrates</strong>: Deeply hydrates dry, flaking, or sensitized skin</li><li style=\"margin-bottom: 0.4rem;\"><strong>Fast-absorbing ampoule</strong>: Fast-absorbing ampoule texture without greasy residue</li><li style=\"margin-bottom: 0.4rem;\"><strong>Cruelty-free &</strong>: Cruelty-free & dermatologist tested Korean skincare</li>\n  </ul>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">How To Use:</h3>\n  <p style=\"line-height: 1.7; margin-bottom: 1.5rem; color: #4b5563;\">After applying toner, dispense 2-3 drops onto the face and gently massage into the skin until fully absorbed.</p>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Product Information:</h3>\n  <ul style=\"list-style-type: none; padding-left: 0; line-height: 1.8; color: #374151;\">\n    <li>✅ <strong>Brand:</strong> Tenzero Korea</li>\n    <li>✅ <strong>Origin:</strong> Made in South Korea (100% Authentic Guaranteed)</li>\n    <li>✅ <strong>Category:</strong> K-Beauty Skincare & Haircare</li>\n    <li>✅ <strong>Suitability:</strong> Dermatologically Tested & Safe for Sensitive Skin</li>\n  </ul>\n</div>",
-      "taxType": null,
-      "tax": null,
+      "taxType": "inclusive",
+      "tax": 0,
       "discountType": null,
       "discountValue": 0,
       "quantityAlert": null,
@@ -297,8 +297,8 @@
       "status": true,
       "isArchived": false,
       "deletedAt": null,
-      "createdAt": "2026-11-21T11:50:30.499Z",
-      "updatedAt": "2026-11-21T11:50:30.499Z",
+      "createdAt": "2026-11-21T12:28:12.539Z",
+      "updatedAt": "2026-11-21T12:28:12.539Z",
       "productType": "single",
       "insideDhakaDeliveryCharge": null,
       "outsideDhakaDeliveryCharge": null,
@@ -310,13 +310,13 @@
       "orderBumpPrice": null
     },
     {
-      "id": 25,
+      "id": 39,
       "slug": "retinol-a-vitamin-a-ampoule-50ml",
       "sku": "GLOW-TZ-03",
       "productName": "Retinol A Vitamin A Ampoule – 50ml",
       "sellingType": "single",
-      "subCategoryId": 11,
-      "brandId": 10,
+      "subCategoryId": 17,
+      "brandId": 11,
       "unitId": 1,
       "store": null,
       "warehouse": null,
@@ -325,14 +325,14 @@
       "regularPrice": "1850",
       "quantity": 100,
       "stockStatus": "IN_STOCK",
-      "trackQuantity": true,
+      "trackQuantity": false,
       "preOrderMessage": null,
       "images": [
         "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260288/bll4irvdxt9kwxivqgqr.png"
       ],
       "description": "<div class=\"product-description-content\">\n  <p class=\"lead-text\"><strong>Retinol A Vitamin A Ampoule – 50ml</strong> — Elevate your skincare routine with Retinol A Vitamin A Ampoule. Featuring Retinyl Palmitate, Beta-Carotene and Astaxanthin, this skincare formula is designed to complement your regular skincare routine and give your skin a smooth, refreshed appearance.</p>\n  \n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Key Benefits & Features:</h3>\n  <ul style=\"list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.8;\">\n    <li style=\"margin-bottom: 0.4rem;\"><strong>Powerful antioxidant</strong>: Powerful antioxidant complex with Retinyl Palmitate, Beta-Carotene & Astaxanthin</li><li style=\"margin-bottom: 0.4rem;\"><strong>Visibly refines</strong>: Visibly refines skin texture and boosts natural elasticity</li><li style=\"margin-bottom: 0.4rem;\"><strong>Promotes a</strong>: Promotes a radiant, rejuvenated glass-skin glow</li><li style=\"margin-bottom: 0.4rem;\"><strong>Gentle anti-aging</strong>: Gentle anti-aging formulation suitable for beginners</li><li style=\"margin-bottom: 0.4rem;\"><strong>Targets fine</strong>: Targets fine lines, enlarged pores, and dull uneven tone</li>\n  </ul>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">How To Use:</h3>\n  <p style=\"line-height: 1.7; margin-bottom: 1.5rem; color: #4b5563;\">During evening skincare, dispense a proper amount after toner. Smooth gently over face and follow with a moisturizing cream. Always wear sunscreen during daytime.</p>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Product Information:</h3>\n  <ul style=\"list-style-type: none; padding-left: 0; line-height: 1.8; color: #374151;\">\n    <li>✅ <strong>Brand:</strong> Tenzero Korea</li>\n    <li>✅ <strong>Origin:</strong> Made in South Korea (100% Authentic Guaranteed)</li>\n    <li>✅ <strong>Category:</strong> K-Beauty Skincare & Haircare</li>\n    <li>✅ <strong>Suitability:</strong> Dermatologically Tested & Safe for Sensitive Skin</li>\n  </ul>\n</div>",
-      "taxType": null,
-      "tax": null,
+      "taxType": "inclusive",
+      "tax": 0,
       "discountType": null,
       "discountValue": 0,
       "quantityAlert": null,
@@ -344,8 +344,8 @@
       "status": true,
       "isArchived": false,
       "deletedAt": null,
-      "createdAt": "2026-11-21T11:50:30.512Z",
-      "updatedAt": "2026-11-21T11:50:30.512Z",
+      "createdAt": "2026-11-21T12:28:12.547Z",
+      "updatedAt": "2026-11-21T12:28:12.547Z",
       "productType": "single",
       "insideDhakaDeliveryCharge": null,
       "outsideDhakaDeliveryCharge": null,
@@ -357,13 +357,13 @@
       "orderBumpPrice": null
     },
     {
-      "id": 26,
+      "id": 40,
       "slug": "retinol-a-vitamin-a-silk-soothing-cream-100g",
       "sku": "GLOW-TZ-04",
       "productName": "Retinol A Vitamin A Silk Soothing Cream – 100g",
       "sellingType": "single",
-      "subCategoryId": 12,
-      "brandId": 10,
+      "subCategoryId": 18,
+      "brandId": 11,
       "unitId": 1,
       "store": null,
       "warehouse": null,
@@ -372,14 +372,14 @@
       "regularPrice": "1700",
       "quantity": 100,
       "stockStatus": "IN_STOCK",
-      "trackQuantity": true,
+      "trackQuantity": false,
       "preOrderMessage": null,
       "images": [
         "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260290/qm3va1bskcwnjre5dzgs.png"
       ],
       "description": "<div class=\"product-description-content\">\n  <p class=\"lead-text\"><strong>Retinol A Vitamin A Silk Soothing Cream – 100g</strong> — Experience a silky skincare touch with Retinol A Vitamin A Silk Soothing Cream. Its smooth cream texture makes daily moisturising feel effortless while helping your skin feel soft, nourished and comfortable. A perfect addition to your everyday beauty routine.</p>\n  \n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Key Benefits & Features:</h3>\n  <ul style=\"list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.8;\">\n    <li style=\"margin-bottom: 0.4rem;\"><strong>Silky velvet</strong>: Silky velvet texture wraps skin in deep, non-greasy nourishment</li><li style=\"margin-bottom: 0.4rem;\"><strong>Vitamin A</strong>: Vitamin A complex gently refines surface skin texture overnight</li><li style=\"margin-bottom: 0.4rem;\"><strong>Strengthens the</strong>: Strengthens the moisture barrier while soothing sensitive patches</li><li style=\"margin-bottom: 0.4rem;\"><strong>Leaves skin</strong>: Leaves skin feeling bouncy, plump, and deeply hydrated</li><li style=\"margin-bottom: 0.4rem;\"><strong>Made in</strong>: Made in Korea, generous 100g jar for face and neck care</li>\n  </ul>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">How To Use:</h3>\n  <p style=\"line-height: 1.7; margin-bottom: 1.5rem; color: #4b5563;\">Apply an appropriate amount as the final stage of your evening skincare routine. Massage gently over the face and neck until absorbed.</p>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Product Information:</h3>\n  <ul style=\"list-style-type: none; padding-left: 0; line-height: 1.8; color: #374151;\">\n    <li>✅ <strong>Brand:</strong> Tenzero Korea</li>\n    <li>✅ <strong>Origin:</strong> Made in South Korea (100% Authentic Guaranteed)</li>\n    <li>✅ <strong>Category:</strong> K-Beauty Skincare & Haircare</li>\n    <li>✅ <strong>Suitability:</strong> Dermatologically Tested & Safe for Sensitive Skin</li>\n  </ul>\n</div>",
-      "taxType": null,
-      "tax": null,
+      "taxType": "inclusive",
+      "tax": 0,
       "discountType": null,
       "discountValue": 0,
       "quantityAlert": null,
@@ -391,8 +391,8 @@
       "status": true,
       "isArchived": false,
       "deletedAt": null,
-      "createdAt": "2026-11-21T11:50:30.526Z",
-      "updatedAt": "2026-11-21T11:50:30.526Z",
+      "createdAt": "2026-11-21T12:28:12.575Z",
+      "updatedAt": "2026-11-21T12:28:12.575Z",
       "productType": "single",
       "insideDhakaDeliveryCharge": null,
       "outsideDhakaDeliveryCharge": null,
@@ -404,13 +404,13 @@
       "orderBumpPrice": null
     },
     {
-      "id": 27,
+      "id": 41,
       "slug": "ceramide-d-vitamin-d-silk-soothing-cream-100g",
       "sku": "GLOW-TZ-05",
       "productName": "Ceramide D Vitamin D Silk Soothing Cream – 100g",
       "sellingType": "single",
-      "subCategoryId": 12,
-      "brandId": 10,
+      "subCategoryId": 18,
+      "brandId": 11,
       "unitId": 1,
       "store": null,
       "warehouse": null,
@@ -419,14 +419,14 @@
       "regularPrice": "1700",
       "quantity": 100,
       "stockStatus": "IN_STOCK",
-      "trackQuantity": true,
+      "trackQuantity": false,
       "preOrderMessage": null,
       "images": [
         "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260289/sj1arekn0c22fo3ywg8e.png"
       ],
       "description": "<div class=\"product-description-content\">\n  <p class=\"lead-text\"><strong>Ceramide D Vitamin D Silk Soothing Cream – 100g</strong> — Pamper your skin with the smooth and comforting texture of Ceramide D Vitamin D Silk Soothing Cream. Designed for daily skincare, this cream helps maintain a moisturised feel and leaves your skin feeling soft, smooth and refreshed.</p>\n  \n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Key Benefits & Features:</h3>\n  <ul style=\"list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.8;\">\n    <li style=\"margin-bottom: 0.4rem;\"><strong>High-potency Ceramide</strong>: High-potency Ceramide formula locks in moisture for up to 48 hours</li><li style=\"margin-bottom: 0.4rem;\"><strong>Vitamin D</strong>: Vitamin D infusion comforts stressed, tired skin exposed to pollution</li><li style=\"margin-bottom: 0.4rem;\"><strong>Silky texture</strong>: Silky texture melts instantly without clogging pores</li><li style=\"margin-bottom: 0.4rem;\"><strong>Prevents transepidermal</strong>: Prevents transepidermal water loss and rough dry flakes</li><li style=\"margin-bottom: 0.4rem;\"><strong>Ideal for</strong>: Ideal for all skin types, including dry and sensitive skin</li>\n  </ul>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">How To Use:</h3>\n  <p style=\"line-height: 1.7; margin-bottom: 1.5rem; color: #4b5563;\">Scoop a nickel-sized amount and spread evenly across the face morning and evening. Pat gently with fingertips.</p>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Product Information:</h3>\n  <ul style=\"list-style-type: none; padding-left: 0; line-height: 1.8; color: #374151;\">\n    <li>✅ <strong>Brand:</strong> Tenzero Korea</li>\n    <li>✅ <strong>Origin:</strong> Made in South Korea (100% Authentic Guaranteed)</li>\n    <li>✅ <strong>Category:</strong> K-Beauty Skincare & Haircare</li>\n    <li>✅ <strong>Suitability:</strong> Dermatologically Tested & Safe for Sensitive Skin</li>\n  </ul>\n</div>",
-      "taxType": null,
-      "tax": null,
+      "taxType": "inclusive",
+      "tax": 0,
       "discountType": null,
       "discountValue": 0,
       "quantityAlert": null,
@@ -438,8 +438,8 @@
       "status": true,
       "isArchived": false,
       "deletedAt": null,
-      "createdAt": "2026-11-21T11:50:30.541Z",
-      "updatedAt": "2026-11-21T11:50:30.541Z",
+      "createdAt": "2026-11-21T12:28:12.584Z",
+      "updatedAt": "2026-11-21T12:28:12.584Z",
       "productType": "single",
       "insideDhakaDeliveryCharge": null,
       "outsideDhakaDeliveryCharge": null,
@@ -451,13 +451,13 @@
       "orderBumpPrice": null
     },
     {
-      "id": 28,
+      "id": 42,
       "slug": "clear-green-caviar-toner-200ml",
       "sku": "GLOW-TZ-06",
       "productName": "Clear Green Caviar Toner – 200ml",
       "sellingType": "single",
-      "subCategoryId": 10,
-      "brandId": 10,
+      "subCategoryId": 16,
+      "brandId": 11,
       "unitId": 1,
       "store": null,
       "warehouse": null,
@@ -466,14 +466,14 @@
       "regularPrice": "1550",
       "quantity": 100,
       "stockStatus": "IN_STOCK",
-      "trackQuantity": true,
+      "trackQuantity": false,
       "preOrderMessage": null,
       "images": [
         "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260292/zhpeduepqtpoubevn0ji.png"
       ],
       "description": "<div class=\"product-description-content\">\n  <p class=\"lead-text\"><strong>Clear Green Caviar Toner – 200ml</strong> — Refresh and prepare your skin with Clear Green Caviar Toner. Its refreshing formula is designed to support your daily skin-balancing routine while leaving your skin feeling fresh and comfortable. An ideal step after cleansing and before applying serum or moisturiser.</p>\n  \n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Key Benefits & Features:</h3>\n  <ul style=\"list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.8;\">\n    <li style=\"margin-bottom: 0.4rem;\"><strong>Rich in</strong>: Rich in Sea Grape (Green Caviar) extract packed with minerals and amino acids</li><li style=\"margin-bottom: 0.4rem;\"><strong>Restores optimal</strong>: Restores optimal pH balance immediately after cleansing</li><li style=\"margin-bottom: 0.4rem;\"><strong>Clears dead</strong>: Clears dead skin cells and impurities while replenishing hydration</li><li style=\"margin-bottom: 0.4rem;\"><strong>Prepares skin</strong>: Prepares skin to absorb active serums and creams more effectively</li><li style=\"margin-bottom: 0.4rem;\"><strong>Large 200ml</strong>: Large 200ml volume for daily layering or toner-masking</li>\n  </ul>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">How To Use:</h3>\n  <p style=\"line-height: 1.7; margin-bottom: 1.5rem; color: #4b5563;\">After cleansing, soak a cotton pad or pour directly onto palms, and gently sweep across the face and neck.</p>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Product Information:</h3>\n  <ul style=\"list-style-type: none; padding-left: 0; line-height: 1.8; color: #374151;\">\n    <li>✅ <strong>Brand:</strong> Tenzero Korea</li>\n    <li>✅ <strong>Origin:</strong> Made in South Korea (100% Authentic Guaranteed)</li>\n    <li>✅ <strong>Category:</strong> K-Beauty Skincare & Haircare</li>\n    <li>✅ <strong>Suitability:</strong> Dermatologically Tested & Safe for Sensitive Skin</li>\n  </ul>\n</div>",
-      "taxType": null,
-      "tax": null,
+      "taxType": "inclusive",
+      "tax": 0,
       "discountType": null,
       "discountValue": 0,
       "quantityAlert": null,
@@ -485,8 +485,8 @@
       "status": true,
       "isArchived": false,
       "deletedAt": null,
-      "createdAt": "2026-11-21T11:50:30.557Z",
-      "updatedAt": "2026-11-21T11:50:30.557Z",
+      "createdAt": "2026-11-21T12:28:12.609Z",
+      "updatedAt": "2026-11-21T12:28:12.609Z",
       "productType": "single",
       "insideDhakaDeliveryCharge": null,
       "outsideDhakaDeliveryCharge": null,
@@ -498,13 +498,13 @@
       "orderBumpPrice": null
     },
     {
-      "id": 29,
+      "id": 43,
       "slug": "hair-angel-ring-musk-essence-100ml",
       "sku": "GLOW-TZ-07",
       "productName": "Hair Angel Ring Musk Essence – 100ml",
       "sellingType": "single",
-      "subCategoryId": 14,
-      "brandId": 10,
+      "subCategoryId": 20,
+      "brandId": 11,
       "unitId": 1,
       "store": null,
       "warehouse": null,
@@ -513,14 +513,14 @@
       "regularPrice": "1450",
       "quantity": 100,
       "stockStatus": "IN_STOCK",
-      "trackQuantity": true,
+      "trackQuantity": false,
       "preOrderMessage": null,
       "images": [
         "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260302/zbn03nb5fz3ycyvppfsl.png"
       ],
       "description": "<div class=\"product-description-content\">\n  <p class=\"lead-text\"><strong>Hair Angel Ring Musk Essence – 100ml</strong> — Give your hair a touch of care with Hair Angel Ring Musk Essence. Featuring a blend of 3 Gold Oil, Argan Kernel Oil, Sweet Almond Oil and Sunflower Seed Oil, this hair essence is designed to nourish the hair and enhance its soft, smooth and healthy-looking appearance.</p>\n  \n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Key Benefits & Features:</h3>\n  <ul style=\"list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.8;\">\n    <li style=\"margin-bottom: 0.4rem;\"><strong>Enriched with</strong>: Enriched with 3 Gold Oils (Argan, Sweet Almond, and Sunflower Seed Oils)</li><li style=\"margin-bottom: 0.4rem;\"><strong>Creates an</strong>: Creates an instant glossy 'Angel Ring' shine on dull, frizzy hair</li><li style=\"margin-bottom: 0.4rem;\"><strong>Tames flyaways</strong>: Tames flyaways and prevents split ends without weighing hair down</li><li style=\"margin-bottom: 0.4rem;\"><strong>Leaves an</strong>: Leaves an alluring, long-lasting luxury white musk fragrance</li><li style=\"margin-bottom: 0.4rem;\"><strong>Lightweight non-sticky</strong>: Lightweight non-sticky serum texture suitable for damp or dry hair</li>\n  </ul>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">How To Use:</h3>\n  <p style=\"line-height: 1.7; margin-bottom: 1.5rem; color: #4b5563;\">Pump 1-2 drops onto palms and evenly distribute through towel-dried or dry hair, focusing on mid-lengths and ends.</p>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Product Information:</h3>\n  <ul style=\"list-style-type: none; padding-left: 0; line-height: 1.8; color: #374151;\">\n    <li>✅ <strong>Brand:</strong> Tenzero Korea</li>\n    <li>✅ <strong>Origin:</strong> Made in South Korea (100% Authentic Guaranteed)</li>\n    <li>✅ <strong>Category:</strong> K-Beauty Skincare & Haircare</li>\n    <li>✅ <strong>Suitability:</strong> Dermatologically Tested & Safe for Sensitive Skin</li>\n  </ul>\n</div>",
-      "taxType": null,
-      "tax": null,
+      "taxType": "inclusive",
+      "tax": 0,
       "discountType": null,
       "discountValue": 0,
       "quantityAlert": null,
@@ -532,8 +532,8 @@
       "status": true,
       "isArchived": false,
       "deletedAt": null,
-      "createdAt": "2026-11-21T11:50:30.570Z",
-      "updatedAt": "2026-11-21T11:50:30.570Z",
+      "createdAt": "2026-11-21T12:28:12.617Z",
+      "updatedAt": "2026-11-21T12:28:12.617Z",
       "productType": "single",
       "insideDhakaDeliveryCharge": null,
       "outsideDhakaDeliveryCharge": null,
@@ -545,13 +545,13 @@
       "orderBumpPrice": null
     },
     {
-      "id": 30,
+      "id": 44,
       "slug": "green-caviar-serum-50ml",
       "sku": "GLOW-TZ-08",
       "productName": "Green Caviar Serum – 50ml",
       "sellingType": "single",
-      "subCategoryId": 11,
-      "brandId": 10,
+      "subCategoryId": 17,
+      "brandId": 11,
       "unitId": 1,
       "store": null,
       "warehouse": null,
@@ -560,14 +560,14 @@
       "regularPrice": "1650",
       "quantity": 100,
       "stockStatus": "IN_STOCK",
-      "trackQuantity": true,
+      "trackQuantity": false,
       "preOrderMessage": null,
       "images": [
         "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260296/bhxw8simjscxuradqvhl.png"
       ],
       "description": "<div class=\"product-description-content\">\n  <p class=\"lead-text\"><strong>Green Caviar Serum – 50ml</strong> — Add a refreshing touch to your skincare routine with Green Caviar Serum. Its lightweight serum formula is designed to complement your daily skincare steps, helping your skin feel hydrated, balanced and refreshed.</p>\n  \n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Key Benefits & Features:</h3>\n  <ul style=\"list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.8;\">\n    <li style=\"margin-bottom: 0.4rem;\"><strong>High concentration</strong>: High concentration of Green Caviar (Sea Grape) for deep cellular hydration</li><li style=\"margin-bottom: 0.4rem;\"><strong>Provides vital</strong>: Provides vital nutrients, vitamins, and antioxidants directly to skin cells</li><li style=\"margin-bottom: 0.4rem;\"><strong>Improves skin</strong>: Improves skin bounce, firmness, and natural dewy radiance</li><li style=\"margin-bottom: 0.4rem;\"><strong>Watery cooling</strong>: Watery cooling texture that penetrates rapidly without greasy feel</li><li style=\"margin-bottom: 0.4rem;\"><strong>Perfect for</strong>: Perfect for dehydrated skin lacking glow and vitality</li>\n  </ul>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">How To Use:</h3>\n  <p style=\"line-height: 1.7; margin-bottom: 1.5rem; color: #4b5563;\">Apply 2-3 drops onto cleansed and toned skin. Smooth gently until completely absorbed.</p>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Product Information:</h3>\n  <ul style=\"list-style-type: none; padding-left: 0; line-height: 1.8; color: #374151;\">\n    <li>✅ <strong>Brand:</strong> Tenzero Korea</li>\n    <li>✅ <strong>Origin:</strong> Made in South Korea (100% Authentic Guaranteed)</li>\n    <li>✅ <strong>Category:</strong> K-Beauty Skincare & Haircare</li>\n    <li>✅ <strong>Suitability:</strong> Dermatologically Tested & Safe for Sensitive Skin</li>\n  </ul>\n</div>",
-      "taxType": null,
-      "tax": null,
+      "taxType": "inclusive",
+      "tax": 0,
       "discountType": null,
       "discountValue": 0,
       "quantityAlert": null,
@@ -579,8 +579,8 @@
       "status": true,
       "isArchived": false,
       "deletedAt": null,
-      "createdAt": "2026-11-21T11:50:30.587Z",
-      "updatedAt": "2026-11-21T11:50:30.587Z",
+      "createdAt": "2026-11-21T12:28:12.632Z",
+      "updatedAt": "2026-11-21T12:28:12.632Z",
       "productType": "single",
       "insideDhakaDeliveryCharge": null,
       "outsideDhakaDeliveryCharge": null,
@@ -592,13 +592,13 @@
       "orderBumpPrice": null
     },
     {
-      "id": 31,
+      "id": 45,
       "slug": "extra-capsule-green-caviar-cream-50g",
       "sku": "GLOW-TZ-09",
       "productName": "Extra Capsule Green Caviar Cream – 50g",
       "sellingType": "single",
-      "subCategoryId": 12,
-      "brandId": 10,
+      "subCategoryId": 18,
+      "brandId": 11,
       "unitId": 1,
       "store": null,
       "warehouse": null,
@@ -607,14 +607,14 @@
       "regularPrice": "1750",
       "quantity": 100,
       "stockStatus": "IN_STOCK",
-      "trackQuantity": true,
+      "trackQuantity": false,
       "preOrderMessage": null,
       "images": [
         "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260297/orxzcrctqvhavaoxd0o1.png"
       ],
       "description": "<div class=\"product-description-content\">\n  <p class=\"lead-text\"><strong>Extra Capsule Green Caviar Cream – 50g</strong> — Complete your skincare routine with Extra Capsule Green Caviar Cream. This moisturising cream is designed to provide a comfortable, nourished feel while helping maintain your skin's moisture. Its smooth texture makes it a great addition to everyday skincare.</p>\n  \n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Key Benefits & Features:</h3>\n  <ul style=\"list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.8;\">\n    <li style=\"margin-bottom: 0.4rem;\"><strong>Features moisture</strong>: Features moisture capsules suspended in a soothing nutrient-rich cream gel</li><li style=\"margin-bottom: 0.4rem;\"><strong>Capsules burst</strong>: Capsules burst upon application, delivering fresh nutrients to skin</li><li style=\"margin-bottom: 0.4rem;\"><strong>Locks in</strong>: Locks in deep hydration while building a protective barrier</li><li style=\"margin-bottom: 0.4rem;\"><strong>Smooths skin</strong>: Smooths skin texture and enhances natural plumpness</li><li style=\"margin-bottom: 0.4rem;\"><strong>Dermatologically tested</strong>: Dermatologically tested authentic Korean skincare formulation</li>\n  </ul>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">How To Use:</h3>\n  <p style=\"line-height: 1.7; margin-bottom: 1.5rem; color: #4b5563;\">At the final skincare step, apply a moderate amount onto face. Gently massage to melt the moisture capsules into skin.</p>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Product Information:</h3>\n  <ul style=\"list-style-type: none; padding-left: 0; line-height: 1.8; color: #374151;\">\n    <li>✅ <strong>Brand:</strong> Tenzero Korea</li>\n    <li>✅ <strong>Origin:</strong> Made in South Korea (100% Authentic Guaranteed)</li>\n    <li>✅ <strong>Category:</strong> K-Beauty Skincare & Haircare</li>\n    <li>✅ <strong>Suitability:</strong> Dermatologically Tested & Safe for Sensitive Skin</li>\n  </ul>\n</div>",
-      "taxType": null,
-      "tax": null,
+      "taxType": "inclusive",
+      "tax": 0,
       "discountType": null,
       "discountValue": 0,
       "quantityAlert": null,
@@ -626,8 +626,8 @@
       "status": true,
       "isArchived": false,
       "deletedAt": null,
-      "createdAt": "2026-11-21T11:50:30.600Z",
-      "updatedAt": "2026-11-21T11:50:30.600Z",
+      "createdAt": "2026-11-21T12:28:12.652Z",
+      "updatedAt": "2026-11-21T12:28:12.652Z",
       "productType": "single",
       "insideDhakaDeliveryCharge": null,
       "outsideDhakaDeliveryCharge": null,
@@ -639,13 +639,13 @@
       "orderBumpPrice": null
     },
     {
-      "id": 32,
+      "id": 46,
       "slug": "aqua-cooling-tonic-anti-hair-loss-scalp-tonic-100ml",
       "sku": "GLOW-TZ-10",
       "productName": "Aqua Cooling Tonic – Anti-Hair Loss Scalp Tonic – 100ml",
       "sellingType": "single",
-      "subCategoryId": 13,
-      "brandId": 10,
+      "subCategoryId": 19,
+      "brandId": 11,
       "unitId": 1,
       "store": null,
       "warehouse": null,
@@ -654,14 +654,14 @@
       "regularPrice": "1550",
       "quantity": 100,
       "stockStatus": "IN_STOCK",
-      "trackQuantity": true,
+      "trackQuantity": false,
       "preOrderMessage": null,
       "images": [
         "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260299/mmbdlojuxkd3urwx6lrh.png"
       ],
       "description": "<div class=\"product-description-content\">\n  <p class=\"lead-text\"><strong>Aqua Cooling Tonic – Anti-Hair Loss Scalp Tonic – 100ml</strong> — Refresh your scalp with Aqua Cooling Tonic by Tenzero. This spray-type scalp tonic features an aqua-based formula with Hyaluronic Acid, Ceramide and Dexpanthenol. Designed for scalp care, it provides a refreshing cooling sensation and supports your regular hair-care routine.</p>\n  \n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Key Benefits & Features:</h3>\n  <ul style=\"list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.8;\">\n    <li style=\"margin-bottom: 0.4rem;\"><strong>KFDA functional</strong>: KFDA functional certification for anti-hair loss and scalp strengthening</li><li style=\"margin-bottom: 0.4rem;\"><strong>Instant cooling</strong>: Instant cooling effect reduces scalp temperature and excessive sebum</li><li style=\"margin-bottom: 0.4rem;\"><strong>Hyaluronic Acid</strong>: Hyaluronic Acid & Ceramide nourish the scalp moisture barrier</li><li style=\"margin-bottom: 0.4rem;\"><strong>Dexpanthenol calms</strong>: Dexpanthenol calms irritation, flaking, and itching</li><li style=\"margin-bottom: 0.4rem;\"><strong>Easy spray</strong>: Easy spray nozzle allows targeted application directly to hair roots</li>\n  </ul>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">How To Use:</h3>\n  <p style=\"line-height: 1.7; margin-bottom: 1.5rem; color: #4b5563;\">Shake well before use. Spray evenly onto the scalp and massage gently with fingertips for 1-2 minutes until absorbed. Do not rinse.</p>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Product Information:</h3>\n  <ul style=\"list-style-type: none; padding-left: 0; line-height: 1.8; color: #374151;\">\n    <li>✅ <strong>Brand:</strong> Tenzero Korea</li>\n    <li>✅ <strong>Origin:</strong> Made in South Korea (100% Authentic Guaranteed)</li>\n    <li>✅ <strong>Category:</strong> K-Beauty Skincare & Haircare</li>\n    <li>✅ <strong>Suitability:</strong> Dermatologically Tested & Safe for Sensitive Skin</li>\n  </ul>\n</div>",
-      "taxType": null,
-      "tax": null,
+      "taxType": "inclusive",
+      "tax": 0,
       "discountType": null,
       "discountValue": 0,
       "quantityAlert": null,
@@ -673,8 +673,8 @@
       "status": true,
       "isArchived": false,
       "deletedAt": null,
-      "createdAt": "2026-11-21T11:50:30.612Z",
-      "updatedAt": "2026-11-21T11:50:30.612Z",
+      "createdAt": "2026-11-21T12:28:12.667Z",
+      "updatedAt": "2026-11-21T12:28:12.667Z",
       "productType": "single",
       "insideDhakaDeliveryCharge": null,
       "outsideDhakaDeliveryCharge": null,
@@ -686,13 +686,13 @@
       "orderBumpPrice": null
     },
     {
-      "id": 33,
+      "id": 47,
       "slug": "cica-cooling-tonic-anti-hair-loss-scalp-tonic-100ml",
       "sku": "GLOW-TZ-11",
       "productName": "Cica Cooling Tonic – Anti-Hair Loss Scalp Tonic – 100ml",
       "sellingType": "single",
-      "subCategoryId": 13,
-      "brandId": 10,
+      "subCategoryId": 19,
+      "brandId": 11,
       "unitId": 1,
       "store": null,
       "warehouse": null,
@@ -701,14 +701,14 @@
       "regularPrice": "1550",
       "quantity": 100,
       "stockStatus": "IN_STOCK",
-      "trackQuantity": true,
+      "trackQuantity": false,
       "preOrderMessage": null,
       "images": [
         "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260301/dimn4avyj69ceavoqihd.png"
       ],
       "description": "<div class=\"product-description-content\">\n  <p class=\"lead-text\"><strong>Cica Cooling Tonic – Anti-Hair Loss Scalp Tonic – 100ml</strong> — Give your scalp a refreshing experience with Cica Cooling Tonic. Formulated with Cica Complex, Centella Asiatica, Ceramide and Menthol, this spray-type tonic is designed to refresh the scalp and provide a cooling sensation as part of your regular hair-care routine.</p>\n  \n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Key Benefits & Features:</h3>\n  <ul style=\"list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.8;\">\n    <li style=\"margin-bottom: 0.4rem;\"><strong>High content</strong>: High content Centella Asiatica (Cica Complex) calms troubled & irritated scalps</li><li style=\"margin-bottom: 0.4rem;\"><strong>Provides relief</strong>: Provides relief from heat, dandruff, irritation, and follicle inflammation</li><li style=\"margin-bottom: 0.4rem;\"><strong>Anti-hair loss</strong>: Anti-hair loss care strengthens hair roots and follicle vitality</li><li style=\"margin-bottom: 0.4rem;\"><strong>Leaves scalp</strong>: Leaves scalp clean, refreshed, and pleasantly scented with menthol</li><li style=\"margin-bottom: 0.4rem;\"><strong>Non-greasy, watery</strong>: Non-greasy, watery mist that dries cleanly without residue</li>\n  </ul>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">How To Use:</h3>\n  <p style=\"line-height: 1.7; margin-bottom: 1.5rem; color: #4b5563;\">Shake bottle well. Section hair and spray directly onto clean scalp. Gently pat with fingers to stimulate absorption.</p>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Product Information:</h3>\n  <ul style=\"list-style-type: none; padding-left: 0; line-height: 1.8; color: #374151;\">\n    <li>✅ <strong>Brand:</strong> Tenzero Korea</li>\n    <li>✅ <strong>Origin:</strong> Made in South Korea (100% Authentic Guaranteed)</li>\n    <li>✅ <strong>Category:</strong> K-Beauty Skincare & Haircare</li>\n    <li>✅ <strong>Suitability:</strong> Dermatologically Tested & Safe for Sensitive Skin</li>\n  </ul>\n</div>",
-      "taxType": null,
-      "tax": null,
+      "taxType": "inclusive",
+      "tax": 0,
       "discountType": null,
       "discountValue": 0,
       "quantityAlert": null,
@@ -720,8 +720,8 @@
       "status": true,
       "isArchived": false,
       "deletedAt": null,
-      "createdAt": "2026-11-21T11:50:30.624Z",
-      "updatedAt": "2026-11-21T11:50:30.624Z",
+      "createdAt": "2026-11-21T12:28:12.689Z",
+      "updatedAt": "2026-11-21T12:28:12.689Z",
       "productType": "single",
       "insideDhakaDeliveryCharge": null,
       "outsideDhakaDeliveryCharge": null,
@@ -733,13 +733,13 @@
       "orderBumpPrice": null
     },
     {
-      "id": 34,
+      "id": 48,
       "slug": "relief-cica-cleansing-oil-150ml",
       "sku": "GLOW-TZ-12",
       "productName": "Relief Cica Cleansing Oil – 150ml",
       "sellingType": "single",
-      "subCategoryId": 15,
-      "brandId": 10,
+      "subCategoryId": 21,
+      "brandId": 11,
       "unitId": 1,
       "store": null,
       "warehouse": null,
@@ -748,14 +748,14 @@
       "regularPrice": "1650",
       "quantity": 100,
       "stockStatus": "IN_STOCK",
-      "trackQuantity": true,
+      "trackQuantity": false,
       "preOrderMessage": null,
       "images": [
         "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260294/egeraowticr7faxnnebm.png"
       ],
       "description": "<div class=\"product-description-content\">\n  <p class=\"lead-text\"><strong>Relief Cica Cleansing Oil – 150ml</strong> — Make your cleansing routine more enjoyable with Relief Cica Cleansing Oil. Its lightweight oil formula helps dissolve makeup, sunscreen and everyday impurities, leaving your skin feeling clean and comfortable. A convenient first step in your daily double cleansing routine.</p>\n  \n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Key Benefits & Features:</h3>\n  <ul style=\"list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.8;\">\n    <li style=\"margin-bottom: 0.4rem;\"><strong>Gentle botanical</strong>: Gentle botanical oil emulsifies instantly with water to rinse cleanly away</li><li style=\"margin-bottom: 0.4rem;\"><strong>Dissolves waterproof</strong>: Dissolves waterproof makeup, excess sebum, and stubborn blackheads</li><li style=\"margin-bottom: 0.4rem;\"><strong>Infused with</strong>: Infused with Centella Asiatica to soothe skin during the cleansing process</li><li style=\"margin-bottom: 0.4rem;\"><strong>Leaves skin</strong>: Leaves skin soft, nourished, and hydrated without any greasy film</li><li style=\"margin-bottom: 0.4rem;\"><strong>Non-comedogenic, suitable</strong>: Non-comedogenic, suitable for acne-prone and sensitive skin</li>\n  </ul>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">How To Use:</h3>\n  <p style=\"line-height: 1.7; margin-bottom: 1.5rem; color: #4b5563;\">Pump 2-3 times onto dry hands. Massage gently over dry face to melt makeup. Add warm water to emulsify into a milky fluid, then rinse thoroughly.</p>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Product Information:</h3>\n  <ul style=\"list-style-type: none; padding-left: 0; line-height: 1.8; color: #374151;\">\n    <li>✅ <strong>Brand:</strong> Tenzero Korea</li>\n    <li>✅ <strong>Origin:</strong> Made in South Korea (100% Authentic Guaranteed)</li>\n    <li>✅ <strong>Category:</strong> K-Beauty Skincare & Haircare</li>\n    <li>✅ <strong>Suitability:</strong> Dermatologically Tested & Safe for Sensitive Skin</li>\n  </ul>\n</div>",
-      "taxType": null,
-      "tax": null,
+      "taxType": "inclusive",
+      "tax": 0,
       "discountType": null,
       "discountValue": 0,
       "quantityAlert": null,
@@ -767,8 +767,8 @@
       "status": true,
       "isArchived": false,
       "deletedAt": null,
-      "createdAt": "2026-11-21T11:50:30.636Z",
-      "updatedAt": "2026-11-21T11:50:30.636Z",
+      "createdAt": "2026-11-21T12:28:12.701Z",
+      "updatedAt": "2026-11-21T12:28:12.701Z",
       "productType": "single",
       "insideDhakaDeliveryCharge": null,
       "outsideDhakaDeliveryCharge": null,
@@ -780,13 +780,13 @@
       "orderBumpPrice": null
     },
     {
-      "id": 35,
+      "id": 49,
       "slug": "hair-voluming-watery-essence-lite-100ml",
       "sku": "GLOW-TZ-13",
       "productName": "Hair Voluming Watery Essence Lite – 100ml",
       "sellingType": "single",
-      "subCategoryId": 14,
-      "brandId": 10,
+      "subCategoryId": 20,
+      "brandId": 11,
       "unitId": 1,
       "store": null,
       "warehouse": null,
@@ -795,14 +795,14 @@
       "regularPrice": "1450",
       "quantity": 100,
       "stockStatus": "IN_STOCK",
-      "trackQuantity": true,
+      "trackQuantity": false,
       "preOrderMessage": null,
       "images": [
         "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260304/vbpiknrtndrf5mhyisww.png"
       ],
       "description": "<div class=\"product-description-content\">\n  <p class=\"lead-text\"><strong>Hair Voluming Watery Essence Lite – 100ml</strong> — Support your hair styling with Hair Voluming Watery Essence Lite. Its light essence formula helps hair feel fresh and manageable while adding a soft, natural touch to your everyday haircare routine.</p>\n  \n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Key Benefits & Features:</h3>\n  <ul style=\"list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.8;\">\n    <li style=\"margin-bottom: 0.4rem;\"><strong>Watery lightweight</strong>: Watery lightweight texture delivers natural root volume and bounce</li><li style=\"margin-bottom: 0.4rem;\"><strong>Hydrates flat,</strong>: Hydrates flat, limp hair strands without any stickiness or heaviness</li><li style=\"margin-bottom: 0.4rem;\"><strong>Protects hair</strong>: Protects hair from heat styling and environmental humidity</li><li style=\"margin-bottom: 0.4rem;\"><strong>Adds a</strong>: Adds a clean, natural gloss and fresh floral scent</li><li style=\"margin-bottom: 0.4rem;\"><strong>Perfect daily</strong>: Perfect daily styling primer for fine and thin hair</li>\n  </ul>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">How To Use:</h3>\n  <p style=\"line-height: 1.7; margin-bottom: 1.5rem; color: #4b5563;\">Apply an appropriate amount to towel-dried or blow-dried hair. Style with fingers or hair dryer to build natural volume.</p>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Product Information:</h3>\n  <ul style=\"list-style-type: none; padding-left: 0; line-height: 1.8; color: #374151;\">\n    <li>✅ <strong>Brand:</strong> Tenzero Korea</li>\n    <li>✅ <strong>Origin:</strong> Made in South Korea (100% Authentic Guaranteed)</li>\n    <li>✅ <strong>Category:</strong> K-Beauty Skincare & Haircare</li>\n    <li>✅ <strong>Suitability:</strong> Dermatologically Tested & Safe for Sensitive Skin</li>\n  </ul>\n</div>",
-      "taxType": null,
-      "tax": null,
+      "taxType": "inclusive",
+      "tax": 0,
       "discountType": null,
       "discountValue": 0,
       "quantityAlert": null,
@@ -814,8 +814,8 @@
       "status": true,
       "isArchived": false,
       "deletedAt": null,
-      "createdAt": "2026-11-21T11:50:30.646Z",
-      "updatedAt": "2026-11-21T11:50:30.646Z",
+      "createdAt": "2026-11-21T12:28:12.724Z",
+      "updatedAt": "2026-11-21T12:28:12.724Z",
       "productType": "single",
       "insideDhakaDeliveryCharge": null,
       "outsideDhakaDeliveryCharge": null,
@@ -827,13 +827,13 @@
       "orderBumpPrice": null
     },
     {
-      "id": 36,
+      "id": 50,
       "slug": "hair-protecting-floral-essence-oil-100ml",
       "sku": "GLOW-TZ-14",
       "productName": "Hair Protecting Floral Essence Oil – 100ml",
       "sellingType": "single",
-      "subCategoryId": 14,
-      "brandId": 10,
+      "subCategoryId": 20,
+      "brandId": 11,
       "unitId": 1,
       "store": null,
       "warehouse": null,
@@ -842,14 +842,14 @@
       "regularPrice": "1450",
       "quantity": 100,
       "stockStatus": "IN_STOCK",
-      "trackQuantity": true,
+      "trackQuantity": false,
       "preOrderMessage": null,
       "images": [
         "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260306/cv2eowfva3stk1c0rn5v.png"
       ],
       "description": "<div class=\"product-description-content\">\n  <p class=\"lead-text\"><strong>Hair Protecting Floral Essence Oil – 100ml</strong> — Treat your hair to everyday care with Hair Protecting Floral Essence Oil. Formulated with selected oils and a pleasant floral fragrance, this essence oil is designed to support hair softness and complement your regular beauty routine.</p>\n  \n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Key Benefits & Features:</h3>\n  <ul style=\"list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1.5rem; line-height: 1.8;\">\n    <li style=\"margin-bottom: 0.4rem;\"><strong>Delicate floral</strong>: Delicate floral bouquet aroma keeps hair smelling fresh all day</li><li style=\"margin-bottom: 0.4rem;\"><strong>Nourishing botanical</strong>: Nourishing botanical oils seal hair cuticles to prevent frizz and breakage</li><li style=\"margin-bottom: 0.4rem;\"><strong>Provides thermal</strong>: Provides thermal protection before flat-ironing or blow-drying</li><li style=\"margin-bottom: 0.4rem;\"><strong>Restores silkiness</strong>: Restores silkiness and radiant shine to damaged, color-treated hair</li><li style=\"margin-bottom: 0.4rem;\"><strong>Absorbs smoothly</strong>: Absorbs smoothly into strands without weighing hair down</li>\n  </ul>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">How To Use:</h3>\n  <p style=\"line-height: 1.7; margin-bottom: 1.5rem; color: #4b5563;\">Dispense 1-2 pumps into palms and smooth through damp or dry hair, focusing on split ends and damaged areas.</p>\n\n  <h3 style=\"font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.75rem; color: #1f2937;\">Product Information:</h3>\n  <ul style=\"list-style-type: none; padding-left: 0; line-height: 1.8; color: #374151;\">\n    <li>✅ <strong>Brand:</strong> Tenzero Korea</li>\n    <li>✅ <strong>Origin:</strong> Made in South Korea (100% Authentic Guaranteed)</li>\n    <li>✅ <strong>Category:</strong> K-Beauty Skincare & Haircare</li>\n    <li>✅ <strong>Suitability:</strong> Dermatologically Tested & Safe for Sensitive Skin</li>\n  </ul>\n</div>",
-      "taxType": null,
-      "tax": null,
+      "taxType": "inclusive",
+      "tax": 0,
       "discountType": null,
       "discountValue": 0,
       "quantityAlert": null,
@@ -861,8 +861,8 @@
       "status": true,
       "isArchived": false,
       "deletedAt": null,
-      "createdAt": "2026-11-21T11:50:30.660Z",
-      "updatedAt": "2026-11-21T11:50:30.660Z",
+      "createdAt": "2026-11-21T12:28:12.736Z",
+      "updatedAt": "2026-11-21T12:28:12.736Z",
       "productType": "single",
       "insideDhakaDeliveryCharge": null,
       "outsideDhakaDeliveryCharge": null,
@@ -874,238 +874,13 @@
       "orderBumpPrice": null
     }
   ],
-  "productVariant": [
-    {
-      "id": 15,
-      "productId": 23,
-      "sku": "GLOW-TZ-01-DEFAULT",
-      "price": "1350",
-      "regularPrice": "1650",
-      "costPrice": "0",
-      "quantity": 100,
-      "attributes": {
-        "Default": "Standard"
-      },
-      "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260285/vclajdxnqk7jq8ilxcrq.png",
-      "isDefault": true,
-      "createdAt": "2026-11-21T11:50:30.485Z",
-      "updatedAt": "2026-11-21T11:50:30.485Z"
-    },
-    {
-      "id": 16,
-      "productId": 24,
-      "sku": "GLOW-TZ-02-DEFAULT",
-      "price": "1450",
-      "regularPrice": "1750",
-      "costPrice": "0",
-      "quantity": 100,
-      "attributes": {
-        "Default": "Standard"
-      },
-      "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260286/mzzz6u5cfjfcybmwrdi1.png",
-      "isDefault": true,
-      "createdAt": "2026-11-21T11:50:30.504Z",
-      "updatedAt": "2026-11-21T11:50:30.504Z"
-    },
-    {
-      "id": 17,
-      "productId": 25,
-      "sku": "GLOW-TZ-03-DEFAULT",
-      "price": "1490",
-      "regularPrice": "1850",
-      "costPrice": "0",
-      "quantity": 100,
-      "attributes": {
-        "Default": "Standard"
-      },
-      "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260288/bll4irvdxt9kwxivqgqr.png",
-      "isDefault": true,
-      "createdAt": "2026-11-21T11:50:30.516Z",
-      "updatedAt": "2026-11-21T11:50:30.516Z"
-    },
-    {
-      "id": 18,
-      "productId": 26,
-      "sku": "GLOW-TZ-04-DEFAULT",
-      "price": "1390",
-      "regularPrice": "1700",
-      "costPrice": "0",
-      "quantity": 100,
-      "attributes": {
-        "Default": "Standard"
-      },
-      "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260290/qm3va1bskcwnjre5dzgs.png",
-      "isDefault": true,
-      "createdAt": "2026-11-21T11:50:30.532Z",
-      "updatedAt": "2026-11-21T11:50:30.532Z"
-    },
-    {
-      "id": 19,
-      "productId": 27,
-      "sku": "GLOW-TZ-05-DEFAULT",
-      "price": "1390",
-      "regularPrice": "1700",
-      "costPrice": "0",
-      "quantity": 100,
-      "attributes": {
-        "Default": "Standard"
-      },
-      "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260289/sj1arekn0c22fo3ywg8e.png",
-      "isDefault": true,
-      "createdAt": "2026-11-21T11:50:30.546Z",
-      "updatedAt": "2026-11-21T11:50:30.546Z"
-    },
-    {
-      "id": 20,
-      "productId": 28,
-      "sku": "GLOW-TZ-06-DEFAULT",
-      "price": "1250",
-      "regularPrice": "1550",
-      "costPrice": "0",
-      "quantity": 100,
-      "attributes": {
-        "Default": "Standard"
-      },
-      "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260292/zhpeduepqtpoubevn0ji.png",
-      "isDefault": true,
-      "createdAt": "2026-11-21T11:50:30.562Z",
-      "updatedAt": "2026-11-21T11:50:30.562Z"
-    },
-    {
-      "id": 21,
-      "productId": 29,
-      "sku": "GLOW-TZ-07-DEFAULT",
-      "price": "1190",
-      "regularPrice": "1450",
-      "costPrice": "0",
-      "quantity": 100,
-      "attributes": {
-        "Default": "Standard"
-      },
-      "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260302/zbn03nb5fz3ycyvppfsl.png",
-      "isDefault": true,
-      "createdAt": "2026-11-21T11:50:30.575Z",
-      "updatedAt": "2026-11-21T11:50:30.575Z"
-    },
-    {
-      "id": 22,
-      "productId": 30,
-      "sku": "GLOW-TZ-08-DEFAULT",
-      "price": "1350",
-      "regularPrice": "1650",
-      "costPrice": "0",
-      "quantity": 100,
-      "attributes": {
-        "Default": "Standard"
-      },
-      "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260296/bhxw8simjscxuradqvhl.png",
-      "isDefault": true,
-      "createdAt": "2026-11-21T11:50:30.593Z",
-      "updatedAt": "2026-11-21T11:50:30.593Z"
-    },
-    {
-      "id": 23,
-      "productId": 31,
-      "sku": "GLOW-TZ-09-DEFAULT",
-      "price": "1450",
-      "regularPrice": "1750",
-      "costPrice": "0",
-      "quantity": 100,
-      "attributes": {
-        "Default": "Standard"
-      },
-      "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260297/orxzcrctqvhavaoxd0o1.png",
-      "isDefault": true,
-      "createdAt": "2026-11-21T11:50:30.604Z",
-      "updatedAt": "2026-11-21T11:50:30.604Z"
-    },
-    {
-      "id": 24,
-      "productId": 32,
-      "sku": "GLOW-TZ-10-DEFAULT",
-      "price": "1250",
-      "regularPrice": "1550",
-      "costPrice": "0",
-      "quantity": 100,
-      "attributes": {
-        "Default": "Standard"
-      },
-      "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260299/mmbdlojuxkd3urwx6lrh.png",
-      "isDefault": true,
-      "createdAt": "2026-11-21T11:50:30.616Z",
-      "updatedAt": "2026-11-21T11:50:30.616Z"
-    },
-    {
-      "id": 25,
-      "productId": 33,
-      "sku": "GLOW-TZ-11-DEFAULT",
-      "price": "1250",
-      "regularPrice": "1550",
-      "costPrice": "0",
-      "quantity": 100,
-      "attributes": {
-        "Default": "Standard"
-      },
-      "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260301/dimn4avyj69ceavoqihd.png",
-      "isDefault": true,
-      "createdAt": "2026-11-21T11:50:30.627Z",
-      "updatedAt": "2026-11-21T11:50:30.627Z"
-    },
-    {
-      "id": 26,
-      "productId": 34,
-      "sku": "GLOW-TZ-12-DEFAULT",
-      "price": "1350",
-      "regularPrice": "1650",
-      "costPrice": "0",
-      "quantity": 100,
-      "attributes": {
-        "Default": "Standard"
-      },
-      "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260294/egeraowticr7faxnnebm.png",
-      "isDefault": true,
-      "createdAt": "2026-11-21T11:50:30.641Z",
-      "updatedAt": "2026-11-21T11:50:30.641Z"
-    },
-    {
-      "id": 27,
-      "productId": 35,
-      "sku": "GLOW-TZ-13-DEFAULT",
-      "price": "1190",
-      "regularPrice": "1450",
-      "costPrice": "0",
-      "quantity": 100,
-      "attributes": {
-        "Default": "Standard"
-      },
-      "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260304/vbpiknrtndrf5mhyisww.png",
-      "isDefault": true,
-      "createdAt": "2026-11-21T11:50:30.650Z",
-      "updatedAt": "2026-11-21T11:50:30.650Z"
-    },
-    {
-      "id": 28,
-      "productId": 36,
-      "sku": "GLOW-TZ-14-DEFAULT",
-      "price": "1190",
-      "regularPrice": "1450",
-      "costPrice": "0",
-      "quantity": 100,
-      "attributes": {
-        "Default": "Standard"
-      },
-      "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260306/cv2eowfva3stk1c0rn5v.png",
-      "isDefault": true,
-      "createdAt": "2026-11-21T11:50:30.664Z",
-      "updatedAt": "2026-11-21T11:50:30.664Z"
-    }
-  ],
+  "productVariant": [],
   "customer": [],
   "customerAddress": [],
   "accountHead": [],
   "heroSlider": [
     {
-      "id": 13,
+      "id": 16,
       "badge": "KOREAN INNOVATION",
       "title": "Tenzero Rose PDRN K Vitamin K Water Soothing Cream",
       "sub_title": "100g generous size delivering ultra-hydrating glass skin hydration and soothing barrier care.",
@@ -1113,11 +888,11 @@
       "link": "/product/rose-pdrn-k-vitamin-k-water-soothing-cream-100g",
       "categoryLink": "/product?category=Moisturizers%20%26%20Creams",
       "productId": null,
-      "createdAt": "2026-11-21T11:50:30.680Z",
-      "updatedAt": "2026-11-21T11:50:30.680Z"
+      "createdAt": "2026-11-21T12:28:12.769Z",
+      "updatedAt": "2026-11-21T12:28:12.769Z"
     },
     {
-      "id": 14,
+      "id": 17,
       "badge": "BEST SELLING AMPOULE",
       "title": "Tenzero Retinol A & Ceramide D High-Potency Ampoules",
       "sub_title": "Intense skin barrier revitalization and antioxidant texture refining straight from Seoul.",
@@ -1125,11 +900,11 @@
       "link": "/product/retinol-a-vitamin-a-ampoule-50ml",
       "categoryLink": "/product?category=Serums%20%26%20Ampoules",
       "productId": null,
-      "createdAt": "2026-11-21T11:50:30.680Z",
-      "updatedAt": "2026-11-21T11:50:30.680Z"
+      "createdAt": "2026-11-21T12:28:12.769Z",
+      "updatedAt": "2026-11-21T12:28:12.769Z"
     },
     {
-      "id": 15,
+      "id": 18,
       "badge": "HAIR & SCALP CARE",
       "title": "Tenzero Anti-Hair Loss Scalp Cooling Tonics",
       "sub_title": "Cica & Aqua cooling scalp relief with KFDA functional anti-hair loss certified formula.",
@@ -1137,8 +912,8 @@
       "link": "/product/cica-cooling-tonic-anti-hair-loss-scalp-tonic-100ml",
       "categoryLink": "/product?category=Scalp%20Care%20%26%20Tonics",
       "productId": null,
-      "createdAt": "2026-11-21T11:50:30.680Z",
-      "updatedAt": "2026-11-21T11:50:30.680Z"
+      "createdAt": "2026-11-21T12:28:12.769Z",
+      "updatedAt": "2026-11-21T12:28:12.769Z"
     }
   ],
   "storeSetting": [
@@ -1183,200 +958,200 @@
   ],
   "collection": [
     {
-      "id": 5,
+      "id": 7,
       "name": "Tenzero Best Sellers",
       "slug": "tenzero-best-sellers",
       "status": true,
       "priority": 1,
-      "createdAt": "2026-11-21T11:50:30.463Z",
-      "updatedAt": "2026-11-21T11:50:30.463Z"
+      "createdAt": "2026-11-21T12:28:12.503Z",
+      "updatedAt": "2026-11-21T12:28:12.503Z"
     },
     {
-      "id": 6,
+      "id": 8,
       "name": "Daily Skin & Hair Routine",
       "slug": "daily-skin-hair-routine",
       "status": true,
       "priority": 1,
-      "createdAt": "2026-11-21T11:50:30.468Z",
-      "updatedAt": "2026-11-21T11:50:30.468Z"
+      "createdAt": "2026-11-21T12:28:12.508Z",
+      "updatedAt": "2026-11-21T12:28:12.508Z"
     }
   ],
   "bentoImageCard": [
     {
-      "id": 9,
+      "id": 12,
       "title": "Rose PDRN K Water Cream",
       "sub_title": "Intense daily soothing care with Rose PDRN",
       "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260285/vclajdxnqk7jq8ilxcrq.png",
       "link": "/product/rose-pdrn-k-vitamin-k-water-soothing-cream-100g",
       "category": "Moisturizers & Creams",
-      "createdAt": "2026-11-21T11:50:30.686Z",
-      "updatedAt": "2026-11-21T11:50:30.686Z"
+      "createdAt": "2026-11-21T12:28:12.777Z",
+      "updatedAt": "2026-11-21T12:28:12.777Z"
     },
     {
-      "id": 10,
+      "id": 13,
       "title": "Clear Green Caviar Toner",
       "sub_title": "Sea grape mineral-rich balancing toner",
       "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260292/zhpeduepqtpoubevn0ji.png",
       "link": "/product/clear-green-caviar-toner-200ml",
       "category": "Toner & Essence",
-      "createdAt": "2026-11-21T11:50:30.686Z",
-      "updatedAt": "2026-11-21T11:50:30.686Z"
+      "createdAt": "2026-11-21T12:28:12.777Z",
+      "updatedAt": "2026-11-21T12:28:12.777Z"
     },
     {
-      "id": 11,
+      "id": 14,
       "title": "Hair Angel Ring Musk Essence",
       "sub_title": "3 Gold Oils for radiant glass hair shine",
       "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260302/zbn03nb5fz3ycyvppfsl.png",
       "link": "/product/hair-angel-ring-musk-essence-100ml",
       "category": "Hair Essences & Oils",
-      "createdAt": "2026-11-21T11:50:30.686Z",
-      "updatedAt": "2026-11-21T11:50:30.686Z"
+      "createdAt": "2026-11-21T12:28:12.777Z",
+      "updatedAt": "2026-11-21T12:28:12.777Z"
     }
   ],
   "midBanner": [
     {
-      "id": 3,
+      "id": 4,
       "sub_title": "Specially formulated by Tenzero Seoul to restore hydration, repair damaged barriers, and deliver radiant glass skin.",
       "title": "Experience 100% Authentic Korean Skincare",
       "image": "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260286/mzzz6u5cfjfcybmwrdi1.png",
       "link": "/product/ceramide-d-vitamin-d-ampoule-50ml",
       "category": "Serums & Ampoules",
-      "createdAt": "2026-11-21T11:50:30.689Z",
-      "updatedAt": "2026-11-21T11:50:30.689Z"
+      "createdAt": "2026-11-21T12:28:12.797Z",
+      "updatedAt": "2026-11-21T12:28:12.797Z"
     }
   ],
   "productCollection": [
     {
-      "id": 30,
-      "productId": 23,
-      "collectionId": 5,
-      "createdAt": "2026-11-21T11:50:30.491Z"
+      "id": 51,
+      "productId": 37,
+      "collectionId": 7,
+      "createdAt": "2026-11-21T12:28:12.519Z"
     },
     {
-      "id": 31,
-      "productId": 23,
-      "collectionId": 6,
-      "createdAt": "2026-11-21T11:50:30.495Z"
+      "id": 52,
+      "productId": 37,
+      "collectionId": 8,
+      "createdAt": "2026-11-21T12:28:12.536Z"
     },
     {
-      "id": 32,
-      "productId": 24,
-      "collectionId": 5,
-      "createdAt": "2026-11-21T11:50:30.508Z"
+      "id": 53,
+      "productId": 38,
+      "collectionId": 7,
+      "createdAt": "2026-11-21T12:28:12.544Z"
     },
     {
-      "id": 33,
-      "productId": 25,
-      "collectionId": 5,
-      "createdAt": "2026-11-21T11:50:30.520Z"
+      "id": 54,
+      "productId": 39,
+      "collectionId": 7,
+      "createdAt": "2026-11-21T12:28:12.553Z"
     },
     {
-      "id": 34,
-      "productId": 25,
-      "collectionId": 6,
-      "createdAt": "2026-11-21T11:50:30.522Z"
+      "id": 55,
+      "productId": 39,
+      "collectionId": 8,
+      "createdAt": "2026-11-21T12:28:12.570Z"
     },
     {
-      "id": 35,
-      "productId": 26,
-      "collectionId": 5,
-      "createdAt": "2026-11-21T11:50:30.537Z"
+      "id": 56,
+      "productId": 40,
+      "collectionId": 7,
+      "createdAt": "2026-11-21T12:28:12.580Z"
     },
     {
-      "id": 36,
-      "productId": 27,
-      "collectionId": 5,
-      "createdAt": "2026-11-21T11:50:30.549Z"
+      "id": 57,
+      "productId": 41,
+      "collectionId": 7,
+      "createdAt": "2026-11-21T12:28:12.589Z"
     },
     {
-      "id": 37,
-      "productId": 27,
-      "collectionId": 6,
-      "createdAt": "2026-11-21T11:50:30.552Z"
+      "id": 58,
+      "productId": 41,
+      "collectionId": 8,
+      "createdAt": "2026-11-21T12:28:12.605Z"
     },
     {
-      "id": 38,
-      "productId": 28,
-      "collectionId": 5,
-      "createdAt": "2026-11-21T11:50:30.566Z"
+      "id": 59,
+      "productId": 42,
+      "collectionId": 7,
+      "createdAt": "2026-11-21T12:28:12.614Z"
     },
     {
-      "id": 39,
-      "productId": 29,
-      "collectionId": 5,
-      "createdAt": "2026-11-21T11:50:30.578Z"
+      "id": 60,
+      "productId": 43,
+      "collectionId": 7,
+      "createdAt": "2026-11-21T12:28:12.624Z"
     },
     {
-      "id": 40,
-      "productId": 29,
-      "collectionId": 6,
-      "createdAt": "2026-11-21T11:50:30.583Z"
+      "id": 61,
+      "productId": 43,
+      "collectionId": 8,
+      "createdAt": "2026-11-21T12:28:12.628Z"
     },
     {
-      "id": 41,
-      "productId": 30,
-      "collectionId": 5,
-      "createdAt": "2026-11-21T11:50:30.596Z"
+      "id": 62,
+      "productId": 44,
+      "collectionId": 7,
+      "createdAt": "2026-11-21T12:28:12.649Z"
     },
     {
-      "id": 42,
-      "productId": 31,
-      "collectionId": 5,
-      "createdAt": "2026-11-21T11:50:30.606Z"
+      "id": 63,
+      "productId": 45,
+      "collectionId": 7,
+      "createdAt": "2026-11-21T12:28:12.658Z"
     },
     {
-      "id": 43,
-      "productId": 31,
-      "collectionId": 6,
-      "createdAt": "2026-11-21T11:50:30.609Z"
+      "id": 64,
+      "productId": 45,
+      "collectionId": 8,
+      "createdAt": "2026-11-21T12:28:12.663Z"
     },
     {
-      "id": 44,
-      "productId": 32,
-      "collectionId": 5,
-      "createdAt": "2026-11-21T11:50:30.621Z"
+      "id": 65,
+      "productId": 46,
+      "collectionId": 7,
+      "createdAt": "2026-11-21T12:28:12.671Z"
     },
     {
-      "id": 45,
-      "productId": 33,
-      "collectionId": 5,
-      "createdAt": "2026-11-21T11:50:30.630Z"
+      "id": 66,
+      "productId": 47,
+      "collectionId": 7,
+      "createdAt": "2026-11-21T12:28:12.693Z"
     },
     {
-      "id": 46,
-      "productId": 33,
-      "collectionId": 6,
-      "createdAt": "2026-11-21T11:50:30.632Z"
+      "id": 67,
+      "productId": 47,
+      "collectionId": 8,
+      "createdAt": "2026-11-21T12:28:12.697Z"
     },
     {
-      "id": 47,
-      "productId": 34,
-      "collectionId": 5,
-      "createdAt": "2026-11-21T11:50:30.644Z"
+      "id": 68,
+      "productId": 48,
+      "collectionId": 7,
+      "createdAt": "2026-11-21T12:28:12.707Z"
     },
     {
-      "id": 48,
-      "productId": 35,
-      "collectionId": 5,
-      "createdAt": "2026-11-21T11:50:30.654Z"
+      "id": 69,
+      "productId": 49,
+      "collectionId": 7,
+      "createdAt": "2026-11-21T12:28:12.729Z"
     },
     {
-      "id": 49,
-      "productId": 35,
-      "collectionId": 6,
-      "createdAt": "2026-11-21T11:50:30.657Z"
+      "id": 70,
+      "productId": 49,
+      "collectionId": 8,
+      "createdAt": "2026-11-21T12:28:12.733Z"
     },
     {
-      "id": 50,
-      "productId": 36,
-      "collectionId": 5,
-      "createdAt": "2026-11-21T11:50:30.667Z"
+      "id": 71,
+      "productId": 50,
+      "collectionId": 7,
+      "createdAt": "2026-11-21T12:28:12.742Z"
     }
   ],
   "landingPage": [
     {
-      "id": 2,
-      "productId": 23,
+      "id": 3,
+      "productId": 37,
       "orderBumpProductId": null,
       "orderBumpTitle": null,
       "orderBumpSubtitle": null,
@@ -1459,14 +1234,14 @@
       "themeColor": "#D48B80",
       "template": "korean_beauty",
       "relatedProductIds": [
-        24,
-        25,
-        28
+        38,
+        39,
+        42
       ],
       "isPublished": true,
       "viewsCount": 0,
-      "createdAt": "2026-11-21T11:50:30.671Z",
-      "updatedAt": "2026-11-21T11:50:30.671Z"
+      "createdAt": "2026-11-21T12:28:12.746Z",
+      "updatedAt": "2026-11-21T12:28:12.746Z"
     }
   ]
 }

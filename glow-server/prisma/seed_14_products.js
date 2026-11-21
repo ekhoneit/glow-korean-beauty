@@ -8,24 +8,24 @@ const rawCloudinary = {
   1: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260285/vclajdxnqk7jq8ilxcrq.png", // 1.png: Rose PDRN
   2: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260286/mzzz6u5cfjfcybmwrdi1.png", // 2.png: Ceramide D Ampoule
   3: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260288/bll4irvdxt9kwxivqgqr.png", // 3.png: Retinol A Ampoule
-  4: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260289/sj1arekn0c22fo3ywg8e.png", // 4.png
-  5: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260290/qm3va1bskcwnjre5dzgs.png", // 5.png
+  4: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260289/sj1arekn0c22fo3ywg8e.png", // 4.png: Ceramide Cream
+  5: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260290/qm3va1bskcwnjre5dzgs.png", // 5.png: Retinol Cream
   6: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260292/zhpeduepqtpoubevn0ji.png", // 6.png: Clear Green Caviar Toner
-  7: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260294/egeraowticr7faxnnebm.png", // 7.png
+  7: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260294/egeraowticr7faxnnebm.png", // 7.png: Cica Cleansing Oil
   8: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260296/bhxw8simjscxuradqvhl.png", // 8.png: Green Caviar Serum
   9: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260297/orxzcrctqvhavaoxd0o1.png", // 9.png: Green Caviar Cream
   10: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260299/mmbdlojuxkd3urwx6lrh.png", // 10.png: Aqua Cooling Tonic
   11: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260301/dimn4avyj69ceavoqihd.png", // 11.png: Cica Cooling Tonic
-  12: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260302/zbn03nb5fz3ycyvppfsl.png", // 12.png
+  12: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260302/zbn03nb5fz3ycyvppfsl.png", // 12.png: Hair Angel Ring
   13: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260304/vbpiknrtndrf5mhyisww.png", // 13.png: Hair Voluming Watery Essence
   14: "https://res.cloudinary.com/dkgo6wuq/image/upload/v1795260306/cv2eowfva3stk1c0rn5v.png"  // 15.png: Hair Protecting Floral Essence
 };
 
-// Exact Swapped Mapping as requested:
-// Product 4 (Retinol Cream) gets image 5
-// Product 5 (Ceramide Cream) gets image 4
-// Product 7 (Hair Angel Ring) gets image 12
-// Product 12 (Relief Cica Cleansing Oil) gets image 7
+// Swapped Mapping:
+// Product 4 (Retinol Cream) gets 5
+// Product 5 (Ceramide Cream) gets 4
+// Product 7 (Hair Angel Ring) gets 12
+// Product 12 (Relief Cica Cleansing Oil) gets 7
 const productImages = {
   1: rawCloudinary[1],
   2: rawCloudinary[2],
@@ -43,7 +43,7 @@ const productImages = {
   14: rawCloudinary[14]
 };
 
-// 14 Products definition
+// 14 Products definition (All SINGLE products, Tax Inclusive, Track Stock unticked)
 const rawProducts = [
   {
     num: 1,
@@ -324,7 +324,7 @@ function buildRichDescription(prod) {
 }
 
 async function main() {
-  console.log("🌱 Seeding Clean 14 Products with Accurate Swapped Images...");
+  console.log("🌱 Seeding Clean 14 SINGLE Products (Tax: Inclusive, TrackStock: Unticked)...");
 
   // 1. Brand Tenzero only
   await prisma.brand.deleteMany({});
@@ -391,7 +391,7 @@ async function main() {
   });
   console.log("✅ Collections established");
 
-  // 5. Insert 14 Products
+  // 5. Insert 14 Products strictly as SINGLE products (productType="single", taxType="inclusive", trackQuantity=false)
   const createdProducts = [];
   for (const item of rawProducts) {
     const cUrl = productImages[item.num];
@@ -403,31 +403,20 @@ async function main() {
         slug: item.slug,
         sku: item.sku,
         productName: item.title,
+        productType: "single",       // Strictly SINGLE
         sellingType: "single",
+        taxType: "inclusive",        // Tax Inclusive
+        tax: 0,
+        trackQuantity: false,        // Unticked: Track stock count false
+        stockStatus: "IN_STOCK",     // Always In Stock
+        quantity: 100,               // Default buffer
         subCategoryId: targetSubCategoryId,
         brandId: brand.id,
         unitId: 1, // Pcs
         price: item.price,
         regularPrice: item.regularPrice,
-        quantity: 100,
-        stockStatus: "IN_STOCK",
-        trackQuantity: true,
         images: [cUrl],
         description: htmlDesc
-      }
-    });
-
-    // Create default variant
-    await prisma.productVariant.create({
-      data: {
-        productId: prod.id,
-        sku: `${item.sku}-DEFAULT`,
-        price: item.price,
-        regularPrice: item.regularPrice,
-        quantity: 100,
-        isDefault: true,
-        image: cUrl,
-        attributes: { "Default": "Standard" }
       }
     });
 
@@ -448,7 +437,7 @@ async function main() {
     }
 
     createdProducts.push(prod);
-    console.log(`✨ Product #${item.num} -> ${prod.productName} (Image: ${cUrl.substring(cUrl.lastIndexOf('/')+1)})`);
+    console.log(`✨ Single Product #${item.num} -> ${prod.productName} (Image: ${cUrl.substring(cUrl.lastIndexOf('/')+1)})`);
   }
 
   // 6. Flagship Landing Page
@@ -571,14 +560,14 @@ async function main() {
   existing.bentoImageCard = await prisma.bentoImageCard.findMany();
   existing.midBanner = await prisma.midBanner.findMany();
   existing.product = await prisma.product.findMany();
-  existing.productVariant = await prisma.productVariant.findMany();
+  existing.productVariant = []; // No variants, strictly single products
   existing.productCollection = await prisma.productCollection.findMany();
   existing.landingPage = await prisma.landingPage.findMany();
 
   fs.writeFileSync(dataPath, JSON.stringify(existing, null, 2));
-  console.log("💾 local_seed_data.json updated completely with 100% clean data!");
+  console.log("💾 local_seed_data.json updated completely with 100% clean single product data!");
 
-  console.log("🎉 ALL 14 PRODUCTS SEEDED WITH EXACT SWAPPED IMAGES!");
+  console.log("🎉 ALL 14 SINGLE PRODUCTS SEEDED CLEANLY!");
 }
 
 main()
