@@ -175,7 +175,7 @@ model Product {
   trackQuantity              Boolean   @default(false)
   preOrderMessage            String?
   images                     Json?
-  description                String?
+  description                String?   @db.Text
   taxType                    String?
   tax                        Float?
   discountType               String?

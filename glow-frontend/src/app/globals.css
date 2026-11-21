@@ -276,4 +276,68 @@ body {
   border-color: var(--secound) !important;
 }
 
+/* Rich Text & Product Description Typography Preservation */
+.prose h1, .product-description h1 {
+  font-size: 1.875rem !important;
+  line-height: 2.25rem !important;
+  font-weight: 800 !important;
+  margin-top: 1.25rem !important;
+  margin-bottom: 0.75rem !important;
+  color: #111827 !important;
+}
+
+.prose h2, .product-description h2 {
+  font-size: 1.5rem !important;
+  line-height: 2rem !important;
+  font-weight: 700 !important;
+  margin-top: 1rem !important;
+  margin-bottom: 0.5rem !important;
+  color: #1f2937 !important;
+}
+
+.prose h3, .product-description h3 {
+  font-size: 1.25rem !important;
+  line-height: 1.75rem !important;
+  font-weight: 700 !important;
+  margin-top: 0.75rem !important;
+  margin-bottom: 0.375rem !important;
+  color: #374151 !important;
+}
+
+.prose h4, .product-description h4 {
+  font-size: 1.125rem !important;
+  line-height: 1.5rem !important;
+  font-weight: 600 !important;
+  margin-top: 0.5rem !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.prose strong, .prose b,
+.product-description strong, .product-description b {
+  font-weight: 700 !important;
+  color: #111827 !important;
+}
+
+.prose p, .product-description p {
+  margin-bottom: 0.75rem !important;
+  line-height: 1.75 !important;
+}
+
+.prose ul, .product-description ul {
+  list-style-type: disc !important;
+  padding-left: 1.25rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.prose ol, .product-description ol {
+  list-style-type: decimal !important;
+  padding-left: 1.25rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.prose li, .product-description li {
+  margin-bottom: 0.25rem !important;
+}
+
+
 
