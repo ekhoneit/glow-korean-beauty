@@ -275,7 +275,7 @@ class ClientPDFGenerator {
       c.primary_email ||
       c.secondary_email ||
       c.email ||
-      "support@glowbeautybd.com";
+      "support@glowkoreanbeautybd.com";
     const address = c.address || "Dhaka, Bangladesh";
     const title = c.title || "Glow Korean Beauty Online Shop";
     return { phone, email, address, title };

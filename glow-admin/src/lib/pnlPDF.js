@@ -35,7 +35,7 @@ export function generatePnLPDF({
     name: "Glow Korean Beauty",
     address: "Jigatola, Dhaka, Bangladesh",
     phone: "+880 1700000000",
-    email: "support@glowbeautybd.com",
+    email: "support@glowkoreanbeautybd.com",
   },
 }) {
   const doc = new jsPDF({
@@ -106,7 +106,7 @@ export function generatePnLPDF({
   doc.setTextColor(70, 70, 70);
   doc.text(`Phone: ${companyInfo.phone || "01969968555"}`, midX, blockTop + 5);
   doc.text(
-    `Email: ${companyInfo.email || "info@glowbeautybd.com"}`,
+    `Email: ${companyInfo.email || "info@glowkoreanbeautybd.com"}`,
     midX,
     blockTop + 10,
   );

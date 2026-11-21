@@ -75,7 +75,7 @@ const ForgotPassword = () => {
                 },
               })}
               type="email"
-              placeholder="admin@glowbeautybd.com"
+              placeholder="admin@glowkoreanbeautybd.com"
               disabled={isLoading}
               className="w-full px-4 py-2.5 rounded-xl border border-gray-200 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D48B80]/30 focus:border-[#D48B80] transition text-[#102D50]"
             />

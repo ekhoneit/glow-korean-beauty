@@ -460,7 +460,7 @@ const BillingDetails = ({
       const emailToUse = (
         user?.email ||
         formData.email ||
-        (cleanPhone ? `guest_${cleanPhone}@glowbeautybd.com` : "")
+        (cleanPhone ? `guest_${cleanPhone}@glowkoreanbeautybd.com` : "")
       ).trim();
       const recipientName = (
         formData.recipientName ||
@@ -525,7 +525,8 @@ const BillingDetails = ({
           body: JSON.stringify({
             fullName: recipientName || "Guest Customer",
             email:
-              emailToUse || `guest_${cleanPhone || Date.now()}@glowbeautybd.com`,
+              emailToUse ||
+              `guest_${cleanPhone || Date.now()}@glowkoreanbeautybd.com`,
             phone: cleanPhone,
             status: true,
           }),

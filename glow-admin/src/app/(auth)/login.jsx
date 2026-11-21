@@ -87,7 +87,7 @@ const Login = () => {
                 },
               })}
               type="email"
-              placeholder="admin@glowbeautybd.com"
+              placeholder="admin@glowkoreanbeautybd.com"
               className={inputClass}
               disabled={isLoading}
             />

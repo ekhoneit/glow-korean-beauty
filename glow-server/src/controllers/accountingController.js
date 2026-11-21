@@ -166,9 +166,9 @@ exports.getAccountHeads = async (req, res) => {
     }
     if (search) {
       where.OR = [
-        { title: { contains: search, } },
-        { code: { contains: search, } },
-        { description: { contains: search, } },
+        { title: { contains: search } },
+        { code: { contains: search } },
+        { description: { contains: search } },
       ];
     }
 
@@ -234,7 +234,7 @@ exports.createAccountHead = async (req, res) => {
 
     // Check title uniqueness
     const existing = await prisma.accountHead.findFirst({
-      where: { title: { equals: title.trim(), } },
+      where: { title: { equals: title.trim() } },
     });
     if (existing) {
       return errorResponse(res, `Account Head '${title}' already exists`, 409);
@@ -479,10 +479,7 @@ exports.seedDefaultHeads = async (req, res) => {
     for (const head of defaultHeads) {
       const exists = await prisma.accountHead.findFirst({
         where: {
-          OR: [
-            { title: { equals: head.title, } },
-            { code: head.code },
-          ],
+          OR: [{ title: { equals: head.title } }, { code: head.code }],
         },
       });
       if (!exists) {
@@ -542,7 +539,7 @@ exports.getTransactions = async (req, res) => {
       where.accountHeadId = parseInt(accountHeadId);
     }
     if (paymentMethod && paymentMethod !== "all") {
-      where.paymentMethod = { equals: paymentMethod, };
+      where.paymentMethod = { equals: paymentMethod };
     }
     if (dateFilter) {
       where.date = dateFilter;
@@ -555,10 +552,10 @@ exports.getTransactions = async (req, res) => {
     }
     if (search) {
       where.OR = [
-        { voucherNo: { contains: search, } },
-        { reference: { contains: search, } },
-        { note: { contains: search, } },
-        { accountHead: { title: { contains: search, } } },
+        { voucherNo: { contains: search } },
+        { reference: { contains: search } },
+        { note: { contains: search } },
+        { accountHead: { title: { contains: search } } },
       ];
     }
 
@@ -1259,11 +1256,11 @@ exports.getSalesAndCollectionReport = async (req, res) => {
     }
     if (search) {
       where.OR = [
-        { orderNumber: { contains: search, } },
-        { customer: { fullName: { contains: search, } } },
-        { customer: { phone: { contains: search, } } },
+        { orderNumber: { contains: search } },
+        { customer: { fullName: { contains: search } } },
+        { customer: { phone: { contains: search } } },
         {
-          shipment: { trackingCode: { contains: search, } },
+          shipment: { trackingCode: { contains: search } },
         },
       ];
     }
@@ -1551,7 +1548,7 @@ exports.getProfitAndLossReport = async (req, res) => {
         contactRecord?.phone_number ||
         contactRecord?.telephone ||
         "+8801700000000",
-      email: contactRecord?.primary_email || "support@glowbeautybd.com",
+      email: contactRecord?.primary_email || "support@glowkoreanbeautybd.com",
     };
 
     return successResponse(
@@ -1656,8 +1653,8 @@ exports.getProductWiseSalesReport = async (req, res) => {
       itemWhere.product = {
         ...(itemWhere.product || {}),
         OR: [
-          { productName: { contains: search, } },
-          { sku: { contains: search, } },
+          { productName: { contains: search } },
+          { sku: { contains: search } },
         ],
       };
     }

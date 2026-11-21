@@ -17,17 +17,19 @@ const emailTemplates = {
 const fromAddresses = {
   verification:
     process.env.EMAIL_FROM_VERIFICATION ||
-    "Glow Korean Beauty Ecommerce <info@glowbeautybd.com>",
+    "Glow Korean Beauty Ecommerce <info@glowkoreanbeautybd.com>",
   welcome:
     process.env.EMAIL_FROM_WELCOME ||
-    "Glow Korean Beauty Ecommerce <info@glowbeautybd.com>",
+    "Glow Korean Beauty Ecommerce <info@glowkoreanbeautybd.com>",
   passwordResetConfirmation:
-    process.env.EMAIL_FROM_RESET || "Glow Korean Beauty Ecommerce <auth@glowbeautybd.com>",
+    process.env.EMAIL_FROM_RESET ||
+    "Glow Korean Beauty Ecommerce <auth@glowkoreanbeautybd.com>",
   orderConfirmation:
-    process.env.EMAIL_FROM_ORDER || "Glow Korean Beauty Ecommerce <info@glowbeautybd.com>",
+    process.env.EMAIL_FROM_ORDER ||
+    "Glow Korean Beauty Ecommerce <info@glowkoreanbeautybd.com>",
   bulk:
     process.env.EMAIL_FROM_BULK ||
-    "Glow Korean Beauty Ecommerce <noreply@glowbeautybd.com>",
+    "Glow Korean Beauty Ecommerce <noreply@glowkoreanbeautybd.com>",
 };
 
 // Direct function to send order confirmation without HTTP roundtrips
@@ -193,7 +195,7 @@ exports.sendOrderConfirmationDirect = async (orderData) => {
     to: customer?.email,
     subject: `Order Confirmation #${orderNumber} - Glow Korean Beauty`,
     html: emailHtml,
-    replyTo: "info@glowbeautybd.com",
+    replyTo: "info@glowkoreanbeautybd.com",
   };
 
   if (pdfAttachment) {
@@ -380,7 +382,7 @@ exports.sendOrderConfirmation = async (req, res) => {
       to: customer?.email,
       subject: `Order Confirmation #${orderNumber} - Glow Korean Beauty`,
       html: emailHtml,
-      replyTo: "info@glowbeautybd.com",
+      replyTo: "info@glowkoreanbeautybd.com",
     };
 
     // Add PDF attachment if generated
@@ -596,7 +598,6 @@ exports.getEmailStatus = async (req, res) => {
     });
   }
 };
-
 
 // Export helpers for authController
 exports.resend = resend;

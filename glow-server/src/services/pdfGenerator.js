@@ -562,7 +562,7 @@ class PDFGenerator {
           .fillColor(C.secondary)
           .font("Helvetica")
           .text(
-            "Dhaka, Bangladesh  |  Phone: 01969968555  |  Email: info@glowbeautybd.com",
+            "Dhaka, Bangladesh  |  Phone: 01969968555  |  Email: info@glowkoreanbeautybd.com",
             0,
             FY + 18,
             { width: PAGE_W, align: "center", lineBreak: false },
@@ -726,7 +726,7 @@ class PDFGenerator {
           .fillColor(C.primary)
           .font("Helvetica")
           .text(
-            "Dhaka, Bangladesh | 01969968555 | info@glowbeautybd.com",
+            "Dhaka, Bangladesh | 01969968555 | info@glowkoreanbeautybd.com",
             0,
             278,
             { width: 400, align: "center", lineBreak: false },
