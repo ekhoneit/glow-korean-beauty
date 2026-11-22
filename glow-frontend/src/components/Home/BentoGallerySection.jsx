@@ -9,7 +9,11 @@ import { motion } from "framer-motion";
 export default function BentoGallerySection({ bentoCards = [] }) {
     if (!bentoCards || bentoCards.length === 0) return null;
 
-    const activeCards = bentoCards.filter(c => c.image && c.status !== false);
+    // Filter active cards and sort by priority (asc) so ordering is strictly respected
+    const activeCards = bentoCards
+        .filter(c => c.image && c.status !== false)
+        .sort((a, b) => (Number(a.priority) || 0) - (Number(b.priority) || 0));
+
     if (activeCards.length === 0) return null;
 
     return (

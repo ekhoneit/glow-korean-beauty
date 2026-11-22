@@ -8,6 +8,9 @@ import AllProductsSection from "@/components/Home/AllProductsSection";
 import MidBannerSection from "@/components/Home/MidBannerSection";
 import { apiClient } from "@/lib/apiClient";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export const metadata = {
   description: "Glow Korean Beauty is your premier authentic Korean skincare and cosmetic destination in Bangladesh. 100% genuine products directly imported from Seoul.",
   alternates: {
@@ -108,7 +111,8 @@ export default async function HomePage() {
   // 6. Fetch Bento Image Gallery (/api/bento-gallery)
   try {
     const bentoRes = await apiClient("/api/bento-gallery", {
-      next: { revalidate: 15, tags: ["bento-gallery"] },
+      cache: "no-store",
+      next: { revalidate: 0, tags: ["bento-gallery"] },
     });
     if (Array.isArray(bentoRes)) {
       bentoCards = bentoRes;
