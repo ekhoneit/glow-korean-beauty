@@ -96,19 +96,21 @@ const reorderBentoImageCards = async (req, res) => {
                 )
             );
         } catch (reorderErr) {
-            // If prisma client doesn't know priority, use raw SQL
+            console.warn('Prisma transaction update failed, fallback to raw SQL:', reorderErr.message);
+            // If prisma client doesn't know priority yet, use raw SQL
             for (let i = 0; i < orderedIds.length; i++) {
                 const cardId = parseInt(orderedIds[i]);
                 await prisma.$executeRawUnsafe(
                     `UPDATE BentoImageCard SET priority = ? WHERE id = ?`,
                     i + 1,
                     cardId
-                ).catch(() => {});
+                ).catch((err) => {
+                    console.error(`Failed to update priority for card ${cardId}:`, err.message);
+                });
             }
         }
 
-        const updatedCards = await getAllBentoImageCards(req, res);
-        return updatedCards;
+        return successResponse(res, 'Bento cards reordered successfully');
     } catch (error) {
         console.error('Reorder bento image cards error:', error);
         return errorResponse(res, 'Failed to reorder bento cards', 500);

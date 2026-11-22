@@ -1029,6 +1029,7 @@ model BentoImageCard {
   image     String
   link      String?
   category  String
+  priority  Int     @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
