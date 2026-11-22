@@ -89,3 +89,26 @@ export const useDeleteHeroSlider = () => {
 
   return { deleteHeroSlider };
 };
+
+// Hook for reordering hero sliders
+export const useReorderHeroSliders = () => {
+  const reorderHeroSliders = async (orderedIds) => {
+    const response = await fetch(`${API_URL}/api/hero-sliders/reorder`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...getAuthHeader(),
+      },
+      body: JSON.stringify({ orderedIds }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to reorder hero sliders');
+    }
+
+    return response.json();
+  };
+
+  return { reorderHeroSliders };
+};

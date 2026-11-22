@@ -10,18 +10,23 @@ export default function HomeHero({ heroSliders = [], featuredProducts = [] }) {
     // If admin has uploaded hero sliders via CMS, use them!
     const [currentSlide, setCurrentSlide] = useState(0);
 
-    const hasCmsSliders = Array.isArray(heroSliders) && heroSliders.length > 0;
+    // Sort sliders strictly by priority (asc)
+    const sortedSliders = Array.isArray(heroSliders)
+        ? [...heroSliders].sort((a, b) => (Number(a.priority) || 0) - (Number(b.priority) || 0))
+        : [];
+
+    const hasCmsSliders = sortedSliders.length > 0;
 
     // Auto rotate if multiple sliders
     useEffect(() => {
-        if (!hasCmsSliders || heroSliders.length <= 1) return;
+        if (!hasCmsSliders || sortedSliders.length <= 1) return;
         const timer = setInterval(() => {
-            setCurrentSlide((prev) => (prev + 1) % heroSliders.length);
+            setCurrentSlide((prev) => (prev + 1) % sortedSliders.length);
         }, 6000);
         return () => clearInterval(timer);
-    }, [hasCmsSliders, heroSliders.length]);
+    }, [hasCmsSliders, sortedSliders.length]);
 
-    const activeSlide = hasCmsSliders ? heroSliders[currentSlide] : null;
+    const activeSlide = hasCmsSliders ? sortedSliders[currentSlide] : null;
 
     // Check if CMS slider is text+product layout or purely a full-width cover graphic
     // If title has no letters (e.g. empty or symbol like "%"), treat as full-width cover graphic

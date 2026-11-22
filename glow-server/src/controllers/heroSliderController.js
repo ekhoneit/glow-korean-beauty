@@ -53,38 +53,95 @@ const createHeroSlider = async (req, res) => {
 // Get All Hero Sliders
 const getAllHeroSliders = async (req, res) => {
     try {
-        const heroSliders = await prisma.heroSlider.findMany({
-            orderBy: { createdAt: 'desc' },
-            include: {
-                product: {
-                    select: {
-                        id: true,
-                        slug: true,
-                        productName: true,
-                        price: true,
-                        regularPrice: true,
-                        discountType: true,
-                        discountValue: true,
-                        images: true,
-                        sku: true,
-                        productVariants: {
-                            select: {
-                                id: true,
-                                image: true,
-                                price: true,
-                                regularPrice: true,
-                                attributes: true
-                            }
+        let heroSliders;
+        const includeConfig = {
+            product: {
+                select: {
+                    id: true,
+                    slug: true,
+                    productName: true,
+                    price: true,
+                    regularPrice: true,
+                    discountType: true,
+                    discountValue: true,
+                    images: true,
+                    sku: true,
+                    productVariants: {
+                        select: {
+                            id: true,
+                            image: true,
+                            price: true,
+                            regularPrice: true,
+                            attributes: true
                         }
                     }
                 }
             }
-        });
+        };
+
+        try {
+            heroSliders = await prisma.heroSlider.findMany({
+                orderBy: [
+                    { priority: 'asc' },
+                    { createdAt: 'asc' }
+                ],
+                include: includeConfig
+            });
+        } catch (prismaErr) {
+            heroSliders = await prisma.heroSlider.findMany({
+                orderBy: { createdAt: 'desc' },
+                include: includeConfig
+            });
+            heroSliders.sort((a, b) => {
+                if (a.priority !== undefined && b.priority !== undefined) {
+                    return a.priority - b.priority;
+                }
+                return new Date(a.createdAt) - new Date(b.createdAt);
+            });
+        }
 
         return successResponse(res, heroSliders);
     } catch (error) {
         console.error('Get all hero sliders error:', error);
         return errorResponse(res, 'Failed to retrieve hero sliders', 500);
+    }
+};
+
+// Reorder Hero Sliders
+const reorderHeroSliders = async (req, res) => {
+    try {
+        const { orderedIds } = req.body;
+        if (!Array.isArray(orderedIds) || orderedIds.length === 0) {
+            return errorResponse(res, 'orderedIds must be a non-empty array of slider IDs', 400);
+        }
+
+        try {
+            await prisma.$transaction(
+                orderedIds.map((id, index) =>
+                    prisma.heroSlider.update({
+                        where: { id: parseInt(id) },
+                        data: { priority: index + 1 }
+                    })
+                )
+            );
+        } catch (reorderErr) {
+            console.warn('Prisma transaction reorder hero sliders failed, fallback to raw SQL:', reorderErr.message);
+            for (let i = 0; i < orderedIds.length; i++) {
+                const sliderId = parseInt(orderedIds[i]);
+                await prisma.$executeRawUnsafe(
+                    `UPDATE HeroSlider SET priority = ? WHERE id = ?`,
+                    i + 1,
+                    sliderId
+                ).catch((err) => {
+                    console.error(`Failed to update priority for hero slider ${sliderId}:`, err.message);
+                });
+            }
+        }
+
+        return successResponse(res, 'Hero sliders reordered successfully');
+    } catch (error) {
+        console.error('Reorder hero sliders error:', error);
+        return errorResponse(res, 'Failed to reorder hero sliders', 500);
     }
 };
 
@@ -229,5 +286,6 @@ module.exports = {
     getAllHeroSliders,
     getHeroSliderById,
     updateHeroSlider,
-    deleteHeroSlider
+    deleteHeroSlider,
+    reorderHeroSliders
 };

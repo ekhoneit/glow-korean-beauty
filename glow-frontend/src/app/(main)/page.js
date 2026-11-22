@@ -31,7 +31,8 @@ export default async function HomePage() {
   // 1. Fetch hero sliders (from CMS)
   try {
     const heroRes = await apiClient("/api/hero-sliders", {
-      next: { revalidate: 15, tags: ["hero-sliders"] },
+      cache: "no-store",
+      next: { revalidate: 0, tags: ["hero-sliders"] },
     });
     if (Array.isArray(heroRes)) {
       heroSliders = heroRes;

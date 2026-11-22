@@ -788,6 +788,7 @@ model HeroSlider {
   categoryLink String?  // Optional browse categories link
   productId    Int?
   product      Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  priority     Int      @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

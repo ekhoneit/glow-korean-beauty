@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
 import Image from "next/image";
-import { Search, X, Check, Package, Sparkles, AlertCircle, Trash2, Edit2, Plus, ExternalLink } from "lucide-react";
-import { useHeroSliders, useCreateHeroSlider, useUpdateHeroSlider, useDeleteHeroSlider } from "@/hooks/useHeroSlider";
+import { Search, X, Check, Package, Sparkles, AlertCircle, Trash2, Edit2, Plus, ExternalLink, GripVertical, ArrowUp, ArrowDown } from "lucide-react";
+import { useHeroSliders, useCreateHeroSlider, useUpdateHeroSlider, useDeleteHeroSlider, useReorderHeroSliders } from "@/hooks/useHeroSlider";
 import { useProducts } from "@/lib/dataFetch";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import CloudinaryImageInput from "../ui/CloudinaryImageInput";
@@ -32,7 +32,70 @@ const HeroSliderSection = () => {
   const { createHeroSlider } = useCreateHeroSlider();
   const { updateHeroSlider } = useUpdateHeroSlider();
   const { deleteHeroSlider } = useDeleteHeroSlider();
+  const { reorderHeroSliders } = useReorderHeroSliders();
   const { hasPermission } = usePermission();
+
+  // Local state for drag-and-drop / arrow ordering
+  const [slidersList, setSlidersList] = useState([]);
+  const [draggedIndex, setDraggedIndex] = useState(null);
+  const [isReordering, setIsReordering] = useState(false);
+
+  useEffect(() => {
+    if (Array.isArray(heroSliders)) {
+      setSlidersList(heroSliders);
+    }
+  }, [heroSliders]);
+
+  // Drag and drop & ordering handlers
+  const handleDragStart = (index) => {
+    setDraggedIndex(index);
+  };
+
+  const handleDragOver = (e, index) => {
+    e.preventDefault();
+    if (draggedIndex === null || draggedIndex === index) return;
+
+    const updated = [...slidersList];
+    const draggedItem = updated[draggedIndex];
+    updated.splice(draggedIndex, 1);
+    updated.splice(index, 0, draggedItem);
+
+    setDraggedIndex(index);
+    setSlidersList(updated);
+  };
+
+  const handleDragEnd = async () => {
+    setDraggedIndex(null);
+    await saveNewOrder(slidersList);
+  };
+
+  const moveSlider = async (index, direction) => {
+    const targetIndex = index + direction;
+    if (targetIndex < 0 || targetIndex >= slidersList.length) return;
+
+    const updated = [...slidersList];
+    const [movedItem] = updated.splice(index, 1);
+    updated.splice(targetIndex, 0, movedItem);
+
+    setSlidersList(updated);
+    await saveNewOrder(updated);
+  };
+
+  const saveNewOrder = async (orderedList) => {
+    try {
+      setIsReordering(true);
+      const orderedIds = orderedList.map((item) => item.id);
+      await reorderHeroSliders(orderedIds);
+      toast.success("Hero slider order updated!");
+      mutate();
+    } catch (err) {
+      console.error("Failed to reorder hero sliders:", err);
+      toast.error(err.message || "Failed to save slider order");
+      mutate();
+    } finally {
+      setIsReordering(false);
+    }
+  };
 
   // Fetch all products for search and selection
   const { data: rawProductData = [] } = useProducts(1, 1000);
@@ -522,12 +585,17 @@ const HeroSliderSection = () => {
         <div className="lg:col-span-6 bg-white p-6 rounded-xl shadow-md border border-stone-200 space-y-4">
           <div className="flex justify-between items-center border-b pb-3">
             <div>
-              <h2 className="text-lg font-bold text-slate-900">Active Hero Slides ({heroSliders?.length || 0})</h2>
-              <p className="text-xs text-slate-500">Currently active on the website home hero carousel</p>
+              <h2 className="text-lg font-bold text-slate-900">Active Hero Slides ({slidersList?.length || 0})</h2>
+              <p className="text-xs text-slate-500">Drag & drop or use arrows to rearrange the slide order on the website</p>
             </div>
+            {isReordering && (
+              <span className="text-[11px] font-semibold text-primary animate-pulse bg-primary/10 px-2.5 py-1 rounded-full">
+                Saving order...
+              </span>
+            )}
           </div>
 
-          {!heroSliders || heroSliders.length === 0 ? (
+          {!slidersList || slidersList.length === 0 ? (
             <div className="text-center py-12 text-slate-400 space-y-2">
               <Package size={32} className="mx-auto text-slate-300" />
               <p className="text-xs font-semibold">No custom hero slides added yet.</p>
@@ -537,13 +605,50 @@ const HeroSliderSection = () => {
             </div>
           ) : (
             <div className="space-y-3 max-h-[640px] overflow-y-auto pr-1">
-              {heroSliders.map((slider, index) => (
+              {slidersList.map((slider, index) => (
                 <div
                   key={slider.id}
-                  className="border border-slate-200 rounded-xl p-3.5 hover:shadow-md transition bg-slate-50/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+                  draggable
+                  onDragStart={() => handleDragStart(index)}
+                  onDragOver={(e) => handleDragOver(e, index)}
+                  onDragEnd={handleDragEnd}
+                  className={`border border-slate-200 rounded-xl p-3.5 hover:shadow-md transition bg-slate-50/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 cursor-grab active:cursor-grabbing ${
+                    draggedIndex === index ? "opacity-50 ring-2 ring-primary border-transparent bg-primary/5" : ""
+                  }`}
                 >
-                  <div className="flex items-center gap-3 min-w-0">
-                    <div className="w-8 h-8 rounded-full bg-slate-900 text-white font-black text-xs flex items-center justify-center shrink-0">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    {/* Drag Handle & Ordering controls */}
+                    <div className="flex items-center gap-1 text-slate-400 shrink-0">
+                      <GripVertical size={16} className="text-slate-400 hover:text-slate-600" />
+                      <div className="flex flex-col gap-0.5">
+                        <button
+                          type="button"
+                          disabled={index === 0 || isReordering}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            moveSlider(index, -1);
+                          }}
+                          className="p-0.5 hover:bg-slate-200 rounded text-slate-500 disabled:opacity-30 disabled:hover:bg-transparent"
+                          title="Move up"
+                        >
+                          <ArrowUp size={12} />
+                        </button>
+                        <button
+                          type="button"
+                          disabled={index === slidersList.length - 1 || isReordering}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            moveSlider(index, 1);
+                          }}
+                          className="p-0.5 hover:bg-slate-200 rounded text-slate-500 disabled:opacity-30 disabled:hover:bg-transparent"
+                          title="Move down"
+                        >
+                          <ArrowDown size={12} />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="w-7 h-7 rounded-full bg-slate-900 text-white font-black text-xs flex items-center justify-center shrink-0">
                       {index + 1}
                     </div>
 
@@ -565,10 +670,10 @@ const HeroSliderSection = () => {
                         </span>
                       )}
                       <h4 className="text-xs font-bold text-slate-900 truncate max-w-[220px]">
-                        {slider.title}
+                        {slider.title || "(Banner Image)"}
                       </h4>
                       {slider.product && (
-                        <span className="text-[10px] text-emerald-700 font-semibold bg-emerald-50 px-1.5 py-0.2 rounded inline-block">
+                        <span className="text-[10px] text-emerald-700 font-semibold bg-emerald-50 px-1.5 py-0.2 rounded inline-block truncate max-w-[200px]">
                           Product: {slider.product.productName}
                         </span>
                       )}
