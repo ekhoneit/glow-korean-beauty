@@ -42,7 +42,9 @@ export default function FloatingCart() {
             const max = window.innerHeight - 160;
             setCartTop(Math.max(min, Math.min(max, parsed)));
         } else {
-            setCartTop(defaultTop);
+            // Default position: lower on phone (60% of viewport) to avoid overlapping hero sliders or banners
+            const isMobile = window.innerWidth < 768;
+            setCartTop(window.innerHeight * (isMobile ? 0.62 : 0.45));
         }
 
         const handleResize = () => {

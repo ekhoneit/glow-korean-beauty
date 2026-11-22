@@ -38,11 +38,11 @@ export default function HomeHero({ heroSliders = [], featuredProducts = [] }) {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 {/* Main Hero Banner Container */}
-                <div className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-[#EFE8DF] bg-gradient-to-br from-[#2D1B1E] via-[#3D2528] to-[#1E1113] aspect-[16/8] sm:aspect-[21/9] md:aspect-[2.68/1] flex items-center">
+                <div className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-[#EFE8DF] bg-gradient-to-br from-[#2D1B1E] via-[#3D2528] to-[#1E1113] min-h-[380px] sm:min-h-[320px] md:aspect-[2.68/1] flex items-center">
                     
                     {/* CASE 1: CMS Slide is just a full cover image */}
                     {isGraphicOnly ? (
-                        <div className="relative w-full h-full">
+                        <div className="relative w-full h-[220px] sm:h-[300px] md:h-full min-h-[220px] sm:min-h-[280px]">
                             <Image
                                 src={activeSlide.image || "/glow-banner.jpg"}
                                 alt="Glow Korean Beauty Banner"
@@ -61,42 +61,42 @@ export default function HomeHero({ heroSliders = [], featuredProducts = [] }) {
                         </div>
                     ) : hasCmsSliders && activeSlide ? (
                         /* CASE 2: CMS Slide has Text + Product Image + Button */
-                        <div className="relative z-10 w-full p-6 sm:p-10 md:p-14 flex flex-col md:flex-row items-center justify-between gap-8">
+                        <div className="relative z-10 w-full p-5 sm:p-8 md:p-14 flex flex-col md:flex-row items-center justify-between gap-6 sm:gap-8 pb-12 sm:pb-8">
                             {/* Ambient Soft Glows */}
                             <div className="absolute -top-20 -left-20 w-72 h-72 bg-[#D48B80]/20 rounded-full blur-3xl pointer-events-none" />
                             <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-[#B88348]/20 rounded-full blur-3xl pointer-events-none" />
 
                             {/* Left Text Content */}
-                            <div className="w-full md:w-3/5 text-white z-10">
+                            <div className="w-full md:w-3/5 text-white z-10 text-center md:text-left">
                                 {activeSlide.badge && (
-                                    <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-[#F8E7DE] text-[11px] font-bold tracking-wider uppercase mb-4">
-                                        <Sparkles size={12} className="text-[#D48B80]" />
+                                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-[#F8E7DE] text-[10px] sm:text-[11px] font-bold tracking-wider uppercase mb-2.5 sm:mb-4">
+                                        <Sparkles size={11} className="text-[#D48B80]" />
                                         <span>{activeSlide.badge}</span>
                                     </div>
                                 )}
                                 
-                                <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight mb-3">
+                                <h1 className="text-xl sm:text-3xl md:text-5xl font-extrabold tracking-tight text-white leading-tight mb-2 sm:mb-3">
                                     {activeSlide.title}
                                 </h1>
                                 
                                 {activeSlide.sub_title && (
-                                    <p className="text-sm sm:text-base text-[#E5D7D0] max-w-xl mb-6 line-clamp-2 leading-relaxed">
+                                    <p className="text-xs sm:text-sm md:text-base text-[#E5D7D0] max-w-xl mx-auto md:mx-0 mb-4 sm:mb-6 line-clamp-2 leading-relaxed">
                                         {activeSlide.sub_title}
                                     </p>
                                 )}
 
-                                <div className="flex flex-wrap items-center gap-3">
+                                <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5 sm:gap-3">
                                     <Link
                                         href={activeSlide.link || (activeSlide.productId ? `/product/${activeSlide.productId}` : "/product")}
-                                        className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[#D48B80] to-[#B88348] hover:from-[#C47A70] hover:to-[#A77338] text-white text-xs sm:text-sm font-bold shadow-lg hover:shadow-xl transition-all duration-200 active:scale-95"
+                                        className="inline-flex items-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full bg-gradient-to-r from-[#D48B80] to-[#B88348] hover:from-[#C47A70] hover:to-[#A77338] text-white text-xs sm:text-sm font-bold shadow-lg hover:shadow-xl transition-all duration-200 active:scale-95"
                                     >
                                         <span>Shop Now</span>
-                                        <ArrowRight size={15} />
+                                        <ArrowRight size={14} />
                                     </Link>
                                     {activeSlide.categoryLink && (
                                         <Link
                                             href={activeSlide.categoryLink}
-                                            className="px-5 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-semibold backdrop-blur-sm transition-colors border border-white/10"
+                                            className="px-4 py-2.5 sm:px-5 sm:py-3 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-semibold backdrop-blur-sm transition-colors border border-white/10"
                                         >
                                             Browse Categories
                                         </Link>
@@ -106,19 +106,19 @@ export default function HomeHero({ heroSliders = [], featuredProducts = [] }) {
 
                             {/* Right Product Image Showcase (1:1 Aspect Ratio with Rounded Corners) */}
                             <div className="w-full md:w-2/5 flex justify-center items-center z-10">
-                                <div className="relative aspect-square w-64 sm:w-72 md:w-80 rounded-2xl sm:rounded-3xl p-3 bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl flex items-center justify-center">
+                                <div className="relative aspect-square w-48 sm:w-64 md:w-80 rounded-2xl sm:rounded-3xl p-2.5 sm:p-3 bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl flex items-center justify-center">
                                     <div className="relative w-full h-full rounded-xl sm:rounded-2xl overflow-hidden bg-white/5 flex items-center justify-center">
                                         <Image
                                             src={activeSlide.image || (activeSlide.product ? getProductThumbnail(activeSlide.product) : "/glow-banner.jpg")}
                                             alt={activeSlide.title || "Featured Product"}
                                             fill
-                                            sizes="(max-width: 768px) 260px, 340px"
+                                            sizes="(max-width: 768px) 200px, 340px"
                                             className="object-cover rounded-xl sm:rounded-2xl"
                                         />
                                     </div>
                                     {activeSlide.product?.price && (
-                                        <div className="absolute -bottom-2.5 -right-2.5 bg-white text-slate-900 px-3.5 py-1.5 rounded-xl shadow-xl border border-slate-100 flex flex-col items-center z-20">
-                                            <span className="text-[9px] uppercase font-bold text-slate-400">Special Price</span>
+                                        <div className="absolute -bottom-2 -right-2 sm:-bottom-2.5 sm:-right-2.5 bg-white text-slate-900 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-xl shadow-xl border border-slate-100 flex flex-col items-center z-20">
+                                            <span className="text-[8px] sm:text-[9px] uppercase font-bold text-slate-400">Special Price</span>
                                             <span className="text-xs sm:text-sm font-black text-primary">৳{activeSlide.product.price}</span>
                                         </div>
                                     )}
@@ -127,7 +127,7 @@ export default function HomeHero({ heroSliders = [], featuredProducts = [] }) {
                         </div>
                     ) : (
                         /* CASE 3: Default Curated Korean Luxury Full Banner */
-                        <div className="relative w-full h-full">
+                        <div className="relative w-full h-[220px] sm:h-[300px] md:h-full min-h-[220px] sm:min-h-[280px]">
                             <Image
                                 src="/glow-banner.jpg"
                                 alt="Glow Korean Beauty Banner"

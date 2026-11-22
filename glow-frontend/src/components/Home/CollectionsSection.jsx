@@ -25,10 +25,10 @@ export default function CollectionsSection({ collections = [] }) {
                     return (
                         <div key={col.id} className="mb-12 last:mb-0">
                             {/* Collection Header with Luxury Editorial Styling */}
-                            <div className="flex items-end justify-between gap-3 mb-6">
+                            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
                                 <div>
-                                    <div className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#B88348] uppercase tracking-wider mb-1">
-                                        <Sparkles size={13} className="text-[#B88348]" />
+                                    <div className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-bold text-[#B88348] uppercase tracking-wider mb-1">
+                                        <Sparkles size={12} className="text-[#B88348]" />
                                         <span>EXCLUSIVE CURATED EDIT #{idx + 1}</span>
                                     </div>
                                     <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
@@ -38,7 +38,7 @@ export default function CollectionsSection({ collections = [] }) {
 
                                 <Link
                                     href={`/collections/${col.slug}`}
-                                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-white border border-[#EDE5DC] hover:border-primary text-xs font-bold text-slate-800 hover:text-primary transition-all shadow-2xs group"
+                                    className="self-start sm:self-auto inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-full bg-white border border-[#EDE5DC] hover:border-primary text-xs font-bold text-slate-800 hover:text-primary transition-all shadow-2xs group"
                                 >
                                     <span>Explore Collection</span>
                                     <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />

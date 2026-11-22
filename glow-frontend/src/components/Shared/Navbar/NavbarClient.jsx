@@ -134,26 +134,26 @@ export default function NavbarClient({
       <header className="sticky top-0 z-50 w-full bg-white shadow-xs">
         {/* Main Middle Navigation Bar */}
         <div
-          className={`transition-all duration-200 border-b border-slate-100 ${isScrolled ? "py-2.5 bg-white/95 backdrop-blur-md " : "py-3 bg-white"}`}
+          className={`transition-all duration-200 border-b border-slate-100 ${isScrolled ? "py-2 sm:py-2.5 bg-white/95 backdrop-blur-md " : "py-2 sm:py-3 bg-white"}`}
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4 md:gap-8">
+          <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-4 md:gap-8">
             {/* Left: Mobile Menu Toggle & Brand Logo */}
-            <div className="flex items-center gap-3 shrink-0">
+            <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
               <button
                 type="button"
                 onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-                className="lg:hidden p-2 text-slate-800 hover:bg-slate-100 rounded-lg transition cursor-pointer"
+                className="lg:hidden p-1.5 sm:p-2 text-slate-800 hover:bg-slate-100 rounded-lg transition cursor-pointer"
                 aria-label="Toggle menu"
               >
-                {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+                {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
 
-              <Link href="/" className="flex items-center gap-2 group">
+              <Link href="/" className="flex items-center gap-1.5 group">
                 <div
                   className={`relative transition-all ${
                     storeSettings?.navbarLogoBg
-                      ? "w-32 sm:w-44 h-10 sm:h-12 bg-white p-1.5 rounded-lg shadow-2xs border border-slate-100 flex items-center justify-center"
-                      : "w-36 sm:w-48 h-10 sm:h-12 bg-transparent flex items-center justify-start"
+                      ? "w-28 sm:w-44 h-8 sm:h-12 bg-white p-1 rounded-lg shadow-2xs border border-slate-100 flex items-center justify-center"
+                      : "w-28 sm:w-48 h-8 sm:h-12 bg-transparent flex items-center justify-start"
                   }`}
                 >
                   <Image
@@ -187,7 +187,7 @@ export default function NavbarClient({
             </div>
 
             {/* Right: Sign in, Wishlist, Cart Actions (Evaly aesthetic) */}
-            <div className="flex items-center gap-4 sm:gap-6 shrink-0">
+            <div className="flex items-center gap-2.5 sm:gap-6 shrink-0">
               {/* User / Sign in dynamic check */}
               {user ? (
                 <div className="relative group/account">
@@ -198,7 +198,7 @@ export default function NavbarClient({
                     <div className="w-5 h-5 rounded-full bg-primary text-white flex items-center justify-center text-[10px] font-bold">
                       {getUserInitials()}
                     </div>
-                    <span className="text-[11px] font-medium mt-0.5 max-w-[60px] truncate">
+                    <span className="text-[10px] sm:text-[11px] font-medium mt-0.5 max-w-[50px] sm:max-w-[60px] truncate">
                       {getDisplayName()}
                     </span>
                   </Link>
@@ -254,11 +254,11 @@ export default function NavbarClient({
                   className="flex flex-col items-center justify-center text-slate-700 hover:text-primary transition cursor-pointer group"
                 >
                   <User
-                    size={20}
+                    size={19}
                     strokeWidth={1.8}
                     className="group-hover:scale-110 transition-transform"
                   />
-                  <span className="text-[11px] font-medium mt-0.5">
+                  <span className="text-[10px] sm:text-[11px] font-medium mt-0.5">
                     Sign in
                   </span>
                 </Link>
@@ -271,7 +271,7 @@ export default function NavbarClient({
               >
                 <div className="relative">
                   <Heart
-                    size={20}
+                    size={19}
                     strokeWidth={1.8}
                     className="group-hover:scale-110 transition-transform"
                   />
@@ -281,7 +281,7 @@ export default function NavbarClient({
                     </span>
                   )}
                 </div>
-                <span className="text-[11px] font-medium mt-0.5">Wishlist</span>
+                <span className="text-[10px] sm:text-[11px] font-medium mt-0.5">Wishlist</span>
               </Link>
 
               {/* Cart Button triggering Cart Slider */}
@@ -292,7 +292,7 @@ export default function NavbarClient({
               >
                 <div className="relative">
                   <ShoppingCart
-                    size={20}
+                    size={19}
                     strokeWidth={1.8}
                     className="group-hover:scale-110 transition-transform"
                   />
@@ -302,13 +302,13 @@ export default function NavbarClient({
                     </span>
                   )}
                 </div>
-                <span className="text-[11px] font-medium mt-0.5">Cart</span>
+                <span className="text-[10px] sm:text-[11px] font-medium mt-0.5">Cart</span>
               </button>
             </div>
           </div>
 
           {/* Mobile Search Bar Row */}
-          <div className="px-4 pt-2 md:hidden">
+          <div className="px-3 pt-2 pb-1 md:hidden">
             <SearchBar categories={activeCategories} />
           </div>
         </div>

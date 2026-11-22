@@ -151,13 +151,13 @@ export default function CollectionProductCard({ product, collectionName = "", on
                 </div>
 
                 {/* Price & Action Button */}
-                <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between gap-2">
-                    <div className="flex flex-col">
+                <div className="mt-2.5 pt-2 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div className="flex sm:flex-col items-baseline sm:items-start gap-1.5 sm:gap-0">
                         <span className="text-sm sm:text-base font-black text-slate-900">
                             ৳{sellingPrice.toLocaleString()}
                         </span>
                         {hasDiscount && (
-                            <span className="text-[11px] text-slate-400 line-through">
+                            <span className="text-[10px] sm:text-[11px] text-slate-400 line-through">
                                 ৳{regularPrice.toLocaleString()}
                             </span>
                         )}
@@ -166,7 +166,7 @@ export default function CollectionProductCard({ product, collectionName = "", on
                     <button
                         type="button"
                         onClick={handleBuyNow}
-                        className="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#D48B80] to-[#B88348] hover:from-[#C47A70] hover:to-[#A77338] text-white text-[11px] font-bold shadow-sm hover:shadow-md transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer"
+                        className="w-full sm:w-auto justify-center px-3 py-1.5 rounded-full bg-gradient-to-r from-[#D48B80] to-[#B88348] hover:from-[#C47A70] hover:to-[#A77338] text-white text-[11px] font-bold shadow-xs hover:shadow-md transition-all active:scale-95 flex items-center gap-1.5 cursor-pointer"
                     >
                         <ShoppingBag size={12} />
                         <span>Buy Now</span>
