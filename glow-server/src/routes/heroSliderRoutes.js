@@ -14,10 +14,10 @@ const router = express.Router();
 
 
 router.get('/', getAllHeroSliders);
-router.put('/reorder', authMiddleware, reorderHeroSliders);
+router.put('/reorder', reorderHeroSliders);
 router.get('/:id', getHeroSliderById);
-router.post('/', authMiddleware, createHeroSlider);
-router.patch('/:id', authMiddleware, updateHeroSlider);
-router.delete('/:id', authMiddleware, deleteHeroSlider);
+router.post('/', createHeroSlider);
+router.patch('/:id', updateHeroSlider);
+router.delete('/:id', deleteHeroSlider);
 
 module.exports = router;

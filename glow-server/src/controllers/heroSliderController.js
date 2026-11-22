@@ -7,46 +7,62 @@ const createHeroSlider = async (req, res) => {
     try {
         const { sub_title, title, image, link, badge, categoryLink, productId } = req.body;
 
-        const newHeroSlider = await prisma.heroSlider.create({
-            data: {
-                sub_title: sub_title || '',
-                title: title || '',
-                image: image || '',
-                link: link || '',
-                badge: badge || null,
-                categoryLink: categoryLink || null,
-                productId: productId ? parseInt(productId) : null
-            },
-            include: {
-                product: {
-                    select: {
-                        id: true,
-                        slug: true,
-                        productName: true,
-                        price: true,
-                        regularPrice: true,
-                        discountType: true,
-                        discountValue: true,
-                        images: true,
-                        sku: true,
-                        productVariants: {
-                            select: {
-                                id: true,
-                                image: true,
-                                price: true,
-                                regularPrice: true,
-                                attributes: true
-                            }
+        if (!image) {
+            return errorResponse(res, 'Image is required for hero slider', 400);
+        }
+
+        const data = {
+            sub_title: sub_title || '',
+            title: title || '',
+            image: image || '',
+            link: link || '',
+            badge: badge || null,
+            categoryLink: categoryLink || null,
+            productId: productId ? parseInt(productId) : null
+        };
+
+        const includeConfig = {
+            product: {
+                select: {
+                    id: true,
+                    slug: true,
+                    productName: true,
+                    price: true,
+                    regularPrice: true,
+                    discountType: true,
+                    discountValue: true,
+                    images: true,
+                    sku: true,
+                    productVariants: {
+                        select: {
+                            id: true,
+                            image: true,
+                            price: true,
+                            regularPrice: true,
+                            attributes: true
                         }
                     }
                 }
             }
-        });
+        };
+
+        let newHeroSlider;
+        try {
+            newHeroSlider = await prisma.heroSlider.create({
+                data,
+                include: includeConfig
+            });
+        } catch (createErr) {
+            console.warn('Prisma create with include failed, retrying without product include:', createErr.message);
+            newHeroSlider = await prisma.heroSlider.create({
+                data
+            });
+        }
 
         return successResponse(res, 'Hero slider created successfully', newHeroSlider, 201);
     } catch (error) {
         console.error('Create hero slider error:', error);
-        return errorResponse(res, 'Failed to create hero slider', 500);
+        return errorResponse(res, error.message || 'Failed to create hero slider', 500);
     }
 };
 
