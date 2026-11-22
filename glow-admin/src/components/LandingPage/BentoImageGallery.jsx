@@ -5,18 +5,16 @@ import {
     useDeleteBentoImageCard,
     useBentoImageCards,
     useUpdateBentoImageCard,
+    useReorderBentoImageCards,
 } from "@/hooks/useBentoImageCard";
-import { useState, useCallback } from "react";
+import { useCategories } from "@/lib/dataFetch";
+import { useState, useCallback, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import Swal from "sweetalert2";
 import CloudinaryImageInput from "../ui/CloudinaryImageInput";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import Image from "next/image";
-
-const AVAILABLE_CATEGORIES = [
-    "saree",
-    "threePices"
-];
+import { GripVertical, ArrowUp, ArrowDown } from "lucide-react";
 
 export const BentoImageGallery = () => {
     // Form state
@@ -36,6 +34,24 @@ export const BentoImageGallery = () => {
     const { createBentoImageCard } = useCreateBentoImageCard();
     const { updateBentoImageCard } = useUpdateBentoImageCard();
     const { deleteBentoImageCard } = useDeleteBentoImageCard();
+    const { reorderBentoImageCards } = useReorderBentoImageCards();
+    const { data: categoriesData, isLoading: categoriesLoading } = useCategories();
+
+    // Local state for drag-and-drop order
+    const [cardsList, setCardsList] = useState([]);
+    const [draggedIndex, setDraggedIndex] = useState(null);
+    const [isReordering, setIsReordering] = useState(false);
+
+    useEffect(() => {
+        if (Array.isArray(bentoImageCards)) {
+            setCardsList(bentoImageCards);
+        }
+    }, [bentoImageCards]);
+
+    // Categories list from API or fallback
+    const dynamicCategories = Array.isArray(categoriesData)
+        ? categoriesData.map(c => c.name)
+        : (categoriesData?.data || categoriesData?.categories || []).map(c => c.name);
 
     const clearErrors = useCallback((field) => {
         setErrors(prev => {
@@ -85,37 +101,43 @@ export const BentoImageGallery = () => {
         }));
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const validateForm = () => {
+        const newErrors = {};
 
         if (!formData.title.trim()) {
-            toast.error("Title is required");
-            return;
+            newErrors.title = { message: "Title is required" };
         }
 
         if (!formData.image.trim()) {
-            toast.error("Image is required");
-            return;
+            newErrors.image = { message: "Card image is required" };
         }
 
         if (!formData.category.trim()) {
-            toast.error("Category is required");
+            newErrors.category = { message: "Category is required" };
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!validateForm()) {
+            toast.error("Please fill in all required fields");
             return;
         }
 
         try {
             if (editingId) {
-                // Update existing card
                 await updateBentoImageCard(editingId, formData);
                 toast.success("Bento card updated successfully");
                 setEditingId(null);
             } else {
-                // Create new card
                 await createBentoImageCard(formData);
                 toast.success("Bento card created successfully");
             }
 
-            // Clear form
             setFormData({
                 title: "",
                 sub_title: "",
@@ -126,7 +148,6 @@ export const BentoImageGallery = () => {
             setCustomCategory("");
             setErrors({});
 
-            // Refresh data
             mutate();
         } catch (error) {
             toast.error(error.message || "Something went wrong");
@@ -145,8 +166,7 @@ export const BentoImageGallery = () => {
         setEditingId(card.id);
         setErrors({});
 
-        // If category is not in predefined list, show it in custom input
-        if (!AVAILABLE_CATEGORIES.includes(card.category)) {
+        if (!dynamicCategories.includes(card.category)) {
             setCustomCategory(card.category);
         } else {
             setCustomCategory("");
@@ -170,27 +190,71 @@ export const BentoImageGallery = () => {
                 await deleteBentoImageCard(id);
                 toast.success("Bento card deleted successfully");
                 mutate();
-            } catch (err) {
-                console.error("Delete failed:", err);
-                toast.error(err.message || "Delete failed. Please try again.");
+            } catch (error) {
+                toast.error(error.message || "Failed to delete bento card");
             }
+        }
+    };
+
+    // --- Drag and Drop & Ordering Logic ---
+    const handleDragStart = (index) => {
+        setDraggedIndex(index);
+    };
+
+    const handleDragOver = (e, index) => {
+        e.preventDefault();
+        if (draggedIndex === null || draggedIndex === index) return;
+
+        const updated = [...cardsList];
+        const draggedItem = updated[draggedIndex];
+        updated.splice(draggedIndex, 1);
+        updated.splice(index, 0, draggedItem);
+
+        setDraggedIndex(index);
+        setCardsList(updated);
+    };
+
+    const handleDragEnd = async () => {
+        setDraggedIndex(null);
+        await saveNewOrder(cardsList);
+    };
+
+    const moveCard = async (index, direction) => {
+        const targetIndex = index + direction;
+        if (targetIndex < 0 || targetIndex >= cardsList.length) return;
+
+        const updated = [...cardsList];
+        const [movedItem] = updated.splice(index, 1);
+        updated.splice(targetIndex, 0, movedItem);
+
+        setCardsList(updated);
+        await saveNewOrder(updated);
+    };
+
+    const saveNewOrder = async (orderedList) => {
+        try {
+            setIsReordering(true);
+            const orderedIds = orderedList.map(item => item.id);
+            await reorderBentoImageCards(orderedIds);
+            toast.success("Display order updated!");
+            mutate();
+        } catch (err) {
+            console.error("Failed to reorder:", err);
+            toast.error("Failed to save order");
+            mutate();
+        } finally {
+            setIsReordering(false);
         }
     };
 
     if (isLoading) return <LoadingSpinner />;
 
     return (
-        <div className="bg-white p-4 rounded-lg shadow space-y-6 border border-stone-200">
-            {/* Header */}
-            <div className="bg-white p-4 rounded-lg shadow border border-stone-200">
-                <h1 className="text-3xl font-bold mb-2 font-philosopher">Bento Image Gallery Management</h1>
-                <p className="text-gray-600">Manage your bento grid image cards</p>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Left: Form */}
-                <div className="bg-white p-6 rounded-lg shadow-md border border-stone-200">
-                    <h2 className="text-xl font-semibold mb-4">
+        <div className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                {/* Form Column */}
+                <div className="lg:col-span-5 bg-white p-6 rounded-lg border border-stone-200">
+                    <h2 className="text-xl font-bold mb-4">
                         {editingId ? "Edit Bento Card" : "Create New Bento Card"}
                     </h2>
 
@@ -206,7 +270,7 @@ export const BentoImageGallery = () => {
                                     name="title"
                                     value={formData.title}
                                     onChange={handleChange}
-                                    className="w-full p-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                    className="w-full p-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
                                     placeholder="Card title"
                                     required
                                 />
@@ -215,14 +279,14 @@ export const BentoImageGallery = () => {
                             {/* Sub Title */}
                             <div>
                                 <label className="block text-sm font-medium mb-1">
-                                    Sub Title  <span className="text-xs">(optional)</span>
+                                    Sub Title <span className="text-xs text-gray-500">(optional)</span>
                                 </label>
                                 <input
                                     type="text"
                                     name="sub_title"
                                     value={formData.sub_title}
                                     onChange={handleChange}
-                                    className="w-full p-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                    className="w-full p-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
                                     placeholder="Supporting text or description"
                                 />
                             </div>
@@ -255,12 +319,12 @@ export const BentoImageGallery = () => {
                                     name="link"
                                     value={formData.link}
                                     onChange={handleChange}
-                                    className="w-full p-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                                    placeholder="Enter link URL"
+                                    className="w-full p-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm"
+                                    placeholder="Enter product URL or /product link"
                                 />
                             </div>
 
-                            {/* Category */}
+                            {/* Dynamic Category Selector */}
                             <div>
                                 <label className="block text-sm font-medium mb-1">
                                     Category <span className="text-rose-500">*</span>
@@ -268,22 +332,48 @@ export const BentoImageGallery = () => {
                                 <select
                                     value={formData.category}
                                     onChange={(e) => handleCategorySelect(e.target.value)}
-                                    className="w-full p-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                    className="w-full p-2.5 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm bg-white"
                                 >
                                     <option value="">Select category</option>
-                                    {AVAILABLE_CATEGORIES.map((cat) => (
-                                        <option key={cat} value={cat}>
-                                            {cat.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                                        </option>
-                                    ))}
+                                    {dynamicCategories.length > 0 ? (
+                                        dynamicCategories.map((catName) => (
+                                            <option key={catName} value={catName}>
+                                                {catName}
+                                            </option>
+                                        ))
+                                    ) : (
+                                        <>
+                                            <option value="Toner & Essence">Toner & Essence</option>
+                                            <option value="Serums & Ampoules">Serums & Ampoules</option>
+                                            <option value="Moisturizers & Creams">Moisturizers & Creams</option>
+                                            <option value="Scalp Care & Tonics">Scalp Care & Tonics</option>
+                                            <option value="Hair Essences & Oils">Hair Essences & Oils</option>
+                                            <option value="Cleansers">Cleansers</option>
+                                        </>
+                                    )}
+                                    <option value="custom">+ Custom Category</option>
                                 </select>
+
+                                {/* Custom Category Field (if custom selected or non-predefined) */}
+                                {(formData.category === "custom" || (customCategory && !dynamicCategories.includes(formData.category))) && (
+                                    <div className="mt-2">
+                                        <input
+                                            type="text"
+                                            value={customCategory}
+                                            onChange={handleCustomCategoryChange}
+                                            placeholder="Type custom category name..."
+                                            className="w-full p-2 text-sm border border-gray-300 rounded focus:ring-2 focus:ring-primary focus:outline-none"
+                                            autoFocus
+                                        />
+                                    </div>
+                                )}
                             </div>
                         </div>
 
                         <div className="flex gap-3 pt-4">
                             <button
                                 type="submit"
-                                className="bg-secound text-white px-6 py-2 rounded hover:bg-secound-hover cursor-pointer"
+                                className="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded text-sm font-semibold cursor-pointer transition-colors shadow-xs"
                             >
                                 {editingId ? "Update Card" : "Create Card"}
                             </button>
@@ -303,153 +393,134 @@ export const BentoImageGallery = () => {
                                         setCustomCategory("");
                                         setErrors({});
                                     }}
-                                    className="bg-gray-500 text-white px-6 py-2 rounded hover:bg-gray-600"
+                                    className="bg-gray-200 text-gray-800 px-4 py-2 rounded text-sm hover:bg-gray-300 cursor-pointer"
                                 >
                                     Cancel
                                 </button>
                             )}
                         </div>
                     </form>
-
-                    {/* Preview */}
-                    {formData.image && (
-                        <div className="mt-6 pt-6 border-t">
-                            <h3 className="text-lg font-semibold mb-3">Preview</h3>
-                            <div className="border rounded-lg overflow-hidden bg-gray-50">
-                                <div className="relative aspect-square">
-                                    <Image
-                                        src={formData.image}
-                                        alt="Card Preview"
-                                        className="w-full h-full object-cover"
-                                        fill
-                                        sizes="(max-width: 768px) 100vw, 400px"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end">
-                                        <div className="p-4 text-white w-full">
-                                            {formData.title && (
-                                                <h3 className="text-lg font-bold">
-                                                    {formData.title}
-                                                </h3>
-                                            )}
-                                            {formData.sub_title && (
-                                                <p className="text-sm opacity-90">{formData.sub_title}</p>
-                                            )}
-                                            {formData.link && (
-                                                <span className="inline-block mt-2 text-xs bg-white/20 backdrop-blur-sm px-3 py-1 rounded">
-                                                    Click to explore →
-                                                </span>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="p-3 bg-white border-t">
-                                    <div className="flex justify-between items-center text-sm">
-                                        <div>
-                                            <span className="font-medium">Position:</span>{" "}
-                                            <span className="font-bold text-gray-700">
-                                                {formData.category || "None"}
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <span className="font-medium">Link:</span>{" "}
-                                            <span className={`font-bold ${formData.link ? "text-green-600" : "text-gray-400"}`}>
-                                                {formData.link ? "Yes" : "No"}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    )}
                 </div>
 
-                {/* Right: Cards List */}
-                <div className="bg-white p-6 rounded-lg shadow-md border border-stone-200">
+                {/* Cards List Column with Drag & Drop */}
+                <div className="lg:col-span-7 bg-white p-6 rounded-lg border border-stone-200">
                     <div className="flex justify-between items-center mb-4">
                         <div>
-                            <h2 className="text-xl font-semibold">
-                                All Bento Cards ({bentoImageCards?.length || 0})
+                            <h2 className="text-xl font-bold">
+                                All Bento Cards ({cardsList.length})
                             </h2>
-                            <p className="text-sm text-gray-500">Sorted by latest creation</p>
+                            <p className="text-xs text-gray-500 mt-0.5">
+                                Drag & drop cards or use arrows to rearrange the order in frontend.
+                            </p>
                         </div>
-                        <div className="text-sm text-gray-500">
-                            {bentoImageCards?.filter((c) => c.category?.includes("top-right")).length || 0}{" "}
-                            top-right cards
-                        </div>
+                        {isReordering && (
+                            <span className="text-xs text-primary font-medium animate-pulse">
+                                Updating order...
+                            </span>
+                        )}
                     </div>
 
-                    {!bentoImageCards || bentoImageCards.length === 0 ? (
-                        <div className="text-center py-8 text-gray-500">
+                    {!cardsList || cardsList.length === 0 ? (
+                        <div className="text-center py-12 text-gray-400">
                             <div className="text-4xl mb-2">🎴</div>
-                            <p>No bento cards yet.</p>
-                            <p className="text-sm mt-1">Create your first bento grid card!</p>
+                            <p className="font-medium text-gray-600">No bento cards yet.</p>
+                            <p className="text-xs mt-1">Create your first bento grid card from the form!</p>
                         </div>
                     ) : (
-                        <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2">
-                            {bentoImageCards.map((card, index) => (
+                        <div className="space-y-3 max-h-[680px] overflow-y-auto pr-1">
+                            {cardsList.map((card, index) => (
                                 <div
                                     key={card.id}
-                                    className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+                                    draggable
+                                    onDragStart={() => handleDragStart(index)}
+                                    onDragOver={(e) => handleDragOver(e, index)}
+                                    onDragEnd={handleDragEnd}
+                                    className={`border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition-all duration-200 bg-white ${
+                                        draggedIndex === index ? "opacity-40 border-dashed border-primary scale-[0.98]" : ""
+                                    }`}
                                 >
-                                    <div className="flex">
-                                        {/* Order Indicator */}
-                                        <div className="w-12 flex flex-col items-center justify-center bg-gray-50">
-                                            <div className="text-lg font-bold text-gray-700">
+                                    <div className="flex items-center">
+                                        {/* Drag Handle & Order */}
+                                        <div className="w-12 py-4 flex flex-col items-center justify-center bg-gray-50/80 border-r border-gray-100 cursor-grab active:cursor-grabbing hover:bg-gray-100 transition-colors">
+                                            <GripVertical size={16} className="text-gray-400 mb-1" />
+                                            <div className="text-sm font-extrabold text-gray-700">
                                                 {index + 1}
                                             </div>
-                                            <div className="text-xs text-gray-500">Card</div>
+                                            <div className="text-[9px] text-gray-400 font-medium uppercase tracking-wider">
+                                                Order
+                                            </div>
                                         </div>
 
                                         {/* Thumbnail */}
-                                        <div className="w-24 h-24 flex-shrink-0 relative">
+                                        <div className="w-20 h-20 flex-shrink-0 relative m-2 rounded-lg overflow-hidden bg-gray-100 border border-gray-200">
                                             <Image
                                                 src={card.image}
                                                 alt={card.title}
                                                 className="object-cover"
                                                 fill
-                                                sizes="96px"
+                                                sizes="80px"
                                             />
                                         </div>
 
                                         {/* Details */}
-                                        <div className="flex-1 p-3">
-                                            <div className="flex justify-between items-start">
-                                                <div>
-                                                    <h3 className="font-bold text-sm line-clamp-1">
+                                        <div className="flex-1 p-3 min-w-0">
+                                            <div className="flex justify-between items-start gap-2">
+                                                <div className="min-w-0 flex-1">
+                                                    <h3 className="font-bold text-sm text-gray-900 truncate">
                                                         {card.title}
                                                     </h3>
                                                     {card.sub_title && (
-                                                        <p className="text-gray-600 text-xs mt-1 line-clamp-1">
+                                                        <p className="text-gray-500 text-xs mt-0.5 truncate">
                                                             {card.sub_title}
                                                         </p>
                                                     )}
-                                                    <div className="flex flex-wrap gap-2 mt-2">
+                                                    <div className="flex flex-wrap items-center gap-2 mt-2">
                                                         {card.category && (
-                                                            <span className={`text-xs px-2 py-0.5 rounded ${card.category.includes("top-right")
-                                                                    ? "bg-blue-100 text-teal-800"
-                                                                    : card.category.includes("bottom")
-                                                                        ? "bg-green-100 text-green-800"
-                                                                        : "bg-gray-100 text-gray-800"
-                                                                }`}>
+                                                            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-stone-100 text-stone-700 border border-stone-200">
                                                                 {card.category}
                                                             </span>
                                                         )}
-                                                        <span className="text-xs text-gray-500">
-                                                            Created:{" "}
+                                                        <span className="text-[11px] text-gray-400">
                                                             {new Date(card.createdAt).toLocaleDateString()}
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <div className="flex gap-1 ml-2">
+
+                                                {/* Action Buttons: Move Up/Down, Edit, Delete */}
+                                                <div className="flex items-center gap-1.5 flex-shrink-0">
+                                                    {/* Move Up Button */}
                                                     <button
+                                                        type="button"
+                                                        onClick={() => moveCard(index, -1)}
+                                                        disabled={index === 0}
+                                                        title="Move Up"
+                                                        className="p-1.5 rounded text-gray-500 hover:text-gray-900 hover:bg-gray-100 disabled:opacity-20 disabled:cursor-not-allowed cursor-pointer"
+                                                    >
+                                                        <ArrowUp size={14} />
+                                                    </button>
+
+                                                    {/* Move Down Button */}
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => moveCard(index, 1)}
+                                                        disabled={index === cardsList.length - 1}
+                                                        title="Move Down"
+                                                        className="p-1.5 rounded text-gray-500 hover:text-gray-900 hover:bg-gray-100 disabled:opacity-20 disabled:cursor-not-allowed cursor-pointer"
+                                                    >
+                                                        <ArrowDown size={14} />
+                                                    </button>
+
+                                                    <button
+                                                        type="button"
                                                         onClick={() => handleEdit(card)}
-                                                        className="text-green-600 hover:text-white hover:bg-green-500 border border-green-500 px-2 py-1 rounded text-xs cursor-pointer"
+                                                        className="text-emerald-700 hover:bg-emerald-50 border border-emerald-600/40 px-2.5 py-1 rounded text-xs font-semibold cursor-pointer transition-colors"
                                                     >
                                                         Edit
                                                     </button>
                                                     <button
+                                                        type="button"
                                                         onClick={() => handleDelete(card.id)}
-                                                        className="text-red-600 hover:text-white hover:bg-red-500 border border-red-500 px-2 py-1 rounded text-xs cursor-pointer"
+                                                        className="text-rose-600 hover:bg-rose-50 border border-rose-500/40 px-2.5 py-1 rounded text-xs font-semibold cursor-pointer transition-colors"
                                                     >
                                                         Delete
                                                     </button>
@@ -459,30 +530,6 @@ export const BentoImageGallery = () => {
                                     </div>
                                 </div>
                             ))}
-                        </div>
-                    )}
-
-                    {/* Category Summary */}
-                    {bentoImageCards && bentoImageCards.length > 0 && (
-                        <div className="mt-6 pt-6 border-t border-stone-300">
-                            <h3 className="text-lg font-semibold mb-3">Category Summary</h3>
-                            <div className="grid grid-cols-2 gap-3">
-                                {AVAILABLE_CATEGORIES.slice(0, 6).map((cat) => {
-                                    const count = bentoImageCards?.filter((c) => c.category === cat).length || 0;
-                                    if (count === 0) return null;
-
-                                    return (
-                                        <div key={cat} className="bg-gray-50 p-3 rounded">
-                                            <div className="font-medium text-sm mb-1 capitalize">
-                                                {cat.replace(/-/g, ' ')}
-                                            </div>
-                                            <div className="text-xl">
-                                                {count} card{count !== 1 ? "s" : ""}
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
                         </div>
                     )}
                 </div>

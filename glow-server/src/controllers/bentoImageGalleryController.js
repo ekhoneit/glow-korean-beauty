@@ -5,7 +5,16 @@ const { successResponse, errorResponse } = require('../utils/responseHandler');
 // Create BentoImageCard
 const createBentoImageCard = async (req, res) => {
     try {
-        const { title, sub_title, image, link, category } = req.body;
+        const { title, sub_title, image, link, category, priority } = req.body;
+
+        // Auto assign priority to end if not specified
+        let cardPriority = priority !== undefined ? parseInt(priority) : null;
+        if (cardPriority === null || isNaN(cardPriority)) {
+            const maxPriorityCard = await prisma.bentoImageCard.findFirst({
+                orderBy: { priority: 'desc' }
+            });
+            cardPriority = maxPriorityCard ? maxPriorityCard.priority + 1 : 1;
+        }
 
         const newCard = await prisma.bentoImageCard.create({
             data: {
@@ -13,7 +22,8 @@ const createBentoImageCard = async (req, res) => {
                 sub_title: sub_title || '',
                 image: image || '',
                 link: link || '',
-                category: category || ''
+                category: category || '',
+                priority: cardPriority
             }
         });
 
@@ -24,17 +34,51 @@ const createBentoImageCard = async (req, res) => {
     }
 };
 
-// Get All BentoImageCards
+// Get All BentoImageCards (sorted by priority asc, then createdAt asc)
 const getAllBentoImageCards = async (req, res) => {
     try {
         const cardData = await prisma.bentoImageCard.findMany({
-            orderBy: { createdAt: 'desc' }
+            orderBy: [
+                { priority: 'asc' },
+                { createdAt: 'asc' }
+            ]
         });
 
         return successResponse(res, cardData);
     } catch (error) {
         console.error('Get all bento image cards error:', error);
         return errorResponse(res, 'Failed to retrieve bento image cards', 500);
+    }
+};
+
+// Reorder Bento Cards
+const reorderBentoImageCards = async (req, res) => {
+    try {
+        const { orderedIds } = req.body;
+        if (!Array.isArray(orderedIds) || orderedIds.length === 0) {
+            return errorResponse(res, 'orderedIds must be a non-empty array of card IDs', 400);
+        }
+
+        await prisma.$transaction(
+            orderedIds.map((id, index) =>
+                prisma.bentoImageCard.update({
+                    where: { id: parseInt(id) },
+                    data: { priority: index + 1 }
+                })
+            )
+        );
+
+        const updatedCards = await prisma.bentoImageCard.findMany({
+            orderBy: [
+                { priority: 'asc' },
+                { createdAt: 'asc' }
+            ]
+        });
+
+        return successResponse(res, 'Bento cards reordered successfully', updatedCards);
+    } catch (error) {
+        console.error('Reorder bento image cards error:', error);
+        return errorResponse(res, 'Failed to reorder bento cards', 500);
     }
 };
 
@@ -63,9 +107,8 @@ const updateBentoImageCard = async (req, res) => {
         const id = parseInt(req.params.id);
         if (isNaN(id) || id <= 0) return errorResponse(res, 'Invalid ID format', 400);
 
-        const { title, sub_title, image, link, category } = req.body;
+        const { title, sub_title, image, link, category, priority } = req.body;
 
-        // Check if card exists
         const existingCard = await prisma.bentoImageCard.findUnique({
             where: { id }
         });
@@ -79,7 +122,8 @@ const updateBentoImageCard = async (req, res) => {
                 sub_title: sub_title !== undefined ? sub_title : existingCard.sub_title,
                 image: image !== undefined ? image : existingCard.image,
                 link: link !== undefined ? link : existingCard.link,
-                category: category !== undefined ? category : existingCard.category
+                category: category !== undefined ? category : existingCard.category,
+                priority: priority !== undefined ? parseInt(priority) : existingCard.priority
             }
         });
 
@@ -101,7 +145,6 @@ const deleteBentoImageCard = async (req, res) => {
         const id = parseInt(req.params.id);
         if (isNaN(id) || id <= 0) return errorResponse(res, 'Invalid ID format', 400);
 
-        // Check if card exists
         const existingCard = await prisma.bentoImageCard.findUnique({
             where: { id }
         });
@@ -127,6 +170,7 @@ const deleteBentoImageCard = async (req, res) => {
 module.exports = {
     createBentoImageCard,
     getAllBentoImageCards,
+    reorderBentoImageCards,
     getBentoImageCardById,
     updateBentoImageCard,
     deleteBentoImageCard

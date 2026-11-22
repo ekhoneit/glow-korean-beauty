@@ -73,6 +73,28 @@ export const useUpdateBentoImageCard = () => {
   return { updateBentoImageCard };
 };
 
+// Hook for reordering bento cards
+export const useReorderBentoImageCards = () => {
+  const reorderBentoImageCards = async (orderedIds) => {
+    const response = await fetch(`${API_URL}/api/bento-gallery/reorder`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ orderedIds }),
+    });
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'Failed to reorder bento cards');
+    }
+
+    return response.json();
+  };
+
+  return { reorderBentoImageCards };
+};
+
 // Hook for deleting a bento image card
 export const useDeleteBentoImageCard = () => {
   const deleteBentoImageCard = async (id) => {
