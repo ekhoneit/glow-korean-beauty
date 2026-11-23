@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import LandingMinimalHeader from "@/components/LandingPage/LandingMinimalHeader";
 import LandingHero from "@/components/LandingPage/LandingHero";
 import LandingTimerBanner from "@/components/LandingPage/LandingTimerBanner";
@@ -11,6 +11,7 @@ import LandingRelatedProducts from "@/components/LandingPage/LandingRelatedProdu
 import LandingCheckoutSection from "@/components/LandingPage/LandingCheckoutSection";
 import LandingMinimalFooter from "@/components/LandingPage/LandingMinimalFooter";
 import LandingFloatingBottomBar from "@/components/LandingPage/LandingFloatingBottomBar";
+import { trackViewItem } from "@/utils/dataLayer";
 
 export default function DynamicLandingClient({
   landingPage,
@@ -18,6 +19,22 @@ export default function DynamicLandingClient({
 }) {
   const product = landingPage?.product || {};
   const supportPhone = contactData?.phone_number || "01969968555";
+  const hasTrackedViewContent = useRef(false);
+
+  // Track ViewContent / view_item when landing page loads
+  useEffect(() => {
+    if (product?.id && !hasTrackedViewContent.current) {
+      hasTrackedViewContent.current = true;
+      trackViewItem({
+        id: product.id,
+        productName: product.productName || landingPage?.pageTitle,
+        price: landingPage?.offerPrice || product.salePrice || product.price || 0,
+        regularPrice: product.regularPrice || product.price || 0,
+        category: product.category?.categoryName || "Korean Beauty & Skincare",
+        sku: product.sku || `LP-${landingPage?.id}`,
+      });
+    }
+  }, [product, landingPage]);
   const variants = useMemo(() => {
     return Array.isArray(product?.productVariants)
       ? product.productVariants

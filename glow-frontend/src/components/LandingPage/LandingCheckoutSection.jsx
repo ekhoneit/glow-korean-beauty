@@ -89,6 +89,7 @@ export default function LandingCheckoutSection({
   const abandonedSentRef = useRef(false);
   const abandonmentDataRef = useRef(null);
   const lastSentAddressRef = useRef("");
+  const beginCheckoutTrackedRef = useRef(false);
 
   // Gallery & Lightbox Zoom Modal States
   const [modalGallery, setModalGallery] = useState([]); // [{ url, title, variantId }]
@@ -220,6 +221,20 @@ export default function LandingCheckoutSection({
         shippingCost: deliveryFee,
         items: items,
       };
+
+      // Trigger InitiateCheckout / begin_checkout once customer enters contact info
+      if (!beginCheckoutTrackedRef.current && cleanPhone.length >= 10) {
+        beginCheckoutTrackedRef.current = true;
+        trackBeginCheckout(
+          items.map((it) => ({
+            id: it.productId,
+            name: it.productName,
+            price: it.price,
+            quantity: it.quantity,
+          })),
+          grandTotal
+        );
+      }
 
       // Call failed/abandoned order API as soon as user types their phone number,
       // and re-send/update once address is also typed (debounced 1.5s)
