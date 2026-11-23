@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { Plus, Trash2, Search, Package, Sparkles } from "lucide-react";
+import { Plus, Trash2, Search, Package, Sparkles, ChevronDown, Check, X } from "lucide-react";
 
 export default function ComboProductFields({
   allProducts = [],
@@ -13,8 +13,21 @@ export default function ComboProductFields({
   currentProductId = null,
 }) {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedProductId, setSelectedProductId] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedQuantity, setSelectedQuantity] = useState(1);
+  const dropdownRef = useRef(null);
+
+  // Close dropdown when clicked outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   // Filter available products (exclude self and current combo items)
   const availableProducts = (allProducts || []).filter((p) => {
@@ -31,27 +44,31 @@ export default function ComboProductFields({
     );
   });
 
+  const handleSelectProduct = (prod) => {
+    setSelectedProduct(prod);
+    setIsOpen(false);
+    setSearchTerm("");
+  };
+
   const handleAddProduct = () => {
-    if (!selectedProductId) return;
-    const prod = allProducts.find((p) => String(p.id) === String(selectedProductId));
-    if (!prod) return;
+    if (!selectedProduct) return;
 
     const newItem = {
-      productId: prod.id,
+      productId: selectedProduct.id,
       quantity: Math.max(1, parseInt(selectedQuantity) || 1),
       product: {
-        id: prod.id,
-        productName: prod.productName,
-        sku: prod.sku,
-        price: prod.price,
-        regularPrice: prod.regularPrice,
-        quantity: prod.quantity,
-        images: prod.images,
+        id: selectedProduct.id,
+        productName: selectedProduct.productName,
+        sku: selectedProduct.sku,
+        price: selectedProduct.price,
+        regularPrice: selectedProduct.regularPrice,
+        quantity: selectedProduct.quantity,
+        images: selectedProduct.images,
       },
     };
 
     setComboItems([...comboItems, newItem]);
-    setSelectedProductId("");
+    setSelectedProduct(null);
     setSelectedQuantity(1);
     setSearchTerm("");
   };
@@ -180,22 +197,146 @@ export default function ComboProductFields({
 
         {/* Add Product Selector Bar */}
         <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200">
-          <div className="sm:col-span-7">
+          <div className="sm:col-span-7 relative" ref={dropdownRef}>
             <label className="block text-[11px] font-bold text-slate-600 mb-1">
               প্রোডাক্ট নির্বাচন করুন (Search & Pick)
             </label>
-            <select
-              value={selectedProductId}
-              onChange={(e) => setSelectedProductId(e.target.value)}
-              className="w-full p-2 bg-white border border-slate-300 rounded text-xs font-medium focus:ring-2 focus:ring-primary/20 focus:outline-none"
+            
+            {/* Custom Searchable Dropdown Button */}
+            <div
+              onClick={() => setIsOpen(!isOpen)}
+              className="w-full min-h-[38px] p-2 bg-white border border-slate-300 rounded text-xs font-medium flex items-center justify-between cursor-pointer hover:border-slate-400 transition focus-within:ring-2 focus-within:ring-primary/20"
             >
-              <option value="">-- প্রোডাক্ট বেছে নিন ({availableProducts.length}টি উপলব্ধ) --</option>
-              {availableProducts.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.productName} {p.sku ? `(SKU: ${p.sku})` : ""} - বর্তমান স্টক: {p.quantity || 0}
-                </option>
-              ))}
-            </select>
+              {selectedProduct ? (
+                <div className="flex items-center gap-2 truncate">
+                  {selectedProduct.images?.[0]?.url && (
+                    <div className="relative w-5 h-5 rounded overflow-hidden flex-shrink-0 border border-slate-100">
+                      <Image
+                        src={selectedProduct.images[0].url}
+                        alt=""
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
+                  <span className="font-semibold text-slate-800 truncate">
+                    {selectedProduct.productName}
+                  </span>
+                  {selectedProduct.sku && (
+                    <span className="text-[10px] text-slate-400 font-mono">
+                      ({selectedProduct.sku})
+                    </span>
+                  )}
+                  <span className="text-[10px] px-1.5 py-0.2 bg-emerald-50 text-emerald-700 font-bold rounded">
+                    স্টক: {selectedProduct.quantity || 0}
+                  </span>
+                </div>
+              ) : (
+                <span className="text-slate-400">
+                  -- প্রোডাক্ট সার্চ ও নির্বাচন করুন ({availableProducts.length}টি উপলব্ধ) --
+                </span>
+              )}
+              <div className="flex items-center gap-1 text-slate-400 flex-shrink-0 ml-2">
+                {selectedProduct && (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedProduct(null);
+                    }}
+                    className="hover:text-red-500 p-0.5 rounded"
+                  >
+                    <X size={13} />
+                  </button>
+                )}
+                <ChevronDown size={14} className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`} />
+              </div>
+            </div>
+
+            {/* Dropdown Menu with Live Search */}
+            {isOpen && (
+              <div className="absolute z-50 left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-xl overflow-hidden animate-in fade-in duration-150">
+                {/* Search Input Box */}
+                <div className="p-2 border-b border-slate-100 bg-slate-50/70">
+                  <div className="relative">
+                    <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <input
+                      type="text"
+                      autoFocus
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      placeholder="নাম অথবা SKU দিয়ে খুঁজুন..."
+                      className="w-full pl-8 pr-3 py-1.5 text-xs bg-white border border-slate-200 rounded-md focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                    />
+                    {searchTerm && (
+                      <button
+                        type="button"
+                        onClick={() => setSearchTerm("")}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                      >
+                        <X size={12} />
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Product List */}
+                <div className="max-h-60 overflow-y-auto divide-y divide-slate-100">
+                  {availableProducts.length === 0 ? (
+                    <div className="p-4 text-center text-xs text-slate-400">
+                      কোনো প্রোডাক্ট পাওয়া যায়নি
+                    </div>
+                  ) : (
+                    availableProducts.map((p) => {
+                      const isSelected = selectedProduct?.id === p.id;
+                      const thumb = p.images?.[0]?.url || "/placeholder-product.png";
+                      return (
+                        <div
+                          key={p.id}
+                          onClick={() => handleSelectProduct(p)}
+                          className={`p-2.5 flex items-center justify-between gap-2.5 hover:bg-slate-50 cursor-pointer transition ${
+                            isSelected ? "bg-primary/5 text-primary" : "text-slate-700"
+                          }`}
+                        >
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            <div className="relative w-8 h-8 rounded border border-slate-200 overflow-hidden bg-slate-100 flex-shrink-0">
+                              <Image
+                                src={thumb}
+                                alt={p.productName}
+                                fill
+                                className="object-cover"
+                              />
+                            </div>
+                            <div className="min-w-0">
+                              <p className="text-xs font-semibold truncate text-slate-800">
+                                {p.productName}
+                              </p>
+                              <div className="flex items-center gap-2 text-[10px] text-slate-500 mt-0.5">
+                                {p.sku && <span className="font-mono">SKU: {p.sku}</span>}
+                                <span>৳{Number(p.price || 0).toLocaleString()}</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex items-center gap-2 flex-shrink-0">
+                            <span
+                              className={`text-[10px] font-bold px-2 py-0.5 rounded ${
+                                (p.quantity || 0) > 0
+                                  ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                                  : "bg-red-50 text-red-600 border border-red-200"
+                              }`}
+                            >
+                              স্টক: {p.quantity || 0}
+                            </span>
+                            {isSelected && <Check size={14} className="text-primary" />}
+                          </div>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="sm:col-span-3">
@@ -215,9 +356,9 @@ export default function ComboProductFields({
             <button
               type="button"
               onClick={handleAddProduct}
-              disabled={!selectedProductId}
+              disabled={!selectedProduct}
               className={`w-full py-2 px-3 rounded text-xs font-bold flex items-center justify-center gap-1.5 transition ${
-                selectedProductId
+                selectedProduct
                   ? "bg-primary text-white hover:bg-primary-hover cursor-pointer shadow-xs"
                   : "bg-slate-200 text-slate-400 cursor-not-allowed"
               }`}
