@@ -455,6 +455,12 @@ export default function EditLandingPage() {
         return null;
     };
 
+    const filteredProductList = (productList || []).filter(
+        (p) =>
+            p?.productName?.toLowerCase().includes((productSearch || "").toLowerCase()) ||
+            p?.sku?.toLowerCase().includes((productSearch || "").toLowerCase())
+    );
+
     if (loadingInitial) {
         return (
             <ProtectedRoute>
