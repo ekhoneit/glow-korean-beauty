@@ -139,6 +139,7 @@ export async function generateMetadata() {
 
 export default async function RootLayout({ children }) {
   let dynamicGtmId = GTM_ID;
+  let dynamicPixelId = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID || "";
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
     const res = await fetch(`${apiUrl}/api/store-settings`, {
@@ -148,6 +149,9 @@ export default async function RootLayout({ children }) {
       const data = await res.json();
       if (data?.data?.gtmId?.trim()) {
         dynamicGtmId = data.data.gtmId.trim();
+      }
+      if (data?.data?.pixelId?.trim()) {
+        dynamicPixelId = data.data.pixelId.trim();
       }
     }
   } catch (_) {}
@@ -221,6 +225,35 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
+        {/* Dynamic Meta Pixel - Configured via Admin Branding Settings */}
+        {dynamicPixelId ? (
+          <>
+            <Script
+              id="meta-pixel-dynamic"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '${dynamicPixelId}');`,
+              }}
+            />
+            <noscript>
+              <img
+                height="1"
+                width="1"
+                style={{ display: "none" }}
+                src={`https://www.facebook.com/tr?id=${dynamicPixelId}&ev=PageView&noscript=1`}
+                alt=""
+              />
+            </noscript>
+          </>
+        ) : null}
         <PageTracker />
         <ThemeColorInjector />
         <CartDrawerProvider>

@@ -1350,7 +1350,9 @@ model StoreSetting {
   duplicateOrderMessage       String?  @default("You recently placed an order. Our team is processing it. If you need to make changes, please contact us.")
 
   // Google Tag Manager (GTM)
+  // Google Tag Manager (GTM) & Meta Pixel
   gtmId                       String?  @default("")
+  pixelId                     String?  @default("")
 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
