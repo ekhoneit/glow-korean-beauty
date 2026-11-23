@@ -20,6 +20,7 @@ import CloudinaryImageInput from '@/components/ui/CloudinaryImageInput';
 import SingleProductFields from '@/components/product/ProductVariant/SingleProductFields';
 import TinyEditor from '@/components/TinyEditor/Editor';
 import VariantProductFields from "@/components/product/ProductVariant/VariantProductFields";
+import ComboProductFields from "@/components/product/ProductVariant/ComboProductFields";
 import OrderBumpSelector from "@/components/product/OrderBumpSelector";
 import ProductErrorModal from "@/components/modal/ProductModal/ProductErrorModal";
 import { motion, AnimatePresence } from 'framer-motion';
@@ -36,6 +37,7 @@ const ProductEditDrawer = ({ isOpen, onClose, product, onSuccess }) => {
     const [warrantyEnabled, setWarrantyEnabled] = useState(false);
     const [expireEnabled, setExpireEnabled] = useState(false);
     const [variants, setVariants] = useState([]);
+    const [comboItems, setComboItems] = useState([]);
     const [errorModal, setErrorModal] = useState({ isOpen: false, title: "", message: "", details: [] });
 
     // Order Bump states
@@ -154,8 +156,22 @@ const ProductEditDrawer = ({ isOpen, onClose, product, onSuccess }) => {
 
             const isVariantProduct = product.productType === "variant" ||
                 (product.productVariants && product.productVariants.length > 0);
+            const isComboProduct = product.productType === "combo" ||
+                (product.comboItems && product.comboItems.length > 0);
 
-            setProductType(isVariantProduct ? 'variable' : 'single');
+            if (isVariantProduct) {
+                setProductType('variable');
+            } else if (isComboProduct) {
+                setProductType('combo');
+            } else {
+                setProductType('single');
+            }
+
+            if (isComboProduct && product.comboItems?.length > 0) {
+                setComboItems(product.comboItems);
+            } else {
+                setComboItems([]);
+            }
 
             if (isVariantProduct && product.productVariants?.length > 0) {
                 const loadedVariants = product.productVariants.map(v => {
@@ -207,6 +223,7 @@ const ProductEditDrawer = ({ isOpen, onClose, product, onSuccess }) => {
             reset();
             setImages([]);
             setVariants([]);
+            setComboItems([]);
             setSelectedCollections([]);
             setWarrantyEnabled(false);
             setExpireEnabled(false);
@@ -292,13 +309,6 @@ const ProductEditDrawer = ({ isOpen, onClose, product, onSuccess }) => {
 
     const handleProductTypeChange = (type) => {
         if (type !== productType) {
-            if (type === 'single') {
-                setVariants([]);
-            } else {
-                if (variants.length === 0) {
-                    setVariants([]);
-                }
-            }
             setProductType(type);
         }
     };
@@ -448,7 +458,7 @@ const ProductEditDrawer = ({ isOpen, onClose, product, onSuccess }) => {
                         ? new Date(data.expireOn).toISOString()
                         : undefined,
                     productType: 'variant',
-                    images: [],
+                    images: images.filter(Boolean),
                     quantity: 0,
                     stockStatus: data.stockStatus || 'IN_STOCK',
                     trackQuantity: Boolean(data.trackQuantity),
@@ -473,6 +483,46 @@ const ProductEditDrawer = ({ isOpen, onClose, product, onSuccess }) => {
                             isDefault: v.isDefault || false
                         };
                     })
+                };
+            } else if (productType === 'combo') {
+                if (!comboItems || comboItems.length === 0) {
+                    toast.error("কম্বো প্রোডাক্টের জন্য অন্তত একটি সিঙ্গেল প্রোডাক্ট যোগ করুন");
+                    setIsSubmitting(false);
+                    return;
+                }
+                payload = {
+                    ...data,
+                    subCategoryId: data.subCategoryId ? parseInt(data.subCategoryId) : undefined,
+                    brandId: data.brandId ? parseInt(data.brandId) : undefined,
+                    unitId: data.unitId ? parseInt(data.unitId) : undefined,
+                    warrantyId: warrantyEnabled && data.warrantyId ? parseInt(data.warrantyId) : undefined,
+                    price: sellingPrice,
+                    regularPrice: regularPrice > 0 ? regularPrice : null,
+                    costPrice: data.costPrice !== undefined && data.costPrice !== '' ? parseFloat(data.costPrice) : undefined,
+                    quantity: 0,
+                    tax: data.tax ? parseFloat(data.tax) : undefined,
+                    discountType: discountAmount > 0 ? 'Fixed' : null,
+                    discountValue: discountAmount > 0 ? discountAmount : 0,
+                    quantityAlert: data.quantityAlert ? parseInt(data.quantityAlert) : undefined,
+                    manufacturerData: expireEnabled && data.manufacturerData
+                        ? new Date(data.manufacturerData).toISOString()
+                        : undefined,
+                    expireOn: expireEnabled && data.expireOn
+                        ? new Date(data.expireOn).toISOString()
+                        : undefined,
+                    images: images.filter(Boolean),
+                    productType: 'combo',
+                    comboItems: comboItems.map((item, idx) => ({
+                        productId: parseInt(item.productId || item.id),
+                        quantity: Math.max(1, parseInt(item.quantity) || 1),
+                        sortOrder: idx
+                    })),
+                    insideDhakaDeliveryCharge: data.insideDhakaDeliveryCharge ? parseFloat(data.insideDhakaDeliveryCharge) : undefined,
+                    outsideDhakaDeliveryCharge: data.outsideDhakaDeliveryCharge ? parseFloat(data.outsideDhakaDeliveryCharge) : undefined,
+                    collectionIds: selectedCollections,
+                    mainCategory: undefined,
+                    category: undefined,
+                    sellingPrice: undefined
                 };
             } else {
                 payload = {
@@ -950,39 +1000,40 @@ const ProductEditDrawer = ({ isOpen, onClose, product, onSuccess }) => {
                             </button>
                         </div>
 
-                        <div className="flex items-center gap-6 mt-6 text-lg font-exo font-medium">
-                            <label className="flex items-center gap-2">
+                        <div className="flex items-center gap-6 mt-6 text-base font-exo font-medium flex-wrap">
+                            <label className="flex items-center gap-2 cursor-pointer">
                                 <input
                                     type="radio"
                                     value="single"
                                     checked={productType === 'single'}
                                     onChange={() => handleProductTypeChange('single')}
-                                    disabled={product?.productType === 'variant'}
                                 />
                                 Single Product
                             </label>
-                            <label className="flex items-center gap-2">
+                            <label className="flex items-center gap-2 cursor-pointer">
                                 <input
                                     type="radio"
                                     value="variable"
                                     checked={productType === 'variable'}
                                     onChange={() => handleProductTypeChange('variable')}
-                                    disabled={product?.productType === 'single'}
                                 />
                                 Variant Product
                             </label>
+                            <label className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="radio"
+                                    value="combo"
+                                    checked={productType === 'combo'}
+                                    onChange={() => handleProductTypeChange('combo')}
+                                />
+                                Combo Product
+                            </label>
                         </div>
-
-                        {product?.productType && (
-                            <p className="mt-2 text-sm text-amber-600">
-                                ⚠️ Product type cannot be changed after creation. Current type: <strong>{product.productType}</strong>
-                            </p>
-                        )}
 
                         <div className="mt-6">
                             {productType === 'single' ? (
                                 <SingleProductFields register={register} errors={errors} watch={watch} />
-                            ) : (
+                            ) : productType === 'variable' ? (
                                 <VariantProductFields
                                     variants={variants}
                                     setVariants={setVariants}
@@ -991,6 +1042,15 @@ const ProductEditDrawer = ({ isOpen, onClose, product, onSuccess }) => {
                                     register={register}
                                     errors={errors}
                                     watch={watch}
+                                />
+                            ) : (
+                                <ComboProductFields
+                                    allProducts={allProducts}
+                                    comboItems={comboItems}
+                                    setComboItems={setComboItems}
+                                    register={register}
+                                    errors={errors}
+                                    currentProductId={product?.id}
                                 />
                             )}
                         </div>

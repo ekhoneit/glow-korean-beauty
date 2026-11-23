@@ -28,6 +28,23 @@ const productInclude = {
             collection: true,
         },
     },
+    comboItems: {
+        include: {
+            product: {
+                select: {
+                    id: true,
+                    productName: true,
+                    sku: true,
+                    price: true,
+                    regularPrice: true,
+                    quantity: true,
+                    images: true,
+                    productType: true,
+                },
+            },
+        },
+        orderBy: { sortOrder: "asc" },
+    },
 };
 
 const createProduct = async (req, res) => {
@@ -35,6 +52,7 @@ const createProduct = async (req, res) => {
         const {
             productType = "single",
             variants,
+            comboItems,
             collectionIds,
             collections,
             ...productData
@@ -169,6 +187,9 @@ const createProduct = async (req, res) => {
 
         if (productType === "variant" && variants && variants.length > 0) {
             data.quantity = 0;
+        } else if (productType === "combo") {
+            // For combo product, stock is dynamically determined by component products
+            data.quantity = 0;
         }
 
         const createdProductId = await prisma.$transaction(async (tx) => {
@@ -192,6 +213,25 @@ const createProduct = async (req, res) => {
                 await tx.productVariant.createMany({
                     data: variantData,
                 });
+            }
+
+            // Create ComboItems if productType is combo
+            if (productType === "combo" && Array.isArray(comboItems) && comboItems.length > 0) {
+                const comboData = comboItems
+                    .filter(item => (item.productId || item.id) && parseInt(item.productId || item.id))
+                    .map((item, idx) => ({
+                        comboProductId: product.id,
+                        productId: parseInt(item.productId || item.id),
+                        quantity: Math.max(1, parseInt(item.quantity) || 1),
+                        sortOrder: idx,
+                    }));
+
+                if (comboData.length > 0) {
+                    await tx.comboItem.createMany({
+                        data: comboData,
+                        skipDuplicates: true,
+                    });
+                }
             }
 
             const targetCollections = collectionIds || collections;
@@ -480,6 +520,7 @@ const updateProduct = async (req, res) => {
 
         const {
             variants,
+            comboItems,
             productType,
             collectionIds,
             collections,
@@ -618,6 +659,8 @@ const updateProduct = async (req, res) => {
 
         if ((productType === "variant" || data.productType === "variant") && variants && Array.isArray(variants)) {
             data.quantity = 0;
+        } else if (productType === "combo" || data.productType === "combo") {
+            data.quantity = 0;
         }
 
         await prisma.$transaction(async (tx) => {
@@ -625,6 +668,52 @@ const updateProduct = async (req, res) => {
                 where: { id },
                 data,
             });
+
+            // If switching away from variant to single or combo, clean up or handle existing variants
+            const effectiveType = data.productType || productType;
+            if (effectiveType && effectiveType !== "variant") {
+                const existingVariants = await tx.productVariant.findMany({
+                    where: { productId: id },
+                });
+                for (const v of existingVariants) {
+                    const orderCount = await tx.orderItem.count({ where: { productVariantId: v.id } });
+                    if (orderCount === 0) {
+                        await tx.productVariant.delete({ where: { id: v.id } });
+                    } else {
+                        await tx.productVariant.update({ where: { id: v.id }, data: { quantity: 0 } });
+                    }
+                }
+            }
+
+            // Sync ComboItems if comboItems is provided or product is combo
+            if (effectiveType === "combo" || comboItems !== undefined) {
+                await tx.comboItem.deleteMany({
+                    where: { comboProductId: id }
+                });
+
+                if (Array.isArray(comboItems) && comboItems.length > 0) {
+                    const comboData = comboItems
+                        .filter(item => (item.productId || item.id) && parseInt(item.productId || item.id))
+                        .map((item, idx) => ({
+                            comboProductId: id,
+                            productId: parseInt(item.productId || item.id),
+                            quantity: Math.max(1, parseInt(item.quantity) || 1),
+                            sortOrder: idx,
+                        }));
+
+                    if (comboData.length > 0) {
+                        await tx.comboItem.createMany({
+                            data: comboData,
+                            skipDuplicates: true
+                        });
+                    }
+                }
+            } else if (effectiveType && effectiveType !== "combo") {
+                // Switched from combo to single/variant -> remove combo components
+                await tx.comboItem.deleteMany({
+                    where: { comboProductId: id }
+                });
+            }
 
             if (variants && Array.isArray(variants)) {
                 const existingVariants = await tx.productVariant.findMany({

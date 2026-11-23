@@ -305,7 +305,14 @@ const createOrder = async (req, res) => {
                 });
             } else {
                 product = await prisma.product.findUnique({
-                    where: { id: productId }
+                    where: { id: productId },
+                    include: {
+                        comboItems: {
+                            include: {
+                                product: true
+                            }
+                        }
+                    }
                 });
             }
 
@@ -341,7 +348,9 @@ const createOrder = async (req, res) => {
                     productId,
                     productVariantId: null,
                     isVariant: false,
-                    stockToUpdate: isTracked && product.productType !== 'variant',
+                    isCombo: product.productType === 'combo' && product.comboItems?.length > 0,
+                    comboItems: product.comboItems || [],
+                    stockToUpdate: isTracked && product.productType !== 'variant' && product.productType !== 'combo',
                     actualPrice: parseFloat(product.price)
                 });
             }
@@ -602,7 +611,7 @@ const createOrder = async (req, res) => {
                     data: orderItemsData,
                 });
 
-                // Update inventory for regular items only
+                // Update inventory for regular items only (and deduct combo items for combo products)
                 for (const item of validatedItems) {
                     const qty = parseInt(item.quantity || 1);
 
@@ -611,6 +620,17 @@ const createOrder = async (req, res) => {
                             where: { id: item.productVariantId },
                             data: { quantity: { decrement: qty } }
                         });
+                    } else if (item.isCombo && item.comboItems && item.comboItems.length > 0) {
+                        // Deduct stock from each single component product in the combo
+                        for (const cItem of item.comboItems) {
+                            const cQty = parseInt(cItem.quantity || 1) * qty;
+                            if (cItem.productId && cItem.product?.trackQuantity !== false) {
+                                await tx.product.update({
+                                    where: { id: cItem.productId },
+                                    data: { quantity: { decrement: cQty } }
+                                });
+                            }
+                        }
                     } else if (!item.isVariant && item.stockToUpdate) {
                         await tx.product.update({
                             where: { id: item.productId },
@@ -1047,7 +1067,18 @@ const updateOrder = async (req, res) => {
                     select: {
                         productId: true,
                         productVariantId: true,
-                        quantity: true
+                        quantity: true,
+                        product: {
+                            select: {
+                                productType: true,
+                                comboItems: {
+                                    select: {
+                                        productId: true,
+                                        quantity: true
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 shipment: {
@@ -1103,6 +1134,14 @@ const updateOrder = async (req, res) => {
                                     where: { id: item.productVariantId },
                                     data: { quantity: { increment: qty } }
                                 });
+                            } else if (item.product?.productType === 'combo' && item.product?.comboItems?.length > 0) {
+                                for (const cItem of item.product.comboItems) {
+                                    const cQty = parseInt(cItem.quantity || 1) * qty;
+                                    await tx.product.update({
+                                        where: { id: cItem.productId },
+                                        data: { quantity: { increment: cQty } }
+                                    });
+                                }
                             } else if (item.productId) {
                                 await tx.product.update({
                                     where: { id: item.productId },
@@ -1130,6 +1169,14 @@ const updateOrder = async (req, res) => {
                                     where: { id: item.productVariantId },
                                     data: { quantity: { decrement: qty } }
                                 });
+                            } else if (item.product?.productType === 'combo' && item.product?.comboItems?.length > 0) {
+                                for (const cItem of item.product.comboItems) {
+                                    const cQty = parseInt(cItem.quantity || 1) * qty;
+                                    await tx.product.update({
+                                        where: { id: cItem.productId },
+                                        data: { quantity: { decrement: cQty } }
+                                    });
+                                }
                             } else if (item.productId) {
                                 await tx.product.update({
                                     where: { id: item.productId },

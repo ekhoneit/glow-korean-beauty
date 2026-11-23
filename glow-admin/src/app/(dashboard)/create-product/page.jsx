@@ -2,6 +2,7 @@
 
 import SingleProductFields from "@/components/product/ProductVariant/SingleProductFields";
 import VariantProductFields from "@/components/product/ProductVariant/VariantProductFields";
+import ComboProductFields from "@/components/product/ProductVariant/ComboProductFields";
 import OrderBumpSelector from "@/components/product/OrderBumpSelector";
 import TinyEditor from "@/components/TinyEditor/Editor";
 import CloudinaryImageInput from "@/components/ui/CloudinaryImageInput";
@@ -40,6 +41,7 @@ const CreateProduct = () => {
     const [warrantyEnabled, setWarrantyEnabled] = useState(false);
     const [expireEnabled, setExpireEnabled] = useState(false);
     const [variants, setVariants] = useState([]);
+    const [comboItems, setComboItems] = useState([]);
     const [errorModal, setErrorModal] = useState({ isOpen: false, title: "", message: "", details: [] });
 
     // Order Bump states
@@ -266,6 +268,18 @@ const CreateProduct = () => {
                 if (variants[0].costPrice) {
                     payload.costPrice = parseFloat(variants[0].costPrice);
                 }
+            } else if (productType === "combo") {
+                if (!comboItems || comboItems.length === 0) {
+                    toast.error("কম্বো প্রোডাক্টের জন্য অন্তত একটি সিঙ্গেল প্রোডাক্ট যোগ করুন");
+                    setIsSubmitting(false);
+                    return;
+                }
+                payload.comboItems = comboItems.map((item, idx) => ({
+                    productId: parseInt(item.productId || item.id),
+                    quantity: Math.max(1, parseInt(item.quantity) || 1),
+                    sortOrder: idx
+                }));
+                payload.quantity = 0;
             }
 
             // Clean up undefined and empty values
@@ -314,6 +328,7 @@ const CreateProduct = () => {
         setSelectedVariant("");
         setSelectedValue("");
         setVariants([]);
+        setComboItems([]);
         setProductType("single");
         setEnableOrderBump(false);
         setOrderBumpProduct(null);
@@ -742,6 +757,18 @@ const CreateProduct = () => {
                                 />
                                 Variant Product
                             </label>
+                            <label className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="radio"
+                                    value="combo"
+                                    checked={productType === "combo"}
+                                    onChange={() => {
+                                        setProductType("combo");
+                                        setVariants([]);
+                                    }}
+                                />
+                                Combo Product
+                            </label>
                         </div>
 
                         <div className="mt-6">
@@ -751,7 +778,7 @@ const CreateProduct = () => {
                                     errors={errors}
                                     watch={watch}
                                 />
-                            ) : (
+                            ) : productType === "variant" ? (
                                 <VariantProductFields
                                     register={register}
                                     errors={errors}
@@ -762,6 +789,14 @@ const CreateProduct = () => {
                                     setSelectedValue={setSelectedValue}
                                     variants={variants}
                                     setVariants={setVariants}
+                                />
+                            ) : (
+                                <ComboProductFields
+                                    allProducts={allProducts}
+                                    comboItems={comboItems}
+                                    setComboItems={setComboItems}
+                                    register={register}
+                                    errors={errors}
                                 />
                             )}
                         </div>

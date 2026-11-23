@@ -205,6 +205,10 @@ model Product {
   orderBumpDiscount          Decimal?            @default(0.00) @db.Decimal(10, 2)
   orderBumpPrice             Decimal?            @db.Decimal(10, 2)
 
+  // Combo Product components
+  comboItems                 ComboItem[]         @relation("ComboParent")
+  includedInCombos           ComboItem[]         @relation("ComboComponent")
+
   bundleItems       BundleItem[]
   couponProducts    CouponProduct[]
   discountProducts  DiscountProduct[]
@@ -706,6 +710,24 @@ model BundleItem {
   @@unique([bundleId, productId])
   @@index([productId])
   @@index([bundleId, sortOrder])
+}
+
+model ComboItem {
+  id              Int      @id @default(autoincrement())
+  comboProductId  Int
+  productId       Int
+  quantity        Int      @default(1)
+  sortOrder       Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  comboProduct    Product  @relation("ComboParent", fields: [comboProductId], references: [id], onDelete: Cascade)
+  product         Product  @relation("ComboComponent", fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([comboProductId, productId])
+  @@index([comboProductId])
+  @@index([productId])
+  @@map("ComboItems")
 }
 
 model Wishlist {
