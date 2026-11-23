@@ -539,6 +539,10 @@ export default function CheckoutClient({ initialContact = null }) {
             displayMsg = `আপনি ইতিমধ্যে একটি অর্ডার${response.orderNumber ? ` (নম্বর: #${response.orderNumber})` : ''} সম্পন্ন করেছেন যা বর্তমানে প্রসেসিং রয়েছে।`;
           }
 
+          const trackUrl = response.orderNumber
+            ? `/track-order?orderId=${encodeURIComponent(response.orderNumber)}`
+            : `/track-order`;
+
           Swal.fire({
             icon: "warning",
             title: "দুঃখিত! সম্প্রতি একটি অর্ডার সম্পন্ন হয়েছে",
@@ -549,7 +553,7 @@ export default function CheckoutClient({ initialContact = null }) {
                 </p>
                 <div class="bg-amber-50 border-2 border-amber-200 rounded-xl p-4 space-y-2.5">
                   ${response.orderNumber ? `
-                  <div class="text-sm sm:text-base font-bold flex items-center gap-2 text-amber-950">
+                  <div class="text-sm sm:text-base font-bold flex items-center justify-between gap-2 text-amber-950 flex-wrap">
                     <span>অর্ডার রেফারেন্স নম্বর:</span>
                     <span class="bg-amber-200/80 text-amber-950 px-2.5 py-1 rounded-lg font-extrabold tracking-wide">#${response.orderNumber}</span>
                   </div>` : ''}
@@ -558,17 +562,39 @@ export default function CheckoutClient({ initialContact = null }) {
                     <span>${waitTimeText}</span>
                   </div>
                 </div>
-                <p class="text-xs sm:text-sm text-slate-600 leading-normal">
+
+                <!-- Track Order Button Banner -->
+                <div class="pt-1">
+                  <a 
+                    href="${trackUrl}" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-primary to-[#BF756A] text-white font-bold text-sm sm:text-base shadow-md hover:shadow-lg transition-all duration-200 text-center cursor-pointer no-underline"
+                    style="text-decoration: none;"
+                  >
+                    <span>📦 অর্ডার ট্র্যাক করুন (Live Status)</span>
+                  </a>
+                </div>
+
+                <p class="text-xs sm:text-sm text-slate-500 leading-normal text-center pt-1">
                   আপনার অর্ডারে কোনো তথ্য সংশোধন বা প্রশ্ন থাকলে অনুগ্রহ করে আমাদের কাস্টমার সাপোর্ট হেল্পলাইনে যোগাযোগ করুন।
                 </p>
               </div>
             `,
-            confirmButtonText: "ঠিক আছে, বুঝেছি",
+            showCancelButton: true,
+            confirmButtonText: "📦 অর্ডার ট্র্যাক করুন",
+            cancelButtonText: "ঠিক আছে, বুঝেছি",
             confirmButtonColor: "#D48B80",
+            cancelButtonColor: "#64748b",
             customClass: {
               popup: "rounded-3xl shadow-2xl p-6 sm:p-8 max-w-lg",
               title: "text-xl sm:text-2xl font-bold text-slate-900 pt-2",
-              confirmButton: "font-semibold text-base px-8 py-3 rounded-xl shadow-lg",
+              confirmButton: "font-semibold text-base px-6 py-3 rounded-xl shadow-lg order-1",
+              cancelButton: "font-semibold text-base px-6 py-3 rounded-xl shadow-sm order-2",
+            }
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.open(trackUrl, "_blank");
             }
           });
           return;
