@@ -1278,7 +1278,7 @@ export default function CreateLandingPage() {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 max-h-60 overflow-y-auto p-1">
-                  {allProducts
+                  {productList
                     .filter((p) => p.id !== selectedProduct?.id)
                     .filter((p) =>
                       !relatedProductSearch ||
