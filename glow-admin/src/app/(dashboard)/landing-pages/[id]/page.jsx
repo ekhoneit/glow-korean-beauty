@@ -179,8 +179,8 @@ export default function EditLandingPage() {
                 if (lp.template) setSelectedTemplate(lp.template);
                 if (Array.isArray(lp.relatedProductIds) && lp.relatedProductIds.length > 0) {
                     setEnableRelatedProducts(true);
-                    if (productsRes?.data && Array.isArray(productsRes.data)) {
-                        setSelectedRelatedProducts(productsRes.data.filter(p => lp.relatedProductIds.includes(p.id)));
+                    if (Array.isArray(productList) && productList.length > 0) {
+                        setSelectedRelatedProducts(productList.filter(p => lp.relatedProductIds.includes(p.id)));
                     }
                 }
 
