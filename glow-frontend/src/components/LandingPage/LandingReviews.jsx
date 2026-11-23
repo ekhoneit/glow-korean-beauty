@@ -4,14 +4,16 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { Star, CheckCircle2, ShoppingBag, ThumbsUp, Quote, Sparkles, User, Check, ChevronLeft, ChevronRight } from "lucide-react";
 
-// Curated authentic real customer avatar portraits (6 distinct realistic diverse customer faces)
+// Curated authentic real customer female avatar portraits (distinct realistic diverse female faces)
 const AVATAR_IMAGES = [
-    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
-    "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80",
-    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
-    "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&auto=format&fit=crop&q=80",
     "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
-    "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=150&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=150&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=150&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=150&auto=format&fit=crop&q=80",
 ];
 
 export default function LandingReviews({ reviews, productName = "" }) {
@@ -88,19 +90,19 @@ export default function LandingReviews({ reviews, productName = "" }) {
         return (
             <div 
                 key={idx}
-                className={`review-card relative bg-white rounded-lg p-5 sm:p-6 flex flex-col justify-between transition-all duration-200 ${
+                className={`review-card relative bg-white rounded-2xl p-5 sm:p-6 flex flex-col justify-between transition-all duration-300 ${
                     isCarouselCard
                         ? "snap-start shrink-0 w-[82vw] sm:w-[340px] md:w-[360px]"
                         : "w-full"
                 } ${
                     isTopReview 
-                        ? "border-2 border-primary shadow-lg ring-1 ring-primary/20" 
-                        : "border border-slate-200/90 shadow-sm hover:shadow-md"
+                        ? "border-2 border-primary shadow-lg ring-2 ring-primary/10" 
+                        : "border border-rose-100 shadow-sm hover:shadow-md hover:border-primary/40"
                 }`}
             >
                 {/* Top Review Pill on Middle Card */}
                 {isTopReview && (
-                    <div className="absolute -top-3.5 right-6 z-10 bg-primary text-white text-[11px] font-bold px-3 py-0.5 rounded-full shadow-md flex items-center gap-1">
+                    <div className="absolute -top-3.5 right-6 z-10 bg-gradient-to-r from-rose-500 to-primary text-white text-[11px] font-bold px-3 py-0.5 rounded-full shadow-md flex items-center gap-1">
                         <Sparkles size={11} className="fill-white" />
                         <span>টপ রিভিউ</span>
                     </div>

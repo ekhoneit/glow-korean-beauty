@@ -153,15 +153,15 @@ export default function LandingHero({
     };
 
     return (
-        <section className="relative overflow-hidden bg-slate-50/60 py-8  border-b border-slate-200/80">
+        <section className="relative overflow-hidden bg-gradient-to-b from-rose-50/40 via-white to-amber-50/20 py-8 sm:py-10 border-b border-rose-100/60 font-hind">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Main 2-Column Grid: Left (Media & Thumbnails), Right (Title, Price, Features & CTA) */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
                     {/* LEFT COLUMN: Media / Gallery (Span 5 or 6) */}
                     <div className="lg:col-span-5 space-y-4">
-                        <div className="relative aspect-square w-full rounded-lg overflow-hidden bg-white border border-slate-200/90 shadow-xs p-3 sm:p-4 flex items-center justify-center">
+                        <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-white border border-rose-100 shadow-md p-3 sm:p-5 flex items-center justify-center">
                             {hasDiscount && (
-                                <div className="absolute top-3 left-3 z-20 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-xs flex items-center gap-1">
+                                <div className="absolute top-3 left-3 z-20 bg-gradient-to-r from-rose-500 to-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-sm flex items-center gap-1">
                                     <Flame size={13} />
                                     <span>{discountPercent}% ছাড়</span>
                                 </div>
@@ -288,8 +288,8 @@ export default function LandingHero({
                             </p>
                         )}
 
-                        {/* Offer Price Box with Dashed Border and Savings Badge */}
-                        <div className="p-4 sm:p-5 bg-white rounded-lg border-2 border-dashed border-primary/30 shadow-2xs space-y-3">
+                        {/* Offer Price Box with Rose Border and Savings Badge */}
+                        <div className="p-4 sm:p-5 bg-white rounded-2xl border-2 border-rose-200/90 shadow-sm space-y-3">
                             <div className="flex items-center justify-between flex-wrap gap-2">
                                 <div className="flex items-baseline gap-3">
                                     <div>
@@ -310,14 +310,14 @@ export default function LandingHero({
                                 </div>
 
                                 {hasDiscount && (
-                                    <div className="px-3 py-1 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold rounded-lg flex items-center gap-1 shadow-2xs">
+                                    <div className="px-3 py-1 bg-rose-50 border border-rose-200 text-primary text-xs font-bold rounded-lg flex items-center gap-1 shadow-2xs">
                                         <span>৳ {(displayRegularPrice - activePrice).toLocaleString()} টাকা সাশ্রয় ({discountPercent}% ছাড়)</span>
                                     </div>
                                 )}
                             </div>
 
                             {/* Live Urgency Countdown Timer */}
-                            <div className="p-2.5 sm:p-3 bg-gradient-to-r from-rose-50 via-amber-50 to-orange-50 rounded-lg border border-rose-200/80 flex flex-col sm:flex-row items-center justify-between gap-2.5 shadow-2xs">
+                            <div className="p-2.5 sm:p-3 bg-gradient-to-r from-rose-50 via-pink-50 to-amber-50 rounded-xl border border-rose-200/70 flex flex-col sm:flex-row items-center justify-between gap-2.5 shadow-2xs">
                                 <div className="flex items-center gap-2">
                                     <div className="w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
                                         <Timer size={16} className="animate-spin text-primary" style={{ animationDuration: '6s' }} />
@@ -461,10 +461,10 @@ export default function LandingHero({
                         {/* Key Product Feature Checklist */}
                         {(() => {
                             const defaultTrustPoints = [
-                                { title: "১০০% অরিজিনাল ও ইনট্যাক্ট বক্স", desc: "অথেনটিক ব্র্যান্ডেড প্রিমিয়াম গ্যাজেট নিশ্চয়তা" },
-                                { title: "অফিশিয়াল ব্র্যান্ড ওয়ারেন্টি", desc: "দ্রুত রিপ্লেসমেন্ট ও টেকনিক্যাল সার্ভিসিং সুবিধা" },
+                                { title: "১০০% অরিজিনাল কোরিয়ান স্কিনকেয়ার", desc: "অথেনটিক ব্র্যান্ডের সরাসরি আমদানি করা পণ্য" },
+                                { title: "ন্যাচারাল ও স্কিন ফ্রেন্ডলি ফর্মুলা", desc: "কোন ক্ষতিকর কেমিক্যাল ছাড়াই নিরাপদ গ্লো" },
                                 { title: "হাতে পেয়ে চেক করে পেমেন্ট", desc: "ডেলিভারি ম্যানের সামনে অনবক্স ও চেক করার সুবিধা" },
-                                { title: "সারা বাংলাদেশে ফাস্ট ক্যাশ অন ডেলিভারি", desc: "কোন অগ্রিম টাকা ছাড়াই নিশ্চিন্তে অর্ডার করুন" }
+                                { title: "সারা বাংলাদেশে দ্রুত ক্যাশ অন ডেলিভারি", desc: "কোন অগ্রিম টাকা ছাড়াই নিশ্চিন্তে ঘরে বসে অর্ডার করুন" }
                             ];
                             const trustList = Array.isArray(landingPage?.trustPoints) && landingPage.trustPoints.length > 0
                                 ? landingPage.trustPoints
@@ -474,11 +474,11 @@ export default function LandingHero({
                                 <div className="space-y-2 text-xs sm:text-sm text-slate-700">
                                     {trustList.map((pt, idx) => (
                                         <div key={idx} className="flex items-center gap-2.5">
-                                            <div className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
-                                                <Check size={13} />
+                                            <div className="w-5 h-5 rounded-full bg-rose-100 text-primary flex items-center justify-center shrink-0">
+                                                <Check size={13} className="stroke-[2.5]" />
                                             </div>
                                             <span>
-                                                {pt.title && <strong>{pt.title}: </strong>}
+                                                {pt.title && <strong className="text-slate-800">{pt.title}: </strong>}
                                                 {pt.desc || (typeof pt === "string" ? pt : "")}
                                             </span>
                                         </div>

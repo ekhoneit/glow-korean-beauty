@@ -5,24 +5,26 @@ import { useStoreSettings } from "@/lib/dataFetch";
 export default function LandingMinimalFooter({ phone = "01969968555" }) {
   const { storeSettings } = useStoreSettings();
 
+  const logoSrc =
+    storeSettings?.footerLogo ||
+    storeSettings?.logo ||
+    "/glowbeauty.png";
+
   return (
     <footer
       id="landing-footer"
-      className="w-full bg-[#0d223c] text-slate-300 py-10 border-t border-slate-700/50"
+      className="w-full bg-[#111827] text-slate-300 py-12 border-t border-slate-800"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center space-y-6">
-        {/* Logo in light badge */}
-        <div className="inline-block rounded-lg px-4 shadow-sm">
-          <div className="relative w-80 h-36 -mb-10">
+        {/* Brand Logo in clean aesthetic card */}
+        <div className="inline-block rounded-2xl bg-white px-6 py-3 shadow-md border border-white/20">
+          <div className="relative w-44 sm:w-56 h-12 sm:h-14">
             <Image
-              src={
-                storeSettings?.footerLogo ||
-                storeSettings?.logo ||
-                "/glowbeauty-white.png"
-              }
+              src={logoSrc}
               alt="Glow Korean Beauty"
               fill
               className="object-contain"
+              unoptimized
             />
           </div>
         </div>

@@ -70,24 +70,24 @@ export default function LandingTimerBanner({
     }, [landingPage?.slug, landingPage?.id]);
 
     return (
-        <section className="w-full bg-gradient-to-r from-[#0d223c] via-[#102d50] to-[#0d223c] text-white py-6 sm:py-8 px-4 border-y-2 border-amber-400/40 relative overflow-hidden shadow-md font-hind">
+        <section className="w-full bg-gradient-to-r from-[#2c1810] via-[#3d1f1d] to-[#2c1810] text-white py-6 sm:py-8 px-4 border-y-2 border-rose-300/40 relative overflow-hidden shadow-md font-hind">
             {/* Background Glow effects */}
-            <div className="absolute -left-10 -top-10 w-48 h-48 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-amber-400/15 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -left-10 -top-10 w-48 h-48 bg-primary/30 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-rose-400/20 rounded-full blur-3xl pointer-events-none" />
 
             <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-5 sm:gap-6 relative z-10">
                 {/* Left: Urgency Headline & Subtitle */}
                 <div className="text-center lg:text-left space-y-1 max-w-xl">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/25 border border-primary/40 text-amber-300 text-xs font-bold mb-1 shadow-xs">
-                        <Flame size={14} className="text-primary animate-pulse fill-primary" />
-                        <span>ধামাকা মেগা অফার ক্যাম্পেইন</span>
-                        <Sparkles size={12} className="text-amber-300" />
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/25 border border-primary/40 text-rose-200 text-xs font-bold mb-1 shadow-xs">
+                        <Sparkles size={14} className="text-rose-300 animate-pulse fill-rose-300" />
+                        <span>স্পেশাল কোরিয়ান গ্লো ক্যাম্পেইন</span>
+                        <Sparkles size={12} className="text-rose-200" />
                     </div>
                     <h3 className="text-lg sm:text-2xl font-black text-white leading-snug tracking-tight">
                         {landingPage?.urgencyText || "অফারটি সীমিত সময়ের জন্য! বিশেষ ছাড়ে এখনই অর্ডার করুন"}
                     </h3>
-                    <p className="text-xs sm:text-sm text-slate-300">
-                        স্টক ফুরিয়ে যাওয়ার আগেই আপনার পছন্দের পণ্যটি দ্রুত সংগ্রহ করুন
+                    <p className="text-xs sm:text-sm text-rose-100/80">
+                        স্টক ফুরিয়ে যাওয়ার আগেই আপনার পছন্দের কোরিয়ান স্কিনকেয়ার সংগ্রহ করুন
                     </p>
                 </div>
 
