@@ -1,7 +1,14 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const getBaseUrl = () => {
+    // If running on server (SSR/Next.js worker) and INTERNAL_API_URL is provided, use it
+    if (typeof window === "undefined" && process.env.INTERNAL_API_URL) {
+        return process.env.INTERNAL_API_URL.replace(/\/+$/, "");
+    }
+    return (process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000").replace(/\/+$/, "");
+};
 
 export async function apiClient(endpoint, options = {}) {
-    const url = endpoint.startsWith("http") ? endpoint : `${API_BASE}${endpoint.startsWith("/") ? "" : "/"}${endpoint}`;
+    const baseUrl = getBaseUrl();
+    const url = endpoint.startsWith("http") ? endpoint : `${baseUrl}${endpoint.startsWith("/") ? "" : "/"}${endpoint}`;
 
     const token =
         typeof window !== "undefined"

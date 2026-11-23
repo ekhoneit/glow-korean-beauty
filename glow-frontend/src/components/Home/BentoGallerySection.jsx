@@ -1,12 +1,30 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Sparkles } from "lucide-react";
 import Container from "@/components/Shared/Container";
 import { motion } from "framer-motion";
+import { apiClient } from "@/lib/apiClient";
 
-export default function BentoGallerySection({ bentoCards = [] }) {
+export default function BentoGallerySection({ bentoCards: initialBentoCards = [] }) {
+    const [bentoCards, setBentoCards] = useState(initialBentoCards);
+
+    // If SSR failed (e.g. server-to-server DNS loopback), fetch client-side as fallback!
+    useEffect(() => {
+        if (!initialBentoCards || initialBentoCards.length === 0) {
+            apiClient("/api/bento-gallery")
+                .then((res) => {
+                    if (Array.isArray(res)) setBentoCards(res);
+                    else if (res?.data && Array.isArray(res.data)) setBentoCards(res.data);
+                })
+                .catch((err) => console.warn("Client fallback bento-gallery fetch:", err));
+        } else {
+            setBentoCards(initialBentoCards);
+        }
+    }, [initialBentoCards]);
+
     if (!bentoCards || bentoCards.length === 0) return null;
 
     // Filter active cards and sort by priority (asc) so ordering is strictly respected

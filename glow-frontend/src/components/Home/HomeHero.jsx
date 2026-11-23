@@ -5,10 +5,25 @@ import Link from "next/link";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, ArrowRight, Sparkles, ShieldCheck, HeartHandshake, Award } from "lucide-react";
 import { getProductThumbnail } from "@/utils/productImage";
+import { apiClient } from "@/lib/apiClient";
 
-export default function HomeHero({ heroSliders = [], featuredProducts = [] }) {
-    // If admin has uploaded hero sliders via CMS, use them!
+export default function HomeHero({ heroSliders: initialHeroSliders = [], featuredProducts = [] }) {
+    const [heroSliders, setHeroSliders] = useState(initialHeroSliders);
     const [currentSlide, setCurrentSlide] = useState(0);
+
+    // If SSR failed (e.g. server-to-server DNS block), fetch client-side as fallback!
+    useEffect(() => {
+        if (!initialHeroSliders || initialHeroSliders.length === 0) {
+            apiClient("/api/hero-sliders")
+                .then((res) => {
+                    if (Array.isArray(res)) setHeroSliders(res);
+                    else if (res?.data && Array.isArray(res.data)) setHeroSliders(res.data);
+                })
+                .catch((err) => console.warn("Client fallback hero-slider fetch:", err));
+        } else {
+            setHeroSliders(initialHeroSliders);
+        }
+    }, [initialHeroSliders]);
 
     // Sort sliders strictly by priority (asc)
     const sortedSliders = Array.isArray(heroSliders)
