@@ -551,8 +551,8 @@ export default function LandingCheckoutSection({
             ...orderData,
             recipientName: fullName.trim(),
             phoneNumber: cleanPhone,
-            address: address.trim(),
-            city: selectedDistrict || "Dhaka",
+            address: fullAddress.trim(),
+            city: deliveryArea === "inside" ? "Dhaka" : "Outside Dhaka",
           },
           orderItemsPayload
         );
