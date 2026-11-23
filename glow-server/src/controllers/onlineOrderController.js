@@ -514,6 +514,9 @@ const createOrder = async (req, res) => {
             if (deviceMeta) finalNote += `\n${deviceMeta}`;
             if (ipMeta) finalNote += `\n${ipMeta}`;
             finalNote = finalNote.trim() || null;
+            if (finalNote && finalNote.length > 5000) {
+                finalNote = finalNote.substring(0, 5000);
+            }
 
             const newOrder = await tx.onlineOrder.create({
                 data: {
