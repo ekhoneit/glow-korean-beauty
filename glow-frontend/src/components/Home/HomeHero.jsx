@@ -47,23 +47,26 @@ export default function HomeHero({ heroSliders: initialHeroSliders = [], feature
     // If title has no letters (e.g. empty or symbol like "%"), treat as full-width cover graphic
     const cleanTitle = (activeSlide?.title || "").replace(/[^a-zA-Z0-9\u0980-\u09FF]/g, "").trim();
     const isGraphicOnly = activeSlide && (!cleanTitle || (!activeSlide.title?.trim() && !activeSlide.sub_title?.trim()) || activeSlide.title?.trim() === "%");
+    const isFullImageBanner = isGraphicOnly || !hasCmsSliders || !activeSlide;
 
     return (
         <section className="w-full py-4 sm:py-6 bg-white font-sans">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 
                 {/* Main Hero Banner Container */}
-                <div className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-[#EFE8DF] bg-gradient-to-br from-[#2D1B1E] via-[#3D2528] to-[#1E1113] min-h-[380px] sm:min-h-[320px] md:aspect-[2.68/1] flex items-center">
+                <div className={`relative w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-[#EFE8DF] bg-gradient-to-br from-[#2D1B1E] via-[#3D2528] to-[#1E1113] ${isFullImageBanner ? "" : "min-h-[380px] sm:min-h-[320px] md:aspect-[2.68/1] flex items-center"}`}>
                     
                     {/* CASE 1: CMS Slide is just a full cover image */}
                     {isGraphicOnly ? (
-                        <div className="relative w-full h-[220px] sm:h-[300px] md:h-full min-h-[220px] sm:min-h-[280px]">
+                        <div className="relative w-full">
                             <Image
                                 src={activeSlide.image || "/glow-banner.jpg"}
                                 alt="Glow Korean Beauty Banner"
-                                fill
+                                width={1024}
+                                height={381}
                                 priority
-                                className="object-cover object-center"
+                                unoptimized
+                                className="w-full h-auto block"
                                 sizes="(max-width: 1280px) 100vw, 1280px"
                             />
                             {activeSlide.link && (
@@ -142,13 +145,15 @@ export default function HomeHero({ heroSliders: initialHeroSliders = [], feature
                         </div>
                     ) : (
                         /* CASE 3: Default Curated Korean Luxury Full Banner */
-                        <div className="relative w-full h-[220px] sm:h-[300px] md:h-full min-h-[220px] sm:min-h-[280px]">
+                        <div className="relative w-full">
                             <Image
                                 src="/glow-banner.jpg"
                                 alt="Glow Korean Beauty Banner"
-                                fill
+                                width={1024}
+                                height={381}
                                 priority
-                                className="object-cover object-center"
+                                unoptimized
+                                className="w-full h-auto block"
                                 sizes="(max-width: 1280px) 100vw, 1280px"
                             />
                             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-black/5 pointer-events-none" />
