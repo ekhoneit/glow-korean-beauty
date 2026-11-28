@@ -11,18 +11,17 @@ import { apiClient } from "@/lib/apiClient";
 export default function BentoGallerySection({ bentoCards: initialBentoCards = [] }) {
     const [bentoCards, setBentoCards] = useState(initialBentoCards);
 
-    // If SSR failed (e.g. server-to-server DNS loopback), fetch client-side as fallback!
+    // Always sync fresh bento gallery client-side so Cloudflare/edge HTML caching never shows stale cards
     useEffect(() => {
-        if (!initialBentoCards || initialBentoCards.length === 0) {
-            apiClient("/api/bento-gallery")
-                .then((res) => {
-                    if (Array.isArray(res)) setBentoCards(res);
-                    else if (res?.data && Array.isArray(res.data)) setBentoCards(res.data);
-                })
-                .catch((err) => console.warn("Client fallback bento-gallery fetch:", err));
-        } else {
+        if (initialBentoCards && initialBentoCards.length > 0) {
             setBentoCards(initialBentoCards);
         }
+        apiClient("/api/bento-gallery", { cache: "no-store" })
+            .then((res) => {
+                if (Array.isArray(res)) setBentoCards(res);
+                else if (res?.data && Array.isArray(res.data)) setBentoCards(res.data);
+            })
+            .catch((err) => console.warn("Client bento-gallery sync:", err));
     }, [initialBentoCards]);
 
     if (!bentoCards || bentoCards.length === 0) return null;

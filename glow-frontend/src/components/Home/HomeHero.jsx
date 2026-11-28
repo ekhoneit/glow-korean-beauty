@@ -11,18 +11,17 @@ export default function HomeHero({ heroSliders: initialHeroSliders = [], feature
     const [heroSliders, setHeroSliders] = useState(initialHeroSliders);
     const [currentSlide, setCurrentSlide] = useState(0);
 
-    // If SSR failed (e.g. server-to-server DNS block), fetch client-side as fallback!
+    // Always sync fresh hero sliders client-side so Cloudflare/edge HTML caching never shows stale slides
     useEffect(() => {
-        if (!initialHeroSliders || initialHeroSliders.length === 0) {
-            apiClient("/api/hero-sliders")
-                .then((res) => {
-                    if (Array.isArray(res)) setHeroSliders(res);
-                    else if (res?.data && Array.isArray(res.data)) setHeroSliders(res.data);
-                })
-                .catch((err) => console.warn("Client fallback hero-slider fetch:", err));
-        } else {
+        if (initialHeroSliders && initialHeroSliders.length > 0) {
             setHeroSliders(initialHeroSliders);
         }
+        apiClient("/api/hero-sliders", { cache: "no-store" })
+            .then((res) => {
+                if (Array.isArray(res)) setHeroSliders(res);
+                else if (res?.data && Array.isArray(res.data)) setHeroSliders(res.data);
+            })
+            .catch((err) => console.warn("Client hero-slider sync:", err));
     }, [initialHeroSliders]);
 
     // Sort sliders strictly by priority (asc)
